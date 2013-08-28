@@ -202,7 +202,7 @@ HandView::getViewWindow()
 
 //HandViewWindow:
 //Set the HandViewWindow which contains he views themselves
-HandViewWindow::HandViewWindow(QWidget * parent, Hand * h):currentPreview(-1), maxViewSize(10), cloneHand(new Hand(h->getWorld(), "newHand"))
+HandViewWindow::HandViewWindow(QWidget * parent, Hand * h):currentPreview(-1), maxViewSize(3), cloneHand(new Hand(h->getWorld(), "newHand"))
 {
   
   handViewWindow = new QFrame(NULL);
@@ -212,7 +212,7 @@ HandViewWindow::HandViewWindow(QWidget * parent, Hand * h):currentPreview(-1), m
    handViewWindow->setGeometry(QRect(10, 600, 950, 540));
    handViewWindow->setFrameStyle(QFrame::Box | QFrame::Raised); 
    handViewWindow->setLineWidth(4);
-   grid = new QGridLayout(handViewWindow,2,5);//Set the second parameter to 1 for single column
+   grid = new QGridLayout(handViewWindow,3,1);//Set the second parameter to 1 for single column
   
   
   for(unsigned int i = 0; i < maxViewSize; ++i)
@@ -239,13 +239,16 @@ HandViewWindow::HandViewWindow(QWidget * parent, Hand * h):currentPreview(-1), m
 */
 bool HandViewWindow::addView(HandObjectState& s, int i)
 {     
-  views[i]->update(s,*cloneHand);
+  if (i < maxViewSize)
+    views[i]->update(s,*cloneHand);
   return true;
 }
 
 //Used to go directly to a choice
 void HandViewWindow::setCurrentView(int num)
 {
+  if (num > maxViewSize)
+    return;
   if (currentPreview >= 0)
     views[currentPreview]->getViewWindow()->move(views[currentPreview]->getViewWindow()->x(),views[currentPreview]->getViewWindow()->y()+10);
   
