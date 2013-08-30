@@ -437,6 +437,18 @@ EGPlanner::getGrasp(int i)
 }
 
 void 
+EGPlanner::setGraspAttribute(int i, const QString & attribute, double value)
+{
+  assert (i>=0 && i<(int)mBestList.size());
+  std::list<GraspPlanningState*>::iterator it = mBestList.begin();
+  for (int k=0; k<i; k++) {
+    it++;
+  }
+  (*it)->setAttribute(attribute, value);
+}
+
+
+void 
 EGPlanner::showGrasp(int i)
 {
 	assert (i>=0 && i<getListSize());
