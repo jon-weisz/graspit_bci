@@ -102,6 +102,7 @@ private:
   void sendBodyName(Body* bod);
   void computeNewVelocities(double ts);
   void moveDynamicBodies(double ts);
+  void setGraspAttribute();
 
   void sendRobotName(Robot* rob);
   void sendDOFVals(Robot *rob);

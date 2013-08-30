@@ -50,6 +50,11 @@
 #include <Inventor/fields/SoSFVec3f.h>
 
 
+//helper function to get current world planner
+EGPlanner* currentWorldPlanner(){ return graspItGUI->getIVmgr()->getWorld()->getCurrentPlanner();}
+
+
+
 ClientSocket::ClientSocket( int sock, QObject *parent, const char *name ) :
   Q3Socket( parent, name )
 {
@@ -439,7 +444,34 @@ ClientSocket::readClient()
       removeBodies(true);
             
     }
+    else if ((*strPtr) == "setGraspAttribute"){
+      	strPtr += 1;
+	verifyInput(3);
+	setGraspAttribute();
+      	
+    }
+
   }
+}
+
+void ClientSocket::setGraspAttribute()
+{		
+		double graspIdentifier = strPtr->toDouble();
+		strPtr += 1;
+		QString attributeString = *strPtr;
+		strPtr += 1;
+		double value = strPtr->toDouble();
+		strPtr += 1;
+		for(int i = 0; i < currentWorldPlanner()->getListSize(); i++ )
+		{
+			const GraspPlanningState * gs = currentWorldPlanner()->getGrasp(i);
+			if (gs->getAttribute("graspIdentifier") == attributeString.toInt())
+			{
+			  currentWorldPlanner()->setGraspAttribute(i, "testResult", value); 
+			}
+		}
+		
+
 }
 
 /*!
@@ -778,8 +810,6 @@ ClientSocket::updatePlannerParams(QStringList & qsl)
   return;
 }
 
-//helper function to get current world planner
-EGPlanner* currentWorldPlanner(){ return graspItGUI->getIVmgr()->getWorld()->getCurrentPlanner();}
 
 void
 ClientSocket::outputPlannerResults(int solution_index)
