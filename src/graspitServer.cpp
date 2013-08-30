@@ -1057,7 +1057,7 @@ bool ClientSocket::setPlannerTarget(const QString & bodyName)
 
 }
 
-double convertToNumber(QStringList::const_iterator & strPtr, QStringList * lineStrList, bool & ok)
+double convertToNumber(const QStringList::const_iterator & strPtr, QStringList * lineStrList, bool & ok)
 {  
   double d = -1;
   ok = false;
