@@ -37,7 +37,7 @@
 #include "grasp.h"
 #include "eigenGrasp.h"
 #include "matvec3D.h"
-#include "graspitgui.h"
+#include "graspitGUI.h"
 #include "ivmgr.h"
 
 //#define GRASPITDBG
