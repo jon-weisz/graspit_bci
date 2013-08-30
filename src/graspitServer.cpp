@@ -457,22 +457,22 @@ ClientSocket::readClient()
 
 void ClientSocket::setGraspAttribute()
 {		
-		double graspIdentifier = strPtr->toDouble();
-		strPtr += 1;
-		QString attributeString = *strPtr;
-		strPtr += 1;
-		double value = strPtr->toDouble();
-		strPtr += 1;
-		for(int i = 0; i < currentWorldPlanner()->getListSize(); i++ )
-		{
-			const GraspPlanningState * gs = currentWorldPlanner()->getGrasp(i);
-			if (gs->getAttribute("graspIdentifier") == attributeString.toInt())
-			{
-			  currentWorldPlanner()->setGraspAttribute(i, "testResult", value); 
-			}
-		}
-		
-
+  double graspIdentifier = strPtr->toDouble();
+  strPtr += 1;
+  QString attributeString = *strPtr;
+  strPtr += 1;
+  double value = strPtr->toDouble();
+  strPtr += 1;
+  for(int i = 0; i < currentWorldPlanner()->getListSize(); i++ )
+    {
+      const GraspPlanningState * gs = currentWorldPlanner()->getGrasp(i);
+      if (gs->getAttribute("graspIdentifier") == graspIdentifier)
+	{
+	  currentWorldPlanner()->setGraspAttribute(i, 
+						   attributeString, 
+						   value); 
+	}
+    }		
 }
 
 /*!
