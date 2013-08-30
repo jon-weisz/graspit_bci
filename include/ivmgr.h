@@ -367,7 +367,7 @@ protected:
 
  public:
   BackgroundBlinker (StereoViewer *viewer, int mSecDuration = 100, int times = 1, 
-                        SbColor & blinkColor = SbColor(0.0,0.0,0.0)) : viewer_(viewer), mSecDuration_(mSecDuration),
+                        SbColor blinkColor = SbColor(0.0,0.0,0.0)) : viewer_(viewer), mSecDuration_(mSecDuration),
                         times_(times), blinkColor_(blinkColor)
   {
     start();
