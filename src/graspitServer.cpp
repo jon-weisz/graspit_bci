@@ -825,7 +825,7 @@ ClientSocket::outputPlannerResults(int solution_index)
   //WARNING:: THIS IS NOT REALLY THREADSAFE BECAUSE THE PLANNER KEEPS RUNNING
   //FIXME
   //os << currentWorldPlanner()->getListSize() << "\n";
-  os << '{';
+  os << "doGrasp {";
   //  for(int solution_index =0; solution_index < currentWorldPlanner()->getListSize(); ++solution_index)
   // {
   os << *(currentWorldPlanner()->getGrasp(solution_index)) << ',';      
@@ -861,7 +861,7 @@ ClientSocket::outputCurrentGrasp()
   GraspPlanningState g(graspItGUI->getIVmgr()->getWorld()->getCurrentHand());
   g.setPostureType(POSE_DOF, false);
   g.saveCurrentHandState();
-  os << '{';
+  os << "doGrasp{";
   os << g <<',';
  
   os << '}';
