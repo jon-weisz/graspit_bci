@@ -566,6 +566,8 @@ EGPlanner::setStatStream(std::ostream *out) const
 
 bool 
 EGPlanner::addSolution(GraspPlanningState *s)
-{ 
-  return addToListOfUniqueSolutions(s,&mBestList,0.2);
+{   
+  bool addResult = addToListOfUniqueSolutions(s,&mBestList,0.2);  
+  mCurrentStep +=1;
+  return addResult;
 }
