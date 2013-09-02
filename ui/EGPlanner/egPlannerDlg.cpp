@@ -1070,6 +1070,10 @@ void EigenGraspPlannerDlg::loadGraspsToHandviewWindow()
 
 void EigenGraspPlannerDlg::initializeTarget()
 {
+  bci_experiment::sendSetTarget(mObject);
+  bci_experiment::disableNontargetCollisions(mHand, mObject);
+  bci_experiment::disableTableObjectCollisions();  
+
   //Initialize Handview Window
   initializeHandviewWindow();
   
@@ -1093,9 +1097,8 @@ void EigenGraspPlannerDlg::initializeTarget()
   timer.start();
   graspItGUI->getIVmgr()->setFocus();    
   graspItGUI->getIVmgr()->setActiveWindow();
-  bci_experiment::disableNontargetCollisions(mHand, mObject);
-  bci_experiment::disableTableObjectCollisions();  
-  bci_experiment::sendSetTarget(mObject);
+
+  
 }
 
 
