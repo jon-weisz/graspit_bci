@@ -1059,8 +1059,9 @@ void EigenGraspPlannerDlg::loadGraspsToHandviewWindow()
 						     (grasps[gNum])->getFinalGraspPlanningState());
       
       s->setObject(mHand->getGrasp()->getObject());
-      mPlanner->addSolution(s);
-      
+      if(mPlanner->addSolution(s)){
+        graspItGUI->getIVmgr()->emitAnalyzeGrasp(s);        
+      }
       viewWindow->addView(*s, gNum);     
       viewWindow->getViewWindow()->show();        
     }    
