@@ -181,7 +181,7 @@ namespace bci_experiment{
     Body * tableBody= getObjectByName(bodyName);
     if(tableBody)
       return tableBody;
-    return addToWorld("models/obstacles/","Obstacle", bodyName+".xml");
+    return addToWorld("models/objects/","Obstacle", bodyName+".xml");
   }
 
   void setObjectCentral(Body * b)
