@@ -451,8 +451,31 @@ ClientSocket::readClient()
 	setGraspAttribute();
       	
     }
-
+    else if ((*strPtr) == "drawCircle"){
+      strPtr += 1;
+	    drawCircle();  
+    }
   }
+}
+
+void ClientSocket::drawCircle()
+{
+  QString circleName = *strPtr;
+  strPtr++;
+  bool ok;
+  double x = 2*strPtr->toDouble(&ok) - 1;
+  strPtr++;
+  double y = 2*strPtr->toDouble(&ok) - 1;
+  strPtr++;
+  double radius = strPtr->toDouble(&ok);
+  strPtr++;
+  double r = strPtr->toDouble(&ok);
+  strPtr++;
+  double g = strPtr->toDouble(&ok);
+  strPtr++;
+  double b = strPtr->toDouble(&ok);
+
+  graspItGUI->getIVmgr()->drawCircle(circleName, x, y, radius, SbColor(r,g,b));
 }
 
 void ClientSocket::setGraspAttribute()
