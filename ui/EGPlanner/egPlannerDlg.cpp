@@ -186,10 +186,11 @@ namespace bci_experiment{
 
   void setObjectCentral(Body * b)
   {
-    transf centralize(Quaternion::IDENTITY, -b->getTran().translation());
-    
-    moveAllBodies(centralize);
     Body * table = getOrAddExperimentTable();
+    moveAllBodies(table->getTran().inverse());
+    transf centralize(Quaternion::IDENTITY, -b->getTran().translation());        
+    moveAllBodies(centralize);
+    
     table->setTran(centralize);
     SoNodeList l;
     unsigned int listLen = SoTransform::getByName("PointCloudTransform", l);
