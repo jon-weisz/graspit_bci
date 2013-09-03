@@ -353,6 +353,8 @@ void EigenGraspPlannerDlg::exitButton_clicked()
 
 void EigenGraspPlannerDlg::init()
 { 
+
+  this->setWindowState(Qt::WindowMinimized);
   energyBox->insertItem("Hand Contacts");
   energyBox->insertItem("Potential Quality");
   energyBox->insertItem("Contacts AND Quality");
