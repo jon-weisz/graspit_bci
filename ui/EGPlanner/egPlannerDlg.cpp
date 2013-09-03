@@ -277,37 +277,71 @@ namespace bci_experiment{
     graspItGUI->getIVmgr()->getViewer()->getCamera()->pointAt(SbVec3f(0,0,0), table_z);
   }
 
-  class CircleDrawer : public QWidget
+  void resetHandCollisions(Hand * h, bool setting, std::vector<bool> & collisionStatus)
   {
-  
-  public:
-    CircleDrawer(QWidget * parent) : QWidget(parent)
-    {
-    }
+    World * w = getWorld();
     
-      
-  protected:
-  void paintEvent(QPaintEvent *)
- {
-    static int frameNo = 1; 
-    QPainter painter(this);
-    int diameter = width()/2;
-    painter.translate(width() / 2, height() / 2);
-    painter.setPen(QPen(QColor(0, 0, 0, 127), 3));
-    painter.drawEllipse(-diameter/ 2.0, -diameter / 2.0,
-                                            diameter, diameter);
-    std::cout << "painted" <<std::endl;
-  }
-  };
+    Body * experiment_table = getOrAddExperimentTable();
+    collisionStatus.push_back(!w->collisionsAreOff(h, experiment_table));
+    w->toggleCollisions(setting, h, experiment_table);
 
-  QWidget * addCircleDrawer()
+    for (int i = 0; i < w->getNumGB(); ++i)
+    {
+      collisionStatus.push_back(!w->collisionsAreOff(h, w->getGB(i)));
+      w->toggleCollisions(setting, h, w->getGB(i));
+    }
+  }
+
+  bool setCollisionState(Hand * h, std::vector<bool> & collisionStatus)
   {
-    CircleDrawer * circleDrawer = new CircleDrawer(graspItGUI->getIVmgr()->getViewer()->getWidget());
-    circleDrawer->setObjectName("circle_drawer");
-    circleDrawer->resize(graspItGUI->getIVmgr()->getViewer()->getWidget()->size());
-    circleDrawer->setStyleSheet("background:transparent;");
-    circleDrawer->setAttribute(Qt::WA_TranslucentBackground);
-    return circleDrawer;
+    World * w = getWorld();    
+    if(collisionStatus.size() != w->getNumGB() + 1)
+      return false;
+    
+    Body * experiment_table = getOrAddExperimentTable();
+    w->toggleCollisions(collisionStatus[0], h, experiment_table);
+    for (int i = 0; i < w->getNumGB(); ++i)
+    {      
+      w->toggleCollisions(collisionStatus[i+1], h, w->getGB(i));
+    }
+  }
+
+  int getNumHandCollisions(Hand * h)
+  {
+    CollisionReport colReport;
+    std::vector<Body *> body_list;
+    h->getBodyList(&body_list);
+    getWorld()->getCollisionReport(&colReport, &body_list);
+    return colReport.size();    
+  }
+
+  bool testPreGraspCollisions(Hand * h, float pregrasp_dist)
+  {
+    h->autoGrasp(false, -2.0, true);
+    h->approachToContact(pregrasp_dist, false);
+    return (getNumHandCollisions(h));
+  }
+
+  bool testGraspCollisions(Hand * h, const GraspPlanningState * s)
+  {
+    bool result = false;
+    std::vector<bool> currentCollisionState;
+    resetHandCollisions(h, true, currentCollisionState);
+    s->execute(h);
+    World * w = getWorld();
+    w->toggleCollisions(false, h, s->getObject());
+    if(getNumHandCollisions(h))
+      result = true;
+    if(testPreGraspCollisions(h, -50.0))
+      result = true;
+
+    setCollisionState(h, currentCollisionState);
+    return result;    
+  }
+
+  void printTestResult(const GraspPlanningState & s)
+  {
+    std::cout << "graspID: " << s.getAttribute("graspId") <<  " Test Result: " <<s.getAttribute("testResult") << "\n";
   }
 
 } 
