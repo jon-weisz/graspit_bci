@@ -269,6 +269,12 @@ namespace bci_experiment{
   void viewTarget(Body * b)
   {    
     graspItGUI->getIVmgr()->getViewer()->getCamera()->viewAll(b->getIVRoot(), graspItGUI->getIVmgr()->getViewer()->getViewportRegion(), 1.0);    
+    Body * tableBody= getObjectByName("experiment_table");
+    SbVec3f table_z = tableBody->getTran().affine().transpose().row(2).toSbVec3f();
+    
+    
+    
+    graspItGUI->getIVmgr()->getViewer()->getCamera()->pointAt(SbVec3f(0,0,0), table_z);
   }
 
   class CircleDrawer : public QWidget
