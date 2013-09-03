@@ -421,10 +421,17 @@ void EigenGraspPlannerDlg::init()
           this, SLOT(redrawCircles()));
   drawTimer->start();
   */
+  QPoint location = graspItGUI->getIVmgr()->getViewer()->getBaseWidget()->mapToGlobal(QPoint(0,0));
+  QSize mWindowSize((1280/graspItGUI->getIVmgr()->getViewer()->getSize()[0])*graspItGUI->getMainWindow()->mWindow->size());
+  graspItGUI->getMainWindow()->mWindow->setSizePolicy(QSizePolicy::Policy::Ignored, QSizePolicy::Policy::Ignored);
+  
+  graspItGUI->getMainWindow()->mWindow->move(QPoint(0,0));
+  graspItGUI->getMainWindow()->mWindow->resize(1280.0/3.0*2.0,1024);
+  
   bciStageFrame = new BciStageFrame;  
   bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, INITIALIZATION_PHASE);
-  graspItGUI->getMainWindow()->mWindow->move(0, 0);
-  graspItGUI->getMainWindow()->mWindow->resize(1070, 940);
+  //graspItGUI->getMainWindow()->mWindow->move(0, 0);
+  //graspItGUI->getMainWindow()->mWindow->resize(1070, 940);
   QPoint globalPosition = graspItGUI->getIVmgr()->getViewer()->getNormalWidget()->mapToGlobal(QPoint(0,graspItGUI->getIVmgr()->getViewer()->getNormalWidget()->size().height()));  
   globalPosition.rx() = (graspItGUI->getMainWindow()->mWindow->size().width() - bciStageFrame->size().width())/2;
   bciStageFrame->move(globalPosition);
@@ -1066,14 +1073,15 @@ void EigenGraspPlannerDlg::initializeHandviewWindow()
 	  {       
 	    delete viewWindow;
 	  }
-        viewWindow = new HandViewWindow(parentWidget(), mHand);
-        viewWindow->handViewWindow->resize(1070,745);        
+  
+        viewWindow = new HandViewWindow(parentWidget(), mHand, QRect(2.0*1280.0/3.0,0, 1280.0/3,1024.0));
+    
         QPoint globalPosition = bciStageFrame->mapToGlobal(QPoint(0,bciStageFrame->size().height()));
         std::cout << "Global view window height " << globalPosition.y() << std::endl;
         globalPosition.rx() = 0;
         //QPoint localPosition = viewWindow->handViewWindow->parentWidget()->mapFromGlobal(globalPosition);
         //std::cout << "Local view window height " << localPosition.y() << std::endl;
-        viewWindow->handViewWindow->move(globalPosition);
+    
 }
 
 
