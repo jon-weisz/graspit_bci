@@ -759,7 +759,7 @@ void EigenGraspPlannerDlg::plannerUpdate()
 void EigenGraspPlannerDlg::updateResults(bool render, bool execute)
 {
   assert(mPlanner);
-
+  assert(viewWindow);
   if (execute) assert( mPlanner->getType() == PLANNER_ONLINE);
 
   QString nStr;
@@ -1238,6 +1238,14 @@ void EigenGraspPlannerDlg::plannerExec()
 
 void EigenGraspPlannerDlg::resetStateMachine()
 {
+  if (mPlanner)
+  {
+    stopPlanner();
+    delete mPlanner;
+    mPlanner = NULL;
+  }
+  
+
   realignHand(mHand);
   bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, INITIALIZATION_PHASE);
 }
@@ -1328,6 +1336,7 @@ void EigenGraspPlannerDlg::plannerStart_clicked()
 void EigenGraspPlannerDlg::plannerTypeBox_activated( const QString & )
 {
   if (mPlanner) {
+    mHand->getWorld()->setCurrentPlanner(NULL);
     delete mPlanner;
     mPlanner = NULL;
   }
