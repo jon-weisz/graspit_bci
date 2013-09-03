@@ -1159,9 +1159,10 @@ void EigenGraspPlannerDlg::initializeTarget()
   
   // Load the grasps into the grasp planner list.        
   loadGraspsToHandviewWindow();
-  
+  mPlanner->getGrasp(0)->execute(mHand);
   //Draw new first grasp
   updateResults(true, false);
+  
   std::ofstream time_out("grasp_timing.txt", std::ios_base::out | std::ios_base::app);
   time_out << "Object: " << mObject->getName().toStdString() << "\n";  
   timer.start();
