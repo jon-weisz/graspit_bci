@@ -194,11 +194,11 @@ namespace bci_experiment{
     table->setTran(centralize);
     SoNodeList l;
     unsigned int listLen = SoTransform::getByName("PointCloudTransform", l);
-    if(listLen = 1)
+    if(listLen == 1)
     {
       SoTransform * tran = static_cast<SoTransform*>(l[0]);
       centralize.toSoTransform(tran);
-    }
+    }    
   }
 
   void sendString(const QString & s)
