@@ -1101,7 +1101,10 @@ void EigenGraspPlannerDlg::loadGraspsToHandviewWindow()
   // Using the found model, retrieve the grasps
   std::vector<db_planner::Grasp*> grasps;
   mDbMgr->GetGrasps(*modelList[modelList.size()-1], GraspitDBGrasp::getHandDBName(mHand).toStdString(), &grasps);
-
+  HandObjectState hs(mHand);
+  hs.setPositionType(StateType::SPACE_COMPLETE);
+  hs.setPostureType(StateType::POSE_DOF);
+  hs.saveCurrentHandState();
   // Load the grasps into the grasp planner list.        
   unsigned int numGrasps = std::min<unsigned int>(grasps.size(), 10);
   for (unsigned int gNum = 0; gNum < numGrasps; ++gNum)
@@ -1110,12 +1113,28 @@ void EigenGraspPlannerDlg::loadGraspsToHandviewWindow()
 						     (grasps[gNum])->getFinalGraspPlanningState());
       
       s->setObject(mHand->getGrasp()->getObject());
-      if(mPlanner->addSolution(s)){
+      s->setRefTran(mHand->getGrasp()->getObject()->getTran());
+      float testResult = -2*bci_experiment::testGraspCollisions(mHand, s);
+      s->addAttribute("graspId", gNum);
+      s->addAttribute("testResult", testResult);
+      //bci_experiment::printTestResult(*s);
+      if(mPlanner->addSolution(s))
+      {
         graspItGUI->getIVmgr()->emitAnalyzeGrasp(s);        
       }
-      viewWindow->addView(*s, gNum);     
+  }
+  hs.execute(mHand);
+  dynamic_cast<OnLinePlanner *>(mPlanner)->updateSolutionList();
+  
+  for(int i = 0; i < std::min<unsigned int>(mPlanner->getListSize(), 10); ++i)
+  {
+      viewWindow->addView(*const_cast<GraspPlanningState*>(mPlanner->getGrasp(i)), i);     
       viewWindow->getViewWindow()->show();        
-    }    
+      viewWindow->getViewWindow()->update();
+  } 
+
+  viewWindow->getViewWindow()->sizeIncrement();
+
 }
 
 
