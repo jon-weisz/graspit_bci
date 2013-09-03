@@ -130,7 +130,7 @@ private:
   bool next();
 
   bool setCameraOrigin();
-
+  void drawCircle();
   
 
 

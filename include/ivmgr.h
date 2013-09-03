@@ -330,7 +330,9 @@ public:
   void setDBMgr(db_planner::DatabaseManager*){}
 #endif
   void setStereoWindow(QWidget *parent);
-  
+
+  void drawCircle(const QString & stringName, double x, double y, float scale, SbColor & color); 
+
   //! Current State of BCI planner
   BciPlanningState bciPlanningState;
 };
