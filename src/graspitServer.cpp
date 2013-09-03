@@ -486,16 +486,20 @@ void ClientSocket::setGraspAttribute()
   strPtr += 1;
   double value = strPtr->toDouble();
   strPtr += 1;
+  if (!currentWorldPlanner())
+    return;
   for(int i = 0; i < currentWorldPlanner()->getListSize(); i++ )
     {
       const GraspPlanningState * gs = currentWorldPlanner()->getGrasp(i);
-      if (gs->getAttribute("graspId") == graspIdentifier)
-	{
-	  currentWorldPlanner()->setGraspAttribute(i, 
-						   attributeString, 
-						   value); 
-	}
-    }		
+    if (gs->getAttribute("graspId") == graspIdentifier)
+  	  {
+	    currentWorldPlanner()->setGraspAttribute(i, 
+			                                			   attributeString, 
+						                                    value); 
+      std::cout << "SetGraspAttribute graspId " << graspIdentifier << " attreibuteString " << value << "\n";
+
+	  }
+  }		
 }
 
 /*!
