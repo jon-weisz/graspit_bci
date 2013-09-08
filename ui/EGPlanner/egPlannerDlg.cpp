@@ -105,16 +105,17 @@ namespace bci_experiment{
     return newBody;
   }
   
-  void highlightBody(Body * b)
+  void highlightBody(Body * b, SbColor & color)
   {    
     b->getIVMat()->emissiveColor.setIgnored(false);
-    b->getIVMat()->emissiveColor.setValue(1.0,0.0,0.0);
-    
+    b->getIVMat()->emissiveColor.setValue(color);
+    b->getIVMat()->transparency.setIgnored(true);
   }
   
   void unhighlightBody(Body * b)
   {
     b->getIVMat()->emissiveColor.setIgnored(true);
+    b->getIVMat()->transparency.setIgnored(false);
   }
 
   int getGraspableBodyIndex(Body * b)
@@ -155,11 +156,32 @@ namespace bci_experiment{
     GraspableBody * nextBody = getNextGraspableBody(b);
     if(nextBody)
       {
-	    unhighlightBody(b);
-	    highlightBody(nextBody);
+        highlightBody(b, SbColor(1,0,0));
+	      highlightBody(nextBody, SbColor(0,1,0));
       }
     return nextBody;
   }
+  
+  bool unhighlightAll()
+  {
+    for(int i = 0; i < getWorld()->getNumGB(); ++i)
+    {
+      unhighlightBody(getWorld()->getGB(i));
+    }
+    return true;
+  }
+
+  bool highlightAll()
+  {
+    for(int i = 0; i < getWorld()->getNumGB(); ++i)
+    {
+      highlightBody(getWorld()->getGB(i), SbColor(1,0,0));
+    }
+    return true;
+  }
+  
+
+
 
   void moveBody(Body * b, const transf & relTran)
   {
@@ -170,7 +192,7 @@ namespace bci_experiment{
   {
     for(int b_ind = 0; b_ind < getWorld()->getNumGB(); ++b_ind)
       {
-	moveBody(getWorld()->getGB(b_ind), relTran);
+	      moveBody(getWorld()->getGB(b_ind), relTran);
       }
   }
   
@@ -304,6 +326,7 @@ namespace bci_experiment{
     {      
       w->toggleCollisions(collisionStatus[i+1], h, w->getGB(i));
     }
+    return true;
   }
 
   int getNumHandCollisions(Hand * h)
@@ -337,6 +360,14 @@ namespace bci_experiment{
 
     setCollisionState(h, currentCollisionState);
     return result;    
+  }
+
+
+  bool setPointcloudTransparency(double transparency)
+  {
+    SoMaterial * mat = static_cast<SoMaterial *>(SoMaterial::getByName("PointCloudColorMaterial"));
+    mat->transparency = transparency;
+    return true;
   }
 
   void printTestResult(const GraspPlanningState & s)
@@ -1073,7 +1104,7 @@ void EigenGraspPlannerDlg::initializeHandviewWindow()
 	  {       
 	    delete viewWindow;
 	  }
-  
+        
         viewWindow = new HandViewWindow(parentWidget(), mHand, QRect(2.0*1280.0/3.0,0, 1280.0/3,1024.0));
     
         QPoint globalPosition = bciStageFrame->mapToGlobal(QPoint(0,bciStageFrame->size().height()));
@@ -1187,7 +1218,9 @@ void EigenGraspPlannerDlg::plannerExec()
 	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, OBJECT_SELECTION_PHASE);
 		
 	GraspableBody * gb = bci_experiment::getWorld()->getGB(0);
-	bci_experiment::highlightBody(gb);
+  bci_experiment::highlightAll();
+  bci_experiment::setPointcloudTransparency(.2);
+	bci_experiment::highlightBody(gb, SbColor(1,0,0));
   if(gb)
 	  updateObject(gb);  
 	
@@ -1195,7 +1228,8 @@ void EigenGraspPlannerDlg::plannerExec()
       }
     case OBJECT_SELECTION_PHASE:
       {
-  bci_experiment::unhighlightBody(mObject);
+  bci_experiment::unhighlightAll();
+  bci_experiment::setPointcloudTransparency(0);
 	bci_experiment::setObjectCentral(mObject);
 	initializeTarget();
 	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, INITIAL_REVIEW_PHASE);  
