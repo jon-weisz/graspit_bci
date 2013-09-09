@@ -434,7 +434,6 @@ void EigenGraspPlannerDlg::init()
   QPoint location = graspItGUI->getIVmgr()->getViewer()->getBaseWidget()->mapToGlobal(QPoint(0,0));
   QSize mWindowSize((1280/graspItGUI->getIVmgr()->getViewer()->getSize()[0])*graspItGUI->getMainWindow()->mWindow->size());
   graspItGUI->getMainWindow()->mWindow->setSizePolicy(QSizePolicy::Policy::Ignored, QSizePolicy::Policy::Ignored);
-  
   graspItGUI->getMainWindow()->mWindow->move(QPoint(0,0));
   graspItGUI->getMainWindow()->mWindow->resize(1280.0/3.0*2.0,1024);
   
@@ -445,7 +444,7 @@ void EigenGraspPlannerDlg::init()
   QPoint globalPosition = graspItGUI->getIVmgr()->getViewer()->getNormalWidget()->mapToGlobal(QPoint(0,graspItGUI->getIVmgr()->getViewer()->getNormalWidget()->size().height()));  
   globalPosition.rx() = (graspItGUI->getMainWindow()->mWindow->size().width() - bciStageFrame->size().width())/2;
   bciStageFrame->move(globalPosition);
-  
+  graspItGUI->getMainWindow()->mWindow->setWindowState(Qt::WindowMinimized);
   fprintf(stderr,"INIT DONE \n");
 }
 
@@ -534,6 +533,8 @@ void EigenGraspPlannerDlg::setMembers( Hand *h, GraspableBody *b )
 
   updateVariableLayout();
   updateInputLayout();  
+  viewWindow = new HandViewWindow(parentWidget(), mHand, QRect(0,0,1280/3.0,1024/3.0),graspItGUI->getIVmgr()->getViewer()->getSceneGraph());
+  viewWindow->getViewWindow()->setActiveWindow();
 }
 
 // ----------------------------------- Search State and variable layout management -------------------------------
@@ -1081,15 +1082,9 @@ void EigenGraspPlannerDlg::initializeHandviewWindow()
 	//Open view window
 	if(viewWindow)
 	  {       
-	    delete viewWindow;
-	  } 
-        
-  viewWindow = new HandViewWindow(parentWidget(), mHand, QRect(0,0,1280/3.0,1024/3.0),graspItGUI->getIVmgr()->getViewer()->getSceneGraph());
-
-        QPoint globalPosition = bciStageFrame->mapToGlobal(QPoint(0,bciStageFrame->size().height()));
-        std::cout << "Global view window height " << globalPosition.y() << std::endl;
-        globalPosition.rx() = 0;
-        //QPoint localPosition = viewWindow->handViewWindow->parentWidget()->mapFromGlobal(globalPosition);
+	    viewWindow->initViews(mHand);
+	  }          
+       //QPoint localPosition = viewWindow->handViewWindow->parentWidget()->mapFromGlobal(globalPosition);
         //std::cout << "Local view window height " << localPosition.y() << std::endl;
     
 }
@@ -1274,7 +1269,8 @@ void EigenGraspPlannerDlg::resetStateMachine()
     delete mPlanner;
     mPlanner = NULL;
   }
-  
+  if(viewWindow)
+    viewWindow->clearViews();
 
   realignHand(mHand);
   bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, INITIALIZATION_PHASE);

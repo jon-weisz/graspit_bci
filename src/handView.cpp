@@ -95,6 +95,7 @@ HandView::~HandView(){
  //FIXME if segfaulting, this may need to be removed. 
   //IVRoot->unref();
   //fixme - do the rest of these windows need destroying?
+  std::cout << "Deleted view " << viewName_.toStdString();
   delete viewViewer;
 }
 
@@ -220,7 +221,7 @@ HandView::getViewWindow()
 
 //HandViewWindow:
 //Set the HandViewWindow which contains he views themselves
-HandViewWindow::HandViewWindow(QWidget * parent, Hand * h, const QRect & geom, SoNode * IVRoot):currentPreview(-1), maxViewSize(3), cloneHand(new Hand(h->getWorld(), "newHand")), geom_(geom)
+HandViewWindow::HandViewWindow(QWidget * parent, Hand * h, const QRect & geom, SoNode * IVRoot):currentPreview(-1), maxViewSize(3), cloneHand(new Hand(h->getWorld(), "newHand")), geom_(geom), grid(NULL)
 {
   
   
@@ -270,14 +271,12 @@ HandViewWindow::HandViewWindow(QWidget * parent, Hand * h, const QRect & geom, S
 	vbox2 = new QVBoxLayout();
   hbox->addLayout(vbox2);
   vbox2->setGeometry(geom_);
-  handViewWindow->setWindowFlags(Qt::WindowStaysOnTopHint);
+  //handViewWindow->setWindowFlags(Qt::WindowStaysOnTopHint);
   //handViewWindow->resize(QSize(900,100));
    //handViewFrame->setGeometry(geom_);
    handViewWindow->setFrameStyle(QFrame::Box | QFrame::Raised); 
    handViewWindow->setLineWidth(4);
-   grid = new QGridLayout(vbox2,3,1);//Set the second parameter to 1 for single column
    
-  initViews(h);
  
   cloneHand->cloneFrom(h);    
   cloneHand->setRenderGeometry(false);
@@ -285,20 +284,33 @@ HandViewWindow::HandViewWindow(QWidget * parent, Hand * h, const QRect & geom, S
   cloneHand->getWorld()->toggleCollisions(false, cloneHand); 
 }
 
-void HandViewWindow::initViews(Hand * h)
+void HandViewWindow::clearViews()
 {
-  
 //! First clear the grid if necessary:
-  if ( grid->layout() != NULL )
-  {
-    QLayoutItem* item;
+  views.clear();
+ // vbox2->removeWidget(grid);
+  if(grid)
+    QWidget().setLayout(grid);
+  delete grid;
+  //if ( grid->layout() != NULL )
+  //{
+  //  QWidget().setLayout(grid->layout());
+  //}
+    /*QLayoutItem* item;
     while ( ( item = grid->layout()->takeAt( 0 ) ) != NULL )
     {
+        grid->remove(item->widget());
         delete item->widget();
         delete item;
     }
+    
     //delete grid->layout();
-  }
+  }*/
+}
+
+void HandViewWindow::initViews(Hand * h)
+{
+ grid = new QGridLayout(vbox2,3,1);//Set the second parameter to 1 for single column
 
   for(unsigned int i = 0; i < maxViewSize; ++i)
     {

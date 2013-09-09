@@ -204,7 +204,7 @@ public:
   }
   //! Actually adds views at loop of initialization
   bool addView(HandObjectState & s, int i);
-
+  void clearViews();
   //! Simple getter for the viewWindow associated with our object
   QFrame* getViewWindow(){
     return handViewWindow;
