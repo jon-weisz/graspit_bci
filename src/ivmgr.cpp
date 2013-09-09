@@ -223,11 +223,11 @@ IVmgr *IVmgr::ivmgr = 0;
 void 
 disableZCulling(void * userdata, SoAction * action)
 {
-    //if (action->isOfType(SoGLRenderAction::getClassTypeId())) {
+    if (action->isOfType(SoGLRenderAction::getClassTypeId())) {
       glDisable(GL_DEPTH_TEST);
       glDisable(GL_CULL_FACE);
       SoCacheElement::invalidate(action->getState());
-  //}
+  }
 }
 
 void 

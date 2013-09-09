@@ -48,7 +48,7 @@ void HandView::setupIVHandGeometry(Hand * h)
 HandView::HandView(SoQtExaminerViewer *mainViewer, Hand * h, QFrame &parentWindow, QString viewName): viewName_(viewName), mainViewer_(mainViewer),
 IVRoot(NULL), IVHandGeometry(NULL), IVObjectGeometry(NULL)
 {
- 
+
   viewViewer = new SoQtRenderArea(&parentWindow, " ",true);  
   viewViewer->setTransparencyType(SoGLRenderAction::SORTED_OBJECT_BLEND);  
   viewWin = &parentWindow;
@@ -216,23 +216,90 @@ HandView::getViewWindow()
   return viewWin;
 }
 
-
+#include <Inventor/nodes/SoCone.h>
 
 //HandViewWindow:
 //Set the HandViewWindow which contains he views themselves
-HandViewWindow::HandViewWindow(QWidget * parent, Hand * h, const QRect & geom):currentPreview(-1), maxViewSize(3), cloneHand(new Hand(h->getWorld(), "newHand")), geom_(geom)
+HandViewWindow::HandViewWindow(QWidget * parent, Hand * h, const QRect & geom, SoNode * IVRoot):currentPreview(-1), maxViewSize(3), cloneHand(new Hand(h->getWorld(), "newHand")), geom_(geom)
 {
   
-  handViewWindow = new QFrame(NULL);
-  handViewWindow->setWindowFlags(Qt::WindowStaysOnTopHint);
   
+  handViewWindow = new QFrame(NULL);
+  viewHolder = new QFrame(NULL);
+  handViewWindow->setGeometry(0,0,1280,1024);
+  hbox = new QHBoxLayout(handViewWindow);
+  
+    handViewWindow->show();
+  viewHolder->setGeometry(0,0,2*1280/3,1024);
+  viewHolder->setMinimumSize(2*1280.0/3,1024);
+  viewHolder->setFrameStyle(QFrame::Box | QFrame::Raised);
+ viewHolder->setLineWidth(2);
+ viewHolder->setBackgroundColor(QColor(0,0,1));
+  if(IVRoot)
+    {      
+      SoQtRenderArea * render = new SoQtRenderArea(viewHolder, " ",true);  
+      
+      vbox1 = new QVBoxLayout();
+      hbox->addLayout(vbox1);
+      vbox1->addWidget(viewHolder);
+      //render->setSceneGraph(IVRoot);
+      SoSeparator * testRoot = new SoSeparator;
+      //SoCone * testCone = new SoCone;
+      //SoCamera * testCamera = new SoPerspectiveCamera;
+    
+      SoMaterial * testMaterial = new SoMaterial;
+      
+      testMaterial->diffuseColor.setValue(1,0,0);
+      testRoot->addChild(graspItGUI->getIVmgr()->getViewer()->getCamera());
+      SoTransformSeparator *lightSep = new SoTransformSeparator;
+      SoRotation *lightDir = new SoRotation;
+      lightDir->rotation.connectFrom(&graspItGUI->getIVmgr()->getViewer()->getCamera()->orientation);
+      lightSep->addChild(lightDir);
+      lightSep->addChild(graspItGUI->getIVmgr()->getViewer()->getHeadlight());
+      SoLightModel * model = new SoLightModel;
+      model->model=SoLightModel::Model::PHONG;
+      testRoot->addChild(lightSep);
+      testRoot->addChild(model);
+      testRoot->addChild(IVRoot);
+      render->setSceneGraph(testRoot);
+      render->setBackgroundColor(SbColor(1,1,1));
+      render->scheduleRedraw();
+      render->render();
+      render->show();
+    }
+	vbox2 = new QVBoxLayout();
+  hbox->addLayout(vbox2);
+  vbox2->setGeometry(geom_);
+  handViewWindow->setWindowFlags(Qt::WindowStaysOnTopHint);
   //handViewWindow->resize(QSize(900,100));
-   handViewWindow->setGeometry(geom_);
+   //handViewFrame->setGeometry(geom_);
    handViewWindow->setFrameStyle(QFrame::Box | QFrame::Raised); 
    handViewWindow->setLineWidth(4);
-   grid = new QGridLayout(handViewWindow,3,1);//Set the second parameter to 1 for single column
+   grid = new QGridLayout(vbox2,3,1);//Set the second parameter to 1 for single column
+   
+  initViews(h);
+ 
+  cloneHand->cloneFrom(h);    
+  cloneHand->setRenderGeometry(false);
+  cloneHand->showVirtualContacts(false);      
+  cloneHand->getWorld()->toggleCollisions(false, cloneHand); 
+}
+
+void HandViewWindow::initViews(Hand * h)
+{
   
-  
+//! First clear the grid if necessary:
+  if ( grid->layout() != NULL )
+  {
+    QLayoutItem* item;
+    while ( ( item = grid->layout()->takeAt( 0 ) ) != NULL )
+    {
+        delete item->widget();
+        delete item;
+    }
+    //delete grid->layout();
+  }
+
   for(unsigned int i = 0; i < maxViewSize; ++i)
     {
       QFrame * viewWindowFrame = new QFrame(handViewWindow);
@@ -242,13 +309,9 @@ HandViewWindow::HandViewWindow(QWidget * parent, Hand * h, const QRect & geom):c
       views.push_back(hv);            
       grid->addWidget(viewWindowFrame);
     }
-
-  handViewWindow->show();
-  cloneHand->cloneFrom(h);    
-  cloneHand->setRenderGeometry(false);
-  cloneHand->showVirtualContacts(false);      
-  cloneHand->getWorld()->toggleCollisions(false, cloneHand); 
 }
+
+
 
 /* Adds a view of a particular grasp. 
    This function updates a view window to contain a visualization of a grasp planning

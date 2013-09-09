@@ -339,6 +339,16 @@ namespace bci_experiment{
     return result;    
   }
 
+
+  bool setPointcloudTransparency(double transparency)
+  {
+    SoMaterial * mat = static_cast<SoMaterial *>(SoMaterial::getByName("PointCloudColorMaterial"));
+    if(!mat)
+      return false;
+    mat->transparency = transparency;
+    return true;
+  }
+
   void printTestResult(const GraspPlanningState & s)
   {
     std::cout << "graspID: " << s.getAttribute("graspId") <<  " Test Result: " <<s.getAttribute("testResult") << "\n";

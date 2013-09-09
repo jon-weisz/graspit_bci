@@ -2,6 +2,8 @@
 #define HANDVIEW_H_
 
 #include <Q3MainWindow>
+#include <QHboxLayout>
+#include <QVBoxLayout>
 //#include <QMainWindow>
 #include <QString>
 #include <QObject>
@@ -94,7 +96,6 @@
 #include "body.h"
 
 #include "EGPlanner/searchState.h"
-
 class SoQtRenderArea;
 class SoQtExaminerViewer;
 class SoCoordinate3;
@@ -170,7 +171,9 @@ class HandViewWindow{
 
   //! The layout for the thumbnail views
   QGridLayout * grid;
-
+  QHBoxLayout * hbox;
+  QVBoxLayout * vbox1;
+  QVBoxLayout * vbox2;
   //! The container for the layout for the preview (created so that we
   //   can use more than one preview window if so desired with different graphics applied)
   QGridLayout * previewGrid;
@@ -189,9 +192,10 @@ class HandViewWindow{
 public:
   //! the window containing the thumbnail views
   QFrame * handViewWindow;
-
+  QFrame * viewHolder;
   //! Constructor
-  HandViewWindow(QWidget * parent, Hand * h, const QRect & geom);
+  HandViewWindow(QWidget * parent, Hand * h, const QRect & geom, SoNode * IVRoot = NULL);
+  void initViews(Hand * h);
   ~HandViewWindow(){
     for (int i = 0; i < views.size(); ++i)
       delete views[i];
