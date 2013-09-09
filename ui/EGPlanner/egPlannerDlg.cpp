@@ -1082,10 +1082,10 @@ void EigenGraspPlannerDlg::initializeHandviewWindow()
 	if(viewWindow)
 	  {       
 	    delete viewWindow;
-	  }
-  
-        viewWindow = new HandViewWindow(parentWidget(), mHand, QRect(2.0*1280.0/3.0,0, 1280.0/3,1024.0));
-    
+	  } 
+        
+  viewWindow = new HandViewWindow(parentWidget(), mHand, QRect(0,0,1280/3.0,1024/3.0),graspItGUI->getIVmgr()->getViewer()->getSceneGraph());
+
         QPoint globalPosition = bciStageFrame->mapToGlobal(QPoint(0,bciStageFrame->size().height()));
         std::cout << "Global view window height " << globalPosition.y() << std::endl;
         globalPosition.rx() = 0;
