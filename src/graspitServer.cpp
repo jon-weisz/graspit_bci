@@ -60,10 +60,6 @@ ClientSocket::ClientSocket( int sock, QObject *parent, const char *name ) :
 {
       connect( this, SIGNAL(readyRead()), SLOT(readClient()) );
       connect( this, SIGNAL(connectionClosed()), SLOT(connectionClosed()) );
-      connect(graspItGUI->getIVmgr(), SIGNAL( processWorldPlanner(int) ), this, SLOT( outputPlannerResults(int)));
-      connect(graspItGUI->getIVmgr(), SIGNAL( runObjectRecognition() ), this, SLOT( runObjectRecognition() ));
-      connect(graspItGUI->getIVmgr(), SIGNAL( sendString(const QString &) ), this, SLOT( sendString(const QString &) ));
-	  connect(graspItGUI->getIVmgr(), SIGNAL( analyzeGrasp(const GraspPlanningState *) ), this, SLOT(analyzeGrasp(const GraspPlanningState*)));       
       setSocket( sock );
 }
 
