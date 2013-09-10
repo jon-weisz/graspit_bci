@@ -156,6 +156,7 @@ HandView::update(HandObjectState & s, Hand & cloneHand)
   {
     viewViewer->setBackgroundColor(SbColor(.8,1,.8));
   }
+  else if(testResult < 0.0)
   else if(testResult < -1.0)
   {
     viewViewer->setBackgroundColor(SbColor(1,0.8,0.8));
