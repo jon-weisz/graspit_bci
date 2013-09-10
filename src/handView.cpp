@@ -46,7 +46,7 @@ void HandView::setupIVHandGeometry(Hand * h)
 //parentWindow: to attach window to main window
 //viewname: use it for captioning of windows
 HandView::HandView(SoQtExaminerViewer *mainViewer, Hand * h, QFrame &parentWindow, QString viewName): viewName_(viewName), mainViewer_(mainViewer),
-IVRoot(NULL), IVHandGeometry(NULL), IVObjectGeometry(NULL)
+IVRoot(NULL), IVHandGeometry(NULL), IVObjectGeometry(NULL), stateID_(-1)
 {
 
   viewViewer = new SoQtRenderArea(&parentWindow, " ",true);  
@@ -151,6 +151,7 @@ bool
 HandView::update(HandObjectState & s, Hand & cloneHand)
 {
   double testResult = s.getAttribute("testResult");
+  double stateID = s.getAttribute("graspId");
   if(testResult > 0.0)
   {
     viewViewer->setBackgroundColor(SbColor(.8,1,.8));
@@ -160,14 +161,22 @@ HandView::update(HandObjectState & s, Hand & cloneHand)
     viewViewer->setBackgroundColor(SbColor(1,0.8,0.8));
   }
 
-  //need to activate the collision on the copied hand using the cloned hand
-  //container object
-  cloneHand.getWorld()->toggleCollisions(true, &cloneHand, s.getObject()); 
+  if(testResult == 0.0){
+    viewViewer->setBackgroundColor(SbColor(1,1.0,1.0));
+  }
+  testResult_ = testResult;
+  //}
+  if(stateID_ != stateID)
+  {
+    stateID_ = stateID;
 
-  //execute the grasp 
-  s.execute(&cloneHand);
+    //need to activate the collision on the copied hand using the cloned hand
+    //container object
+    cloneHand.getWorld()->toggleCollisions(true, &cloneHand, s.getObject());
+
+    //execute the grasp
+    s.execute(&cloneHand);
     
-  copyLinkTransforms(&cloneHand, IVHandGeometry);
   SoCamera * camera = static_cast<SoCamera*>(IVRoot->getChild(0));
 
   mainViewer_->render();

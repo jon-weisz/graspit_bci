@@ -131,6 +131,7 @@ private:
 
   //! Copy the hand geometry
   void setupIVHandGeometry(Hand * h);
+  int stateID_;
 public:
 
   //! Constructor for the HandView
