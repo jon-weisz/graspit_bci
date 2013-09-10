@@ -164,8 +164,6 @@ HandView::update(HandObjectState & s, Hand & cloneHand)
   if(testResult == 0.0){
     viewViewer->setBackgroundColor(SbColor(1,1.0,1.0));
   }
-  testResult_ = testResult;
-  //}
   if(stateID_ != stateID)
   {
     stateID_ = stateID;
