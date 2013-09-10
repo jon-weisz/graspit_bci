@@ -558,6 +558,7 @@ void EigenGraspPlannerDlg::setMembers( Hand *h, GraspableBody *b )
   updateInputLayout();  
   viewWindow = new HandViewWindow(parentWidget(), mHand, QRect(0,0,1280/3.0,1024/3.0),graspItGUI->getIVmgr()->getViewer()->getSceneGraph());
   viewWindow->getViewWindow()->setActiveWindow();
+  QTimer::singleShot(100, this, SLOT(plannerTimedUpdate()));
 }
 
 // ----------------------------------- Search State and variable layout management -------------------------------
@@ -792,6 +793,7 @@ void EigenGraspPlannerDlg::plannerUpdate()
 
 void EigenGraspPlannerDlg::updateResults(bool render, bool execute)
 {
+  mPlanner->mListAttributeMutex.lock();
   assert(mPlanner);
   assert(viewWindow);
   if (execute) assert( mPlanner->getType() == PLANNER_ONLINE);
@@ -867,6 +869,7 @@ void EigenGraspPlannerDlg::updateResults(bool render, bool execute)
 	// viewWindow->getViewWindow()->update();      
       }
     }
+  mPlanner->mListAttributeMutex.unlock();
   viewWindow->setCurrentView(mDisplayState);
 }
 
@@ -1541,6 +1544,20 @@ void EigenGraspPlannerDlg::inputLoadButton_clicked()
 }
 
 
+void EigenGraspPlannerDlg::plannerTimedUpdate()
+{
+  if(mPlanner && viewWindow)
+  {
+    if(graspItGUI->getIVmgr()->bciPlanningState == FINAL_REVIEW_PHASE  || graspItGUI->getIVmgr()->bciPlanningState == INITIAL_REVIEW_PHASE)
+    {
+      dynamic_cast<OnLinePlanner *>(mPlanner)->updateSolutionList();
+      updateResults(true, false);
+    }
+    QTimer::singleShot(300, this, SLOT(plannerTimedUpdate()));
+    std::cout << "timed updated \n";
+  }
+  
+}
 
 
 
