@@ -1034,6 +1034,7 @@ void EigenGraspPlannerDlg::plannerNext()
       {
        graspItGUI->getIVmgr()->getViewer()->viewAll();
 	     graspItGUI->getIVmgr()->emitRunObjectRecognition();
+       mHand->setTransparency(1);
 	     break;
       }
     case OBJECT_SELECTION_PHASE:
@@ -1233,6 +1234,7 @@ void EigenGraspPlannerDlg::plannerExec()
 	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, INITIAL_REVIEW_PHASE);  
 	realignHand(mHand);        
   bci_experiment::viewHand(mHand);
+  mHand->setTransparency(0.0);
 	break;
       }
 
