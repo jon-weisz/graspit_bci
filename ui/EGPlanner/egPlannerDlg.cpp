@@ -864,13 +864,13 @@ void EigenGraspPlannerDlg::updateResults(bool render, bool execute)
     {
       for(int mDisplayStateNum = 0; mDisplayStateNum < d; ++mDisplayStateNum){
 	//  std::cout << "Resizing View\n";
-	viewWindow->addView(*const_cast<GraspPlanningState*>(mPlanner->getGrasp(mDisplayStateNum)), mDisplayStateNum);
+	    viewWindow->addView(*const_cast<GraspPlanningState*>(mPlanner->getGrasp((mDisplayState + mDisplayStateNum)%10)), mDisplayStateNum);
 	// viewWindow->getViewWindow()->setFocus();
 	// viewWindow->getViewWindow()->update();      
       }
     }
   mPlanner->mListAttributeMutex.unlock();
-  viewWindow->setCurrentView(mDisplayState);
+  //viewWindow->setCurrentView(mDisplayState);
 }
 
 // ----------------------------- Settings management ---------------------------
