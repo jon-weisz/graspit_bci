@@ -289,6 +289,7 @@ HandViewWindow::HandViewWindow(QWidget * parent, Hand * h, const QRect & geom, S
    
  
   cloneHand->cloneFrom(h);    
+  cloneHand->setTransparency(0.0);
   cloneHand->setRenderGeometry(false);
   cloneHand->showVirtualContacts(false);      
   cloneHand->getWorld()->toggleCollisions(false, cloneHand); 
@@ -323,11 +324,21 @@ void HandViewWindow::initViews(Hand * h)
  grid = new QGridLayout(vbox2,3,1);//Set the second parameter to 1 for single column
 
   for(unsigned int i = 0; i < maxViewSize; ++i)
-    {
+    {      
+
       QFrame * viewWindowFrame = new QFrame(handViewWindow);
-      viewWindowFrame->setFrameStyle(QFrame::Box | QFrame::Raised);
-      viewWindowFrame->setLineWidth(2);
+      double t = h->getPalm()->getTransparency();
+      h->setTransparency(0);
       HandView * hv = new HandView(graspItGUI->getIVmgr()->getViewer(), h, *viewWindowFrame, QString::number(i));        //add a view
+      h->setTransparency(t);
+      if(i == 0){
+        viewWindowFrame->setFrameStyle(QFrame::Box| QFrame::Plain);
+        hv->getViewViewer()->setBorder(true);
+      }
+      else{
+      viewWindowFrame->setFrameStyle(QFrame::Box | QFrame::Raised);
+      }
+      viewWindowFrame->setLineWidth(2);
       views.push_back(hv);            
       grid->addWidget(viewWindowFrame);
     }
