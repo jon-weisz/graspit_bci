@@ -246,7 +246,6 @@ HandViewWindow::HandViewWindow(QWidget * parent, Hand * h, const QRect & geom, S
   viewHolder->setMinimumSize(2*1280.0/3,1024);
   viewHolder->setFrameStyle(QFrame::Box | QFrame::Raised);
  viewHolder->setLineWidth(2);
- viewHolder->setBackgroundColor(QColor(0,0,1));
   if(IVRoot)
     {      
       SoQtRenderArea * render = new SoQtRenderArea(viewHolder, " ",true);  
