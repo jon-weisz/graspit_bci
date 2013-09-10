@@ -239,7 +239,6 @@ HandViewWindow::HandViewWindow(QWidget * parent, Hand * h, const QRect & geom, S
   handViewWindow = new QFrame(NULL);
   viewHolder = new QFrame(NULL);
   handViewWindow->setGeometry(geom);
-  handViewWindow->setGeometry(0,0,1280,1024);
   hbox = new QHBoxLayout(handViewWindow);
   
     handViewWindow->show();
