@@ -238,12 +238,13 @@ HandViewWindow::HandViewWindow(QWidget * parent, Hand * h, const QRect & geom, S
   
   handViewWindow = new QFrame(NULL);
   viewHolder = new QFrame(NULL);
+  handViewWindow->setGeometry(geom);
   handViewWindow->setGeometry(0,0,1280,1024);
   hbox = new QHBoxLayout(handViewWindow);
   
     handViewWindow->show();
-  viewHolder->setGeometry(0,0,2*1280/3,1024);
-  viewHolder->setMinimumSize(2*1280.0/3,1024);
+    viewHolder->setGeometry(0,0,2*geom_.width()/3,geom_.height());
+  viewHolder->setMinimumSize(2*geom_.width()/3,geom_.height());
   viewHolder->setFrameStyle(QFrame::Box | QFrame::Raised);
  viewHolder->setLineWidth(2);
   if(IVRoot)
