@@ -506,6 +506,7 @@ void ClientSocket::setGraspAttribute()
   strPtr += 1;
   if (!currentWorldPlanner())
     return;
+  currentWorldPlanner()->mListAttributeMutex.lock();
   for(int i = 0; i < currentWorldPlanner()->getListSize(); i++ )
     {
       const GraspPlanningState * gs = currentWorldPlanner()->getGrasp(i);
@@ -518,6 +519,7 @@ void ClientSocket::setGraspAttribute()
 
 	  }
   }		
+  currentWorldPlanner()->mListAttributeMutex.unlock();  
 }
 
 /*!

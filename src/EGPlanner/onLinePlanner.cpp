@@ -259,6 +259,7 @@ OnLinePlanner::distanceOutsideApproach(const transf &solTran, const transf &hand
 void
 OnLinePlanner::updateSolutionList()
 {
+  mListAttributeMutex.lock();
 	transf stateTran, currentHandTran = mRefHand->getTran();
 
 	std::list<GraspPlanningState*>::iterator it;
@@ -281,16 +282,21 @@ OnLinePlanner::updateSolutionList()
 	//keep only best in list
   std::list<GraspPlanningState *>::iterator it2 = mBestList.begin();
   
-  for(int i = 0; it2 != mBestList.end(); ++it2)
+  for(int i = 0; it2 != mBestList.end();)
   {
-      if ((*it2)->getAttribute("testResult") == 0)
+      if ((*it2)->getAttribute("testResult") < 0)
       break;
     
     if(i >= SOLUTION_BUFFER_SIZE)
     {
       delete *it2;
-      mBestList.erase(it2);
+      std::list<GraspPlanningState *>::iterator it3 = it2;
+      ++it2;
+      mBestList.erase(it3);
     }
+    else
+      ++it2;
+      
       ++i;
   }  
   
@@ -298,6 +304,7 @@ OnLinePlanner::updateSolutionList()
 		delete mBestList.back();
 		mBestList.pop_back();
 	}
+  mListAttributeMutex.unlock();
 }
 
 void 

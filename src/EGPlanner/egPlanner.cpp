@@ -523,6 +523,7 @@ EGPlanner::stateDistance(const GraspPlanningState *s1, const GraspPlanningState 
 bool
 EGPlanner::addToListOfUniqueSolutions(GraspPlanningState *s, std::list<GraspPlanningState*> *list, double distance)
 {
+  mListAttributeMutex.lock();
 	std::list<GraspPlanningState*>::iterator it;
 	it = list->begin();
 	bool add = true;
@@ -555,7 +556,9 @@ EGPlanner::addToListOfUniqueSolutions(GraspPlanningState *s, std::list<GraspPlan
     }
 		
 	}
+  mListAttributeMutex.unlock();
 	return add;
+  
 }
 
 void 
