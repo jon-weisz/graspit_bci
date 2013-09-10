@@ -512,14 +512,16 @@ void ClientSocket::setGraspAttribute()
       const GraspPlanningState * gs = currentWorldPlanner()->getGrasp(i);
     if (gs->getAttribute("graspId") == graspIdentifier)
   	  {
+
 	    currentWorldPlanner()->setGraspAttribute(i, 
 			                                			   attributeString, 
 						                                    value); 
       std::cout << "SetGraspAttribute graspId " << graspIdentifier << " attreibuteString " << value << "\n";
 
-	  }
-  }		
+    }
+  }
   currentWorldPlanner()->mListAttributeMutex.unlock();  
+  analyzeNextGrasp();
 }
 
 /*!
@@ -1287,5 +1289,30 @@ void ClientSocket::analyzeGrasp(const GraspPlanningState * gps)
 {  
 	QTextStream os(this);
 	os << "analyzeGrasp " << gps->getAttribute("graspId") << " " << *gps << "\n";
+  std::cout << "analyzeGrasp " << gps->getAttribute("graspId") << " " << *gps << "\n";
 }
 
+void ClientSocket::analyzeNextGrasp()
+{  
+  if(currentWorldPlanner())
+  {
+  currentWorldPlanner()->mListAttributeMutex.lock();
+	QTextStream os(this);
+  bool emitted = false;
+  for(int i = 0; i < currentWorldPlanner()->getListSize(); ++i)
+  {
+    const GraspPlanningState * gs = currentWorldPlanner()->getGrasp(i);
+    if(gs->getAttribute("testResult") == 0.0)
+    {
+      emitted = true;
+      analyzeGrasp(gs);
+      break;
+    }
+  }	
+  currentWorldPlanner()->mListAttributeMutex.unlock();
+    if (!emitted)
+  {
+    QTimer::singleShot(500, this, SLOT(analyzeNextGrasp()));
+  }
+  }
+}
