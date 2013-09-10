@@ -267,7 +267,7 @@ OnLinePlanner::updateSolutionList()
 	for ( it = mBestList.begin(); it != mBestList.end(); it++ )	{
 		stateTran = (*it)->getTotalTran();
 		//compute distance between each solution and current hand position	
-    double dist = distanceOutsideApproach(stateTran, currentHandTran, true);
+    double dist = distanceOutsideApproach(stateTran, currentHandTran, false);
 		if (dist < 0) dist = -dist;        
     dist += 1000 * (1-(*it)->getAttribute("testResult"));    
 		(*it)->setDistance(dist);
