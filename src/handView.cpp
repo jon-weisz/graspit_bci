@@ -56,17 +56,17 @@ IVRoot(NULL), IVHandGeometry(NULL), IVObjectGeometry(NULL), stateID_(-1)
   //set up IV root
   IVRoot = new SoSeparator();
   SoCamera * cameraTest = mainViewer_->getCamera();
-  SoCamera * camera = static_cast<SoCamera *>(mainViewer_->getCamera()->copy());
-  camera->scaleHeight(.7);
-  camera->nearDistance = .1;
-  camera->farDistance=1e5;
-  camera->orientation.connectFrom(&mainViewer_->getCamera()->orientation);
-  camera->position.connectFrom(&mainViewer_->getCamera()->position);
-  camera->setName("ViewCamera");
+  camera_ = static_cast<SoCamera *>(mainViewer_->getCamera()->copy());
+  camera_->scaleHeight(.7);
+  camera_->nearDistance = .1;
+  camera_->farDistance=1e5;
+  //camera->orientation.connectFrom(&mainViewer_->getCamera()->orientation);
+  //camera->position.connectFrom(&mainViewer_->getCamera()->position);
+  camera_->setName("ViewCamera");
   viewViewer->setSceneGraph(IVRoot);
   
   //Set up camera tied to main view camera
-  IVRoot->addChild(camera);
+  IVRoot->addChild(camera_);
   
   //Set up lighting to be the same as the main view's lighting
   SoRotation *lightDir = new SoRotation;
@@ -178,11 +178,13 @@ HandView::update(HandObjectState & s, Hand & cloneHand)
     //execute the grasp
     s.execute(&cloneHand);
     
-  SoCamera * camera = static_cast<SoCamera*>(IVRoot->getChild(0));
-
+    copyLinkTransforms(&cloneHand, IVHandGeometry);
+  }
+  camera_->position = mainViewer_->getCamera()->position;
+  camera_->orientation = mainViewer_->getCamera()->orientation;
+  camera_->viewAll(IVRoot, viewViewer->getViewportRegion());
   mainViewer_->render();
   viewViewer->render();
-  
   //disable collisions between clone hand and everything  
   cloneHand.getWorld()->toggleCollisions(false, &cloneHand);       
   

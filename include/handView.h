@@ -128,6 +128,7 @@ private:
 
   //! The Examiner View used to initializr the views
   SoQtExaminerViewer * mainViewer_;
+  SoCamera * camera_;
 
   //! Copy the hand geometry
   void setupIVHandGeometry(Hand * h);
