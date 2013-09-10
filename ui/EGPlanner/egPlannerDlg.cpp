@@ -1218,7 +1218,7 @@ void EigenGraspPlannerDlg::plannerExec()
 	GraspableBody * gb = bci_experiment::getWorld()->getGB(0);
   bci_experiment::highlightAll();
   bci_experiment::setPointcloudTransparency(.2);
-	bci_experiment::highlightBody(gb, SbColor(1,0,0));
+	bci_experiment::highlightBody(gb, SbColor(0,1,0));
   if(gb)
 	  updateObject(gb);  
 	
