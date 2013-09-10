@@ -1148,10 +1148,11 @@ void EigenGraspPlannerDlg::loadGraspsToHandviewWindow()
       s->addAttribute("graspId", gNum);
       s->addAttribute("testResult", testResult);
       //bci_experiment::printTestResult(*s);
-      if(mPlanner->addSolution(s))
-      {
-        graspItGUI->getIVmgr()->emitAnalyzeGrasp(s);        
-      }
+      mPlanner->addSolution(s);
+  }
+  if (numGrasps){
+    graspItGUI->getIVmgr()->emitAnalyzeGrasp(mPlanner->getGrasp(0));        
+    std::cout<< "emitted analyze grasp\n";
   }
   hs.execute(mHand);
   dynamic_cast<OnLinePlanner *>(mPlanner)->updateSolutionList();
