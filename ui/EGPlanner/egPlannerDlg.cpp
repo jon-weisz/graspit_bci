@@ -53,6 +53,7 @@
 #include "guidedPlanner.h"
 #include "loopPlanner.h"
 #include <QPainter>
+#include <QDesktopWidget>
 
 //Graspit DB stuff
 #include "DBase/graspit_db_grasp.h"
@@ -447,26 +448,7 @@ void EigenGraspPlannerDlg::init()
 
   inputGloveBox->setEnabled(FALSE);
   inputLoadButton->setEnabled(FALSE);
-/*  circleDraw = bci_experiment::addCircleDrawer();
-  QTimer * drawTimer = new QTimer(this);
-  drawTimer->setInterval(100);
-  connect(drawTimer, SIGNAL(timeout()),
-          this, SLOT(redrawCircles()));
-  drawTimer->start();
-  */
-  QPoint location = graspItGUI->getIVmgr()->getViewer()->getBaseWidget()->mapToGlobal(QPoint(0,0));
-  QSize mWindowSize((1280/graspItGUI->getIVmgr()->getViewer()->getSize()[0])*graspItGUI->getMainWindow()->mWindow->size());
-  graspItGUI->getMainWindow()->mWindow->setSizePolicy(QSizePolicy::Policy::Ignored, QSizePolicy::Policy::Ignored);
-  graspItGUI->getMainWindow()->mWindow->move(QPoint(0,0));
-  graspItGUI->getMainWindow()->mWindow->resize(1280.0/3.0*2.0,1024);
-  
-  bciStageFrame = new BciStageFrame;  
-  bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, INITIALIZATION_PHASE);
-  //graspItGUI->getMainWindow()->mWindow->move(0, 0);
-  //graspItGUI->getMainWindow()->mWindow->resize(1070, 940);
-  QPoint globalPosition = graspItGUI->getIVmgr()->getViewer()->getNormalWidget()->mapToGlobal(QPoint(0,graspItGUI->getIVmgr()->getViewer()->getNormalWidget()->size().height()));  
-  globalPosition.rx() = (graspItGUI->getMainWindow()->mWindow->size().width() - bciStageFrame->size().width())/2;
-  bciStageFrame->move(globalPosition);
+ 
   graspItGUI->getMainWindow()->mWindow->setWindowState(Qt::WindowMinimized);
   fprintf(stderr,"INIT DONE \n");
 }
@@ -556,8 +538,23 @@ void EigenGraspPlannerDlg::setMembers( Hand *h, GraspableBody *b )
 
   updateVariableLayout();
   updateInputLayout();  
-  viewWindow = new HandViewWindow(parentWidget(), mHand, QRect(0,0,1280/3.0,1024/3.0),graspItGUI->getIVmgr()->getViewer()->getSceneGraph());
+  QRect geom;
+  if(qApp->desktop()->screenCount() > 1)
+    geom = QRect(1280.0,0,1280,1024);
+  else
+    geom = QRect(0.0,0,1280,1024);
+
+  viewWindow = new HandViewWindow(parentWidget(), mHand, geom,graspItGUI->getIVmgr()->getViewer()->getSceneGraph());
+
   viewWindow->getViewWindow()->setActiveWindow();
+
+  bciStageFrame = new BciStageFrame();  
+  bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, INITIALIZATION_PHASE);
+  
+  
+  bciStageFrame->move(geom.x() + geom.width()/2 - bciStageFrame->width()/2, 0);
+ 
+
   QTimer::singleShot(100, this, SLOT(plannerTimedUpdate()));
 }
 
