@@ -48,7 +48,7 @@
 #include <Inventor/nodes/SoPointSet.h>
 #include <Inventor/nodes/SoDrawStyle.h>
 #include <Inventor/fields/SoSFVec3f.h>
-
+#include <QMutexLocker>
 
 //helper function to get current world planner
 EGPlanner* currentWorldPlanner(){ return graspItGUI->getIVmgr()->getWorld()->getCurrentPlanner();}
@@ -465,12 +465,14 @@ ClientSocket::readClient()
     }
     else if ((*strPtr) == "connectToPlanner")
     {
-      connect(graspItGUI->getIVmgr(), SIGNAL( analyzeGrasp(const GraspPlanningState *) ), this, SLOT(analyzeGrasp(const GraspPlanningState*)));       
+      connect(graspItGUI->getIVmgr(), SIGNAL( analyzeGrasp(const GraspPlanningState *) ), this, SLOT(analyzeGrasp(const GraspPlanningState*)));
+      connect(graspItGUI->getIVmgr(), SIGNAL( analyzeNextGrasp() ), this, SLOT(analyzeNextGrasp()));       
       connect(graspItGUI->getIVmgr(), SIGNAL( processWorldPlanner(int) ), this, SLOT( outputPlannerResults(int)));
       connect(graspItGUI->getIVmgr(), SIGNAL( runObjectRecognition() ), this, SLOT( runObjectRecognition() ));
       connect(graspItGUI->getIVmgr(), SIGNAL( sendString(const QString &) ), this, SLOT( sendString(const QString &) ));	  
-
-
+      QTextStream os(this);
+      os << "1 \n";
+      os.flush();
     }
   }
 }
@@ -511,7 +513,7 @@ void ClientSocket::setGraspAttribute()
   strPtr += 1;
   if (!currentWorldPlanner())
     return;
-  currentWorldPlanner()->mListAttributeMutex.lock();
+  QMutexLocker lock(&currentWorldPlanner()->mListAttributeMutex);
   for(int i = 0; i < currentWorldPlanner()->getListSize(); i++ )
     {
       const GraspPlanningState * gs = currentWorldPlanner()->getGrasp(i);
@@ -525,7 +527,7 @@ void ClientSocket::setGraspAttribute()
 
     }
   }
-  currentWorldPlanner()->mListAttributeMutex.unlock();  
+  lock.unlock();
   analyzeNextGrasp();
 }
 
@@ -1299,25 +1301,22 @@ void ClientSocket::analyzeGrasp(const GraspPlanningState * gps)
 
 void ClientSocket::analyzeNextGrasp()
 {  
+  std::cout << "Emitted analyze next grasp\n";  
+  QMutexLocker lock(&currentWorldPlanner()->mListAttributeMutex);
   if(currentWorldPlanner())
-  {
-  currentWorldPlanner()->mListAttributeMutex.lock();
-	QTextStream os(this);
-  bool emitted = false;
+  {  
   for(int i = 0; i < currentWorldPlanner()->getListSize(); ++i)
   {
     const GraspPlanningState * gs = currentWorldPlanner()->getGrasp(i);
+    //if(gs->getAttribute("testResult") == -0.5)
+     // break;
     if(gs->getAttribute("testResult") == 0.0)
     {
-      emitted = true;
+   //   currentWorldPlanner()->setGraspAttribute(i, "testResult", -0.5);
       analyzeGrasp(gs);
       break;
     }
-  }	
-  currentWorldPlanner()->mListAttributeMutex.unlock();
-    if (!emitted)
-  {
-    QTimer::singleShot(500, this, SLOT(analyzeNextGrasp()));
+  }	 
   }
-  }
+   
 }

@@ -260,7 +260,7 @@ signals:
 
   // determine reachability of the grasp at this index
   void analyzeGrasp(const GraspPlanningState * gps);
-
+  void analyzeNextGrasp();
 public:
   IVmgr(QWidget *parent=0,const char *name=0,Qt::WFlags f=0);
   ~IVmgr();
@@ -276,6 +276,7 @@ public:
 
 
   void emitAnalyzeGrasp(const GraspPlanningState * gps) {emit analyzeGrasp(gps); }
+  void emitAnalyzeNextGrasp() {emit analyzeNextGrasp(); }
   void emitRunObjectRecognition(){emit runObjectRecognition();}
   void emitProcessWorldPlanner(int i){emit processWorldPlanner(i);}
   void emitSendString(const QString & s){emit sendString(s);}

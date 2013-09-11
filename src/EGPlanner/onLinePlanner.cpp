@@ -26,7 +26,7 @@
 #include "onLinePlanner.h"
 
 #include <Inventor/nodes/SoSeparator.h>
-
+#include <QMutexLocker>
 #include "world.h"
 #include "robot.h"
 #include "simAnn.h"
@@ -259,7 +259,8 @@ OnLinePlanner::distanceOutsideApproach(const transf &solTran, const transf &hand
 void
 OnLinePlanner::updateSolutionList()
 {
-  mListAttributeMutex.lock();
+  QMutexLocker lock(&mListAttributeMutex);
+  
 	transf stateTran, currentHandTran = mRefHand->getTran();
 
 	std::list<GraspPlanningState*>::iterator it;
@@ -304,7 +305,7 @@ OnLinePlanner::updateSolutionList()
 		delete mBestList.back();
 		mBestList.pop_back();
 	}
-  mListAttributeMutex.unlock();
+  
 }
 
 void 

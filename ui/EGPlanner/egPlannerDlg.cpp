@@ -790,9 +790,9 @@ void EigenGraspPlannerDlg::plannerUpdate()
 
 void EigenGraspPlannerDlg::updateResults(bool render, bool execute)
 {
-  mPlanner->mListAttributeMutex.lock();
+  {
   assert(mPlanner);
-  assert(viewWindow);
+  assert(viewWindow);  
   if (execute) assert( mPlanner->getType() == PLANNER_ONLINE);
 
   QString nStr;
@@ -859,14 +859,24 @@ void EigenGraspPlannerDlg::updateResults(bool render, bool execute)
   }
   if(d!=0)
     {
+      bool unlock = false;
+      if (!mPlanner->mListAttributeMutex.locked())
+      {
+        mPlanner->mListAttributeMutex.lock();
+        unlock = true;
+      }
       for(int mDisplayStateNum = 0; mDisplayStateNum < d; ++mDisplayStateNum){
 	//  std::cout << "Resizing View\n";
 	    viewWindow->addView(*const_cast<GraspPlanningState*>(mPlanner->getGrasp((mDisplayState + mDisplayStateNum)%10)), mDisplayStateNum);
 	// viewWindow->getViewWindow()->setFocus();
 	// viewWindow->getViewWindow()->update();      
       }
+      if (unlock)
+        mPlanner->mListAttributeMutex.unlock();
     }
-  mPlanner->mListAttributeMutex.unlock();
+  }//end lock scope
+
+  graspItGUI->getIVmgr()->emitAnalyzeNextGrasp();
   //viewWindow->setCurrentView(mDisplayState);
 }
 
@@ -1106,7 +1116,7 @@ void EigenGraspPlannerDlg::initializeHandviewWindow()
 	//Open view window
 	if(viewWindow)
 	  {       
-
+      viewWindow->clearViews();
 	    viewWindow->initViews(mHand);
 	  }             
 }
@@ -1148,7 +1158,7 @@ void EigenGraspPlannerDlg::loadGraspsToHandviewWindow()
       mPlanner->addSolution(s);
   }
   if (numGrasps){
-    graspItGUI->getIVmgr()->emitAnalyzeGrasp(mPlanner->getGrasp(0));        
+    graspItGUI->getIVmgr()->emitAnalyzeNextGrasp();        
     std::cout<< "emitted analyze grasp\n";
   }
   hs.execute(mHand);
@@ -1553,10 +1563,8 @@ void EigenGraspPlannerDlg::plannerTimedUpdate()
       dynamic_cast<OnLinePlanner *>(mPlanner)->updateSolutionList();
       updateResults(true, false);
     }
-    QTimer::singleShot(300, this, SLOT(plannerTimedUpdate()));
-    std::cout << "timed updated \n";
   }
-  
+  QTimer::singleShot(1000, this, SLOT(plannerTimedUpdate()));
 }
 
 

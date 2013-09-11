@@ -131,7 +131,7 @@ private:
 
   bool setCameraOrigin();
   void drawCircle();
-  void analyzeNextGrasp();
+  
   
 
 
@@ -147,7 +147,7 @@ private slots:
   void analyzeGrasp(const GraspPlanningState * gps);
 /*! Deletes this instance of ClientSocket */ 
   void connectionClosed() { delete this;}
-  
+  void analyzeNextGrasp();
 };
 
 //! TCP server that listens for connections and spawns new ClientSockets 
