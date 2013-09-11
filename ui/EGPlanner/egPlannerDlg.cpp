@@ -1558,7 +1558,7 @@ void EigenGraspPlannerDlg::plannerTimedUpdate()
 {
   if(mPlanner && viewWindow)
   {
-    if(graspItGUI->getIVmgr()->bciPlanningState == FINAL_REVIEW_PHASE  || graspItGUI->getIVmgr()->bciPlanningState == INITIAL_REVIEW_PHASE)
+    if(graspItGUI->getIVmgr()->bciPlanningState == INITIAL_REVIEW_PHASE)
     {
       dynamic_cast<OnLinePlanner *>(mPlanner)->updateSolutionList();
       updateResults(true, false);
