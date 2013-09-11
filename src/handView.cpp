@@ -156,12 +156,12 @@ HandView::update(HandObjectState & s, Hand & cloneHand)
   {
     viewViewer->setBackgroundColor(SbColor(.8,1,.8));
   }
-  else if(testResult < 0.0)
+  else if(testResult <= -1.0)
   {
     viewViewer->setBackgroundColor(SbColor(1,0.8,0.8));
   }
 
-  if(testResult == 0.0){
+  if(testResult <= 0.0 && testResult >-1.0){
     viewViewer->setBackgroundColor(SbColor(1,1.0,1.0));
   }
   if(stateID_ != stateID)
@@ -230,7 +230,8 @@ HandView::getViewWindow()
 
 //HandViewWindow:
 //Set the HandViewWindow which contains he views themselves
-HandViewWindow::HandViewWindow(QWidget * parent, Hand * h, const QRect & geom, SoNode * IVRoot):currentPreview(-1), maxViewSize(3), cloneHand(new Hand(h->getWorld(), "newHand")), geom_(geom), grid(NULL)
+HandViewWindow::HandViewWindow(QWidget * parent, Hand * h, const QRect & geom, SoNode * IVRoot, QWidget * stageFrame):currentPreview(-1),
+maxViewSize(3), cloneHand(new Hand(h->getWorld(), "newHand")), geom_(geom), grid(NULL), stageFrame_(stageFrame)
 {
   
   
@@ -240,8 +241,9 @@ HandViewWindow::HandViewWindow(QWidget * parent, Hand * h, const QRect & geom, S
   hbox = new QHBoxLayout(handViewWindow);
   
     handViewWindow->show();
-    viewHolder->setGeometry(0,0,2*geom_.width()/3,geom_.height());
-  viewHolder->setMinimumSize(2*geom_.width()/3,geom_.height());
+    viewHolder->setGeometry(0,0,2*geom_.width()/3,2*geom_.height()/3);
+  viewHolder->setMinimumSize(2*geom_.width()/3,2*geom_.height()/3);
+  viewHolder->setMaximumSize(2*geom_.width()/3,2*geom_.height()/3);
   viewHolder->setFrameStyle(QFrame::Box | QFrame::Raised);
  viewHolder->setLineWidth(2);
   if(IVRoot)
@@ -251,6 +253,7 @@ HandViewWindow::HandViewWindow(QWidget * parent, Hand * h, const QRect & geom, S
       vbox1 = new QVBoxLayout();
       hbox->addLayout(vbox1);
       vbox1->addWidget(viewHolder);
+      vbox1->addWidget(stageFrame);
       //render->setSceneGraph(IVRoot);
       SoSeparator * testRoot = new SoSeparator;
       //SoCone * testCone = new SoCone;
@@ -277,8 +280,11 @@ HandViewWindow::HandViewWindow(QWidget * parent, Hand * h, const QRect & geom, S
       render->show();
     }
 	vbox2 = new QVBoxLayout();
+  vbox2->setGeometry(QRect(0,0,geom_.width()/3,geom_.height()));
+  vbox2->setSizeConstraint(QLayout::SetMinimumSize);
   hbox->addLayout(vbox2);
-  vbox2->setGeometry(geom_);
+  
+ // vbox2->addWidget(new QWidget());
   //handViewWindow->setWindowFlags(Qt::WindowStaysOnTopHint);
   //handViewWindow->resize(QSize(900,100));
    //handViewFrame->setGeometry(geom_);

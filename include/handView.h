@@ -179,7 +179,7 @@ class HandViewWindow{
   //! The container for the layout for the preview (created so that we
   //   can use more than one preview window if so desired with different graphics applied)
   QGridLayout * previewGrid;
-
+  QWidget * stageFrame_;
   //! MaxViewSize - protect against over access on number of loaded thumbnail views
   unsigned int maxViewSize;
 
@@ -195,8 +195,8 @@ public:
   //! the window containing the thumbnail views
   QFrame * handViewWindow;
   QFrame * viewHolder;
-  //! Constructor
-  HandViewWindow(QWidget * parent, Hand * h, const QRect & geom, SoNode * IVRoot = NULL);
+  //! ConstructorNUL
+  HandViewWindow(QWidget * parent, Hand * h, const QRect & geom, SoNode * IVRoot = NULL, QWidget * stageFrame = NULL);
   void initViews(Hand * h);
   ~HandViewWindow(){
     for (int i = 0; i < views.size(); ++i)

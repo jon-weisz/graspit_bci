@@ -543,16 +543,16 @@ void EigenGraspPlannerDlg::setMembers( Hand *h, GraspableBody *b )
     geom = QRect(1280.0,0,1280,1024);
   else
     geom = QRect(0.0,0,1280,1024);
-
-  viewWindow = new HandViewWindow(parentWidget(), mHand, geom,graspItGUI->getIVmgr()->getViewer()->getSceneGraph());
-
+  bciStageFrame = new BciStageFrame();  
+  viewWindow = new HandViewWindow(parentWidget(), mHand, geom,graspItGUI->getIVmgr()->getViewer()->getSceneGraph(), bciStageFrame);
+  graspItGUI->getMainWindow()->mWindow->resize(10,10);
   viewWindow->getViewWindow()->setActiveWindow();
 
-  bciStageFrame = new BciStageFrame();  
+  
   bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, INITIALIZATION_PHASE);
   
   
-  bciStageFrame->move(geom.x() + geom.width()/2 - bciStageFrame->width()/2, 0);
+  //bciStageFrame->move(geom.x() + geom.width()/2 - bciStageFrame->width()/2, 0);
  
 
   QTimer::singleShot(100, this, SLOT(plannerTimedUpdate()));
