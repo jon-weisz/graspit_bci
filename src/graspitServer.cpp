@@ -482,9 +482,9 @@ void ClientSocket::drawCircle()
   QString circleName = *strPtr;
   strPtr++;
   bool ok;
-  double x = 2*strPtr->toDouble(&ok) - 1;
+  double x = .9*(2*strPtr->toDouble(&ok) - 1);
   strPtr++;
-  double y = 2*strPtr->toDouble(&ok) - 1;
+  double y = .9*(2*strPtr->toDouble(&ok) - 1);
   strPtr++;
   double radius = strPtr->toDouble(&ok);
   strPtr++;
