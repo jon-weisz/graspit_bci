@@ -226,7 +226,6 @@ HandView::getViewWindow()
   return viewWin;
 }
 
-#include <Inventor/nodes/SoCone.h>
 
 //HandViewWindow:
 //Set the HandViewWindow which contains he views themselves
