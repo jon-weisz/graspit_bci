@@ -76,7 +76,7 @@ OnLinePlanner::OnLinePlanner(Hand *h) : SimAnnPlanner(h)
 	//so we can distinguish between the two clones
 	mGraspTester->getHand()->setName( mGraspTester->getHand()->getName() + QString(" th") );//this hand is never put in scene graph, for behind the scenes stuff?
 	mHand->setName( mHand->getName() + QString(" pl") );
-	mHand->setTransparency(0.97);//CHANGED!  made planning hand really light
+    mHand->setTransparency(0.97);//Make the planner hand barely visible just so the user can see something is going on.
 	//this class will actually be used to set the DOF's of the refHand if we are actually performing
 	//grasping tasks.
 	mInterface = new OnLineGraspInterface(mRefHand);
@@ -112,7 +112,7 @@ OnLinePlanner::createSolutionClone()
 
 	mSolutionClone = new Hand(mHand->getWorld(), "Solution clone");
 	mSolutionClone->cloneFrom(mRefHand);//CHANGED! was mHand - for some reason this makes setting transparency not tied to mHand??
-	mSolutionClone->setTransparency(0.03);//CHANGED!
+    mSolutionClone->setTransparency(0.03);//Make the clone that shows the solutions slightly transparent so we can still see the object below it.
 	mSolutionClone->showVirtualContacts(false);
 	mSolutionClone->setRenderGeometry(true);
 	//solution clone is always added to scene graph
