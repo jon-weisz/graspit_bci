@@ -2,7 +2,7 @@
 #define HANDVIEW_H_
 
 #include <Q3MainWindow>
-#include <QHboxLayout>
+#include <QHBoxLayout>
 #include <QVBoxLayout>
 //#include <QMainWindow>
 #include <QString>

@@ -92,13 +92,16 @@
 #include <Inventor/nodes/SoTranslation.h>
 #include <Inventor/nodes/SoText2.h>
 #include <Inventor/nodes/SoFile.h>
+#include <Inventor/nodes/SoSeparator.h>
 
 #include <Inventor/sensors/SoIdleSensor.h>
 #include <Inventor/sensors/SoNodeSensor.h>
 #include <Inventor/SoSceneManager.h>
-#include <Inventor/Elements/SoCacheElement.h>
+#include <Inventor/elements/SoCacheElement.h>
 #include <Inventor/nodes/SoCallback.h>
 #include <Inventor/Qt/SoQt.h>
+
+
 #include <QTimer>
 #include <QtOpenGL/QGLWidget>
 
