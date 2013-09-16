@@ -106,7 +106,7 @@ namespace bci_experiment{
     return newBody;
   }
   
-  void highlightBody(Body * b, SbColor & color)
+  void highlightBody(Body * b, SbColor color)
   {    
     b->getIVMat()->emissiveColor.setIgnored(false);
     b->getIVMat()->emissiveColor.setValue(color);
