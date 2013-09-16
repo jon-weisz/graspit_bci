@@ -285,7 +285,7 @@ OnLinePlanner::updateSolutionList()
   
   for(int i = 0; it2 != mBestList.end();)
   {
-      if ((*it2)->getAttribute("testResult") < 0)
+      if ((*it2)->getAttribute("testResult") <= 0)
       break;
     
     if(i >= SOLUTION_BUFFER_SIZE)
