@@ -268,7 +268,7 @@ maxViewSize(3), cloneHand(new Hand(h->getWorld(), "newHand")), geom_(geom), grid
       lightSep->addChild(lightDir);
       lightSep->addChild(graspItGUI->getIVmgr()->getViewer()->getHeadlight());
       SoLightModel * model = new SoLightModel;
-      model->model=SoLightModel::Model::PHONG;
+      model->model=SoLightModel::PHONG;
       testRoot->addChild(lightSep);
       testRoot->addChild(model);
       testRoot->addChild(IVRoot);
