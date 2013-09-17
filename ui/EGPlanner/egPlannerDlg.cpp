@@ -106,7 +106,7 @@ namespace bci_experiment{
     return newBody;
   }
   
-  void highlightBody(Body * b, SbColor & color)
+  void highlightBody(Body * b, SbColor color)
   {    
     b->getIVMat()->emissiveColor.setIgnored(false);
     b->getIVMat()->emissiveColor.setValue(color);
@@ -1139,8 +1139,8 @@ void EigenGraspPlannerDlg::loadGraspsToHandviewWindow()
   std::vector<db_planner::Grasp*> grasps;
   mDbMgr->GetGrasps(*modelList[modelList.size()-1], GraspitDBGrasp::getHandDBName(mHand).toStdString(), &grasps);
   HandObjectState hs(mHand);
-  hs.setPositionType(StateType::SPACE_COMPLETE);
-  hs.setPostureType(StateType::POSE_DOF);
+  hs.setPositionType(SPACE_COMPLETE);
+  hs.setPostureType(POSE_DOF);
   hs.saveCurrentHandState();
   // Load the grasps into the grasp planner list.        
   unsigned int numGrasps = std::min<unsigned int>(grasps.size(), 10);

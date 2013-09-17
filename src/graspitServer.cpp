@@ -498,9 +498,9 @@ void ClientSocket::drawCircle()
   strPtr++;
   double transparency = strPtr->toDouble(&ok);
   
-
-
-  graspItGUI->getIVmgr()->drawCircle(circleName, x, y, radius, SbColor(r,g,b), thickness, transparency);
+  SbColor circleColor(r,g,b);
+  
+  graspItGUI->getIVmgr()->drawCircle(circleName, x, y, radius, circleColor, thickness, transparency);
 }
 
 void ClientSocket::setGraspAttribute()

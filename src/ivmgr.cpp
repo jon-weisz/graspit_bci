@@ -92,13 +92,16 @@
 #include <Inventor/nodes/SoTranslation.h>
 #include <Inventor/nodes/SoText2.h>
 #include <Inventor/nodes/SoFile.h>
+#include <Inventor/nodes/SoSeparator.h>
 
 #include <Inventor/sensors/SoIdleSensor.h>
 #include <Inventor/sensors/SoNodeSensor.h>
 #include <Inventor/SoSceneManager.h>
-#include <Inventor/Elements/SoCacheElement.h>
+#include <Inventor/elements/SoCacheElement.h>
 #include <Inventor/nodes/SoCallback.h>
 #include <Inventor/Qt/SoQt.h>
+
+
 #include <QTimer>
 #include <QtOpenGL/QGLWidget>
 
@@ -317,7 +320,7 @@ IVmgr::IVmgr(QWidget *parent, const char *name, Qt::WFlags f) :
   myViewer->setBackgroundColor(SbColor(1,1,1));
   
   SoAnnotation * hudSeparator = new SoAnnotation;
-  hudSeparator->renderCaching=SoSeparator::CacheEnabled::OFF;
+  hudSeparator->renderCaching=SoSeparator::OFF;
   hudSeparator->setName("hud");
   sceneRoot->addChild(hudSeparator);
   SoOrthographicCamera * pcam = new SoOrthographicCamera;
@@ -329,7 +332,7 @@ IVmgr::IVmgr(QWidget *parent, const char *name, Qt::WFlags f) :
   std::cout << " Camera height " << pcam->height.getValue() << "\n";
   std::cout << " aspectRatio " << pcam->aspectRatio.getValue() << "\n";
   SoLightModel * hudLightModel = new SoLightModel;
-  hudLightModel->model=SoLightModel::Model::BASE_COLOR;
+  hudLightModel->model=SoLightModel::BASE_COLOR;
   hudSeparator->addChild(hudLightModel);
   SoCallback * disableZTestNode = new SoCallback();
   disableZTestNode->setCallback(disableZCulling);
@@ -2356,7 +2359,7 @@ SoSeparator *  makeCircleSep(const QString & name)
   circleSep->addChild(circTran);
   circleSep->addChild(new SoMaterial);
   SoCone * circGeom(new SoCone);
-  circGeom->removePart(SoCone::Part::BOTTOM);
+  circGeom->removePart(SoCone::BOTTOM);
   circleSep->addChild(circGeom);
   
   static_cast<SoSeparator *>(SoSeparator::getByName("hud"))->addChild(circleSep);
