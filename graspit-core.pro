@@ -97,7 +97,7 @@ HEADERS	+= include/barrett.h \
 	include/EGPlanner/listPlanner.h \
 	include/FitParabola.h \
 	include/shadow.h \
-     include/handView.h
+     	include/handView.h
 
 SOURCES	+= src/arch.cpp \
 	src/barrett.cpp \
@@ -170,7 +170,7 @@ SOURCES	+= src/arch.cpp \
 	src/EGPlanner/graspTesterThread.cpp \
 	src/EGPlanner/onLineGraspInterface.cpp \
 	src/EGPlanner/listPlanner.cpp \
-     src/handView.cpp
+ 	src/handView.cpp
 
 #--------------------------------------- Implementations of the collision interface ---------------------------------
 
