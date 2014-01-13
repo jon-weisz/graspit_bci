@@ -1369,6 +1369,14 @@ bool ClientSocket::setRobotColor()
 
 }
 
+void ClientSocket::analyzeApproachDir(GraspPlanningState * gs)
+{
+	QTextStream os(this);
+	os << "analyzeApproachDirection " << *gs << " \n";
+  os.flush();
+  delete gs;
+}
+
 bool ClientSocket::setBodyColor()
 {
     bool ok = false;
