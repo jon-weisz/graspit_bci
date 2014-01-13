@@ -15,36 +15,5 @@ qmake $libspaths ./graspit.pro
 make
 
 
-rflag= 
-while getopts 'r' OPTION
-do
-	case $OPTION in
-	r)	rflag=1
-		;;
-	?)	printf "Options: %s: [-r] " $(basename $0) >&2
-			exit 2
-			;;
-	esac
-done
-shift $(($OPTIND - 1))
-fr=
-if [ "$rflag" ]
-then 
-cd rosnode
-
-rppsource=#source /path/to/starting/ros/variable
-fr=echo $ROS_PACKAGE_PATH | grep $PWD 
-if ! [ "$ROS_PACKAGE_PATH"]
-    then echo "No ROS_PACKAGE_PATH set"; source $rppsource
-fi
-
-if ! [ "$fr" ]
-then 
-	echo "Adding PWD to ROS_PACKAGE_PATH"; source ./arm.sh;
-fi
-
-	rosmake grasp_common; rosmake grasp_planner; rosmake grasp_test;
-fi
-
 
 
