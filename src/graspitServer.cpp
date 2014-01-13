@@ -475,6 +475,10 @@ ClientSocket::readClient()
       os << "1 \n";
       os.flush();
     }
+    else if ((*strPtr) =="setRobotColor")
+    {
+      setRobotColor();
+    }
   }
 }
 
@@ -1327,20 +1331,26 @@ void ClientSocket::analyzeNextGrasp()
   
   }
 }
+   
+
 
 bool ClientSocket::setRobotColor()
 {
-
+    ++strPtr;
     bool ok = false;
     verifyInput(4);
+  
+    std::vector<Robot *> robVec;
+    readRobotIndList(robVec);
 
-    double r = convertToNumber(strPtr++, &lineStrList, ok)*1000;
+
+    double r = convertToNumber(strPtr++, &lineStrList, ok);
     if (!ok)
       return false;
-    double g = convertToNumber(strPtr++, &lineStrList, ok)*1000;
+    double g = convertToNumber(strPtr++, &lineStrList, ok);
     if (!ok)
       return false;
-    double b = convertToNumber(strPtr++, &lineStrList, ok)*1000;
+    double b = convertToNumber(strPtr++, &lineStrList, ok);
     if (!ok)
       return false;
 
@@ -1348,12 +1358,10 @@ bool ClientSocket::setRobotColor()
     SoMFColor colorField;
     colorField.setValuesPointer(3,&color);
 
-    std::vector<Robot *> robVec;
-    readRobotIndList(robVec);
-
+   
     for(unsigned int i = 0; i < robVec.size(); ++i)
     {
-        robVec[i]->setEmissiveColor(colorField);
+        robVec[i]->setEmissiveColor(color);
     }
 
     return true;
@@ -1371,22 +1379,20 @@ bool ClientSocket::setBodyColor()
     double bodyNum = convertToNumber(strPtr++, &lineStrList, ok)*1000;
     if (!ok)
       return false;
-    double r = convertToNumber(strPtr++, &lineStrList, ok)*1000;
+    double r = convertToNumber(strPtr++, &lineStrList, ok);
     if (!ok)
       return false;
-    double g = convertToNumber(strPtr++, &lineStrList, ok)*1000;
+    double g = convertToNumber(strPtr++, &lineStrList, ok);
     if (!ok)
       return false;
-    double b = convertToNumber(strPtr++, &lineStrList, ok)*1000;
+    double b = convertToNumber(strPtr++, &lineStrList, ok);
     if (!ok)
       return false;
 
     SbColor color(r,g,b);
-    SoMFColor colorField;
-    colorField.setValuesPointer(3,&color);
 
     World * world = graspItGUI->getIVmgr()->getWorld();
-    world->getBody(bodyNum)->setEmissiveColor(colorField);
+    world->getBody(bodyNum)->setEmissiveColor(color);
 
     return true;
 }
