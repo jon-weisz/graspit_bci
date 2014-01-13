@@ -616,6 +616,7 @@ void EigenGraspPlannerDlg::setVariableLayout()
   connect(graspItGUI->getIVmgr()->getWorld(), SIGNAL(next()), this, SLOT(processNext()));
   connect(graspItGUI->getIVmgr()->getWorld(), SIGNAL(targetBodyChanged(GraspableBody *)), this, SLOT(updateObject(GraspableBody *)) );
   connect(graspItGUI->getIVmgr()->getWorld(), SIGNAL(resetStateMachine()), this, SLOT(resetStateMachine()) );
+  connect(graspItGUI->getIVmgr()->getWorld(), SIGNAL(cursorPosition(double, double )), this, SLOT(cursorPosition(double,double )) );
 
 }
 
@@ -1311,6 +1312,11 @@ void EigenGraspPlannerDlg::resetStateMachine()
 
   realignHand(mHand);
   bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, INITIALIZATION_PHASE);
+}
+
+void EigenGraspPlannerDlg::cursorPosition(double x, double y)
+{
+    bciStageFrame->setBinaryCursorPosition(x,y);
 }
 
 void EigenGraspPlannerDlg::plannerInit_clicked()

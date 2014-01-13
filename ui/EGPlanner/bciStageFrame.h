@@ -3,6 +3,7 @@
 #include "ui_bciStageFrame.h"
 #include "ivmgr.h"
 
+
 class BciStageFrame : public QFrame, public Ui::UserGuideWindow 
 {
   Q_OBJECT
@@ -19,6 +20,7 @@ public:
       currentStageName->setText(currentName);
       button1ActionText->setText(button1string);
       button2ActionText->setText(button2string);
+      binaryCommandView->updateCursor(0,0);
     }
 
   void setBCIState(BciPlanningState * currentState, BciPlanningState nextState)
@@ -72,6 +74,13 @@ public:
       
     }
 
+  void setBinaryCursorPosition(double x, double y)
+  {
+      binaryCommandView->updateCursor(x,y);
+  }
+
+
+
 public slots:
   void blinkArea1()
   {    
@@ -79,22 +88,24 @@ public slots:
 
     QTimer::singleShot(100, this, SLOT(restoreArea1()));
 
-  };
+  }
+
   void blinkArea2()
   {
     CurrentStageArea_3->setBackgroundColor(QColor(255,255,255));
 
     QTimer::singleShot(100, this, SLOT(restoreArea2()));
-  };
-void restoreArea1()
-{
-  CurrentStageArea_2->setBackgroundColor(QColor(255,0,0));
-};
+  }
 
-void restoreArea2()
-{
-  CurrentStageArea_3->setBackgroundColor(QColor(0,255,0));
-};
+  void restoreArea1()
+  {
+    CurrentStageArea_2->setBackgroundColor(QColor(255,0,0));
+  }
+
+  void restoreArea2()
+  {
+    CurrentStageArea_3->setBackgroundColor(QColor(0,255,0));
+  }
 
 };
 

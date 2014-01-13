@@ -222,6 +222,9 @@ signals:
   //! Reset the current state machine
   void resetStateMachine();
 
+  //! signal to give cursor position for binary message cursor
+  void cursorPosition(double x, double y);
+
 public:	
   //! public constructor
   World(QObject *parent=0,const char *name=0, IVmgr *mgr=NULL);
@@ -480,8 +483,9 @@ public:
 
   void emitExec(){emit exec();}
   void emitNext(){emit next();}
-  void emitTargetBodyChanged(GraspableBody * b){emit targetBodyChanged(b);};
-  void emitResetStateMachine(){resetStateMachine();};
+  void emitTargetBodyChanged(GraspableBody * b){emit targetBodyChanged(b);}
+  void emitResetStateMachine(){resetStateMachine();}
+  void emitCursorPosition(double x, double y){emit cursorPosition(x,y);}
 
   //! Returns the currently active planner
   EGPlanner * getCurrentPlanner(){return currentPlanner;}

@@ -53,6 +53,7 @@ class HandViewWindow;
 
 
 
+
 /*! The EGPlannerDialog can interface to most of the types of EGPlanners, 
 	pass them any type of HandObjectState as a starting position, accept 
 	changes to the Input provided to the Planner, etc. This is the primary 
@@ -142,6 +143,7 @@ public slots:
 	void inputGloveBox_toggled( bool on);
 	void inputLoadButton_clicked();
   void resetStateMachine();
+  void cursorPosition(double x, double y);
   void processNext();
   void processExec();
   void redrawCircles();

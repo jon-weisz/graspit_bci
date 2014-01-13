@@ -463,6 +463,10 @@ ClientSocket::readClient()
       strPtr += 1;
 	    drawCircle();  
     }
+    else if ((*strPtr) == "drawCursor"){
+      strPtr += 1;
+        drawCursor();
+    }
     else if ((*strPtr) == "connectToPlanner")
     {
       connect(graspItGUI->getIVmgr(), SIGNAL( analyzeGrasp(const GraspPlanningState *) ), this, SLOT(analyzeGrasp(const GraspPlanningState*)));
@@ -503,6 +507,18 @@ void ClientSocket::drawCircle()
   graspItGUI->getIVmgr()->drawCircle(circleName, x, y, radius, circleColor, thickness, transparency);
 }
 
+void ClientSocket::drawCursor()
+{
+  bool ok;
+  double x = (strPtr->toDouble(&ok));
+  strPtr++;
+  double y = (strPtr->toDouble(&ok));
+
+
+
+  graspItGUI->getIVmgr()->getWorld()->emitCursorPosition(x,y);
+}
+
 void ClientSocket::setGraspAttribute()
 {		
   double graspIdentifier = strPtr->toDouble();
@@ -520,9 +536,7 @@ void ClientSocket::setGraspAttribute()
     if (gs->getAttribute("graspId") == graspIdentifier)
   	  {
 
-	    currentWorldPlanner()->setGraspAttribute(i, 
-			                                			   attributeString, 
-						                                    value); 
+        currentWorldPlanner()->setGraspAttribute(i,attributeString, value);
       std::cout << "SetGraspAttribute graspId " << graspIdentifier << " attreibuteString " << value << "\n";
 
     }
