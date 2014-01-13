@@ -26,7 +26,7 @@
 /*! \file 
   \brief Implements the application's TCP server.
  */
-
+#include <QDateTime>
 #include <QTextStream>
 #include <QApplication>
 #include <iostream>
@@ -465,6 +465,7 @@ ClientSocket::readClient()
     }
     else if ((*strPtr) == "connectToPlanner")
     {
+      connect(graspItGUI->getIVmgr(), SIGNAL( analyzeApproachDir(GraspPlanningState *) ), this, SLOT(analyzeApproachDir(GraspPlanningState*)));
       connect(graspItGUI->getIVmgr(), SIGNAL( analyzeGrasp(const GraspPlanningState *) ), this, SLOT(analyzeGrasp(const GraspPlanningState*)));
       connect(graspItGUI->getIVmgr(), SIGNAL( analyzeNextGrasp() ), this, SLOT(analyzeNextGrasp()));       
       connect(graspItGUI->getIVmgr(), SIGNAL( processWorldPlanner(int) ), this, SLOT( outputPlannerResults(int)));
@@ -1307,18 +1308,24 @@ void ClientSocket::analyzeNextGrasp()
   {  
   for(int i = 0; i < currentWorldPlanner()->getListSize(); ++i)
   {
-    const GraspPlanningState * gs = currentWorldPlanner()->getGrasp(i);
-    //if(gs->getAttribute("testResult") == -0.5)
-     // break;
+    const GraspPlanningState * gs = currentWorldPlanner()->getGrasp(i);    
     if(gs->getAttribute("testResult") == 0.0)
     {
-   //   currentWorldPlanner()->setGraspAttribute(i, "testResult", -0.5);
+    if(gs->getAttribute("testTime") >  QDateTime::currentDateTime().toTime_t() - 10)
+       return;
+    }
+  }
+  for(int i = 0; i < currentWorldPlanner()->getListSize(); ++i){
+    const GraspPlanningState * gs = currentWorldPlanner()->getGrasp(i);
+    if(gs->getAttribute("testResult") == 0.0)
+    {
+      currentWorldPlanner()->setGraspAttribute(i, "testTime",  QDateTime::currentDateTime().toTime_t());
       analyzeGrasp(gs);
       break;
     }
-  }	 
   }
-   
+  
+  }
 }
 
 bool ClientSocket::setRobotColor()
