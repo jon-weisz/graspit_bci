@@ -97,8 +97,8 @@ HEADERS	+= include/barrett.h \
 	include/EGPlanner/listPlanner.h \
 	include/FitParabola.h \
 	include/shadow.h \
-     include/handView.h \
-    ui/EGPlanner/binarycommandview.h
+     include/handView.h 
+    
 
 
 SOURCES	+= src/arch.cpp \
@@ -172,8 +172,8 @@ SOURCES	+= src/arch.cpp \
 	src/EGPlanner/graspTesterThread.cpp \
 	src/EGPlanner/onLineGraspInterface.cpp \
 	src/EGPlanner/listPlanner.cpp \
-     src/handView.cpp \
-    ui/EGPlanner/binarycommandview.cpp
+     src/handView.cpp 
+   
 
 
 #--------------------------------------- Implementations of the collision interface ---------------------------------
@@ -232,8 +232,8 @@ HEADERS += ui/mainWindow.h \
 	ui/Planner/plannerdlg.h \
 	ui/EGPlanner/egPlannerDlg.h \
 	ui/EGPlanner/compliantPlannerDlg.h \
-        ui/EGPlanner/bciStageFrame.h \
-        ui/EGPlanner/binarycommandView.h
+     ui/EGPlanner/bciStageFrame.h \
+     ui/EGPlanner/binarycommandView.h
 
 SOURCES += ui/mainWindow.cpp \
 	ui/archBuilderDlg.cpp \
@@ -250,7 +250,7 @@ SOURCES += ui/mainWindow.cpp \
 	ui/Planner/plannerdlg.cpp \
 	ui/EGPlanner/egPlannerDlg.cpp \
 	ui/EGPlanner/compliantPlannerDlg.cpp \
-        ui/EGPlanner/binarycommandView.cpp
+      ui/EGPlanner/binarycommandView.cpp
 
 #-------------------------------------- images and resources -------------------------------------------------------
 
