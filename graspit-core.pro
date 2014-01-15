@@ -351,3 +351,12 @@ mosek {
 	SOURCES += src/math/mosek_qp.cpp
 	HEADERS += src/math/mosek_qp.h
 }
+
+
+protobuf {
+  # add message files here
+  PROTOS = Drawable.proto
+  # add message path here
+  PROTOPATH = ./protocols
+  include(protobuf.pri) 
+}
