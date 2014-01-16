@@ -4,7 +4,7 @@
 
 #----------------------general settings--------------------
 
-QT +=  qt3support opengl
+QT +=  qt3support opengl network
 
 CONFIG += qt warn_on exceptions assistant
 
@@ -97,7 +97,8 @@ HEADERS	+= include/barrett.h \
 	include/EGPlanner/listPlanner.h \
 	include/FitParabola.h \
 	include/shadow.h \
-     include/handView.h 
+     include/handView.h \
+    include/graspitProtobufServer.h
     
 
 
@@ -172,7 +173,8 @@ SOURCES	+= src/arch.cpp \
 	src/EGPlanner/graspTesterThread.cpp \
 	src/EGPlanner/onLineGraspInterface.cpp \
 	src/EGPlanner/listPlanner.cpp \
-     src/handView.cpp 
+     src/handView.cpp \
+    src/graspitProtobufServer.cpp
    
 
 
@@ -355,4 +357,13 @@ mosek {
 	DEFINES += MOSEK_QP
 	SOURCES += src/math/mosek_qp.cpp
 	HEADERS += src/math/mosek_qp.h
+}
+
+
+protobuf {
+  # add message files here
+  PROTOS = Drawable.proto GraspitMessage.proto
+  # add message path here
+  PROTOPATH = ./protocols
+  include(protobuf.pri) 
 }

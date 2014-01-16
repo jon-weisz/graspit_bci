@@ -1,0 +1,97 @@
+message ShapeDrawable
+{
+
+    extensions 100 to max;
+    optional string name = 13 [default=""];
+    enum FillPattern 
+    {
+        DiagonalLines = 0;
+        FDiagonalLines = 1;
+        HorizontalLines = 2;
+        VerticalLines = 3;
+        CrossedLines = 4;
+        XCrossedLines = 5;
+        SolidFill = 6;
+    }
+    enum LineStyle 
+    {
+        Dashed = 0;
+        Dotted = 1;
+        SolidLine = 2;
+    }
+    enum ShapeType 
+    {
+        Circle = 0;
+        Rectangle = 1;
+    }
+
+    required int32 id = 1;
+    required string text = 2;
+
+    required float width = 3;
+    required float height = 4;
+    required float x = 5;
+    required float y = 6;
+
+    required int32 line_color_argb = 7;
+    required float line_width = 8;
+    optional LineStyle line_style = 9 [default = SolidLine];
+
+    optional FillPattern fill_pattern = 10 [default = SolidFill];
+    required int32 fill_color_argb = 11;
+    required ShapeType shape_type = 12;
+    
+}
+
+
+message TextDrawable 
+{
+  optional string name = 8 [default=""];
+  required int32 id = 1;
+  required string text = 2;
+
+  required float x = 3;
+  required float y = 4;
+
+  required int32 font_size = 5;
+  required string font_name = 6;
+  required int32 font_color_argb = 7;
+
+}
+
+message LineDrawable
+{
+  optional string name = 7 [default=""];
+  message Point 
+  {
+    required float x = 1;
+    required float y = 2 ;
+  }
+
+  enum LineStyle 
+  {
+    Dashed = 0;
+    Dotted = 1;
+    SolidLine = 2;
+  }
+
+  required int32 id = 1;
+  required string text = 2;
+
+  repeated Point point = 3;
+  
+  required int32 line_color_argb = 4;
+  required float line_width = 5;
+  optional LineStyle line_style = 6 [default = SolidLine];
+
+}
+
+message DrawableFrame
+{
+required int32 frame_number = 1;
+repeated LineDrawable lines = 2;
+repeated ShapeDrawable shapes = 3;
+repeated TextDrawable texts = 4;
+optional bool clearDrawables = 5 [default = false];
+}
+

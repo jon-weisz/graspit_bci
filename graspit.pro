@@ -47,6 +47,6 @@ win32 {
 }
 
 #------------------GraspIt! core files---------------------
-
+CONFIG += protobuf
 include(graspit-core.pro)
 
