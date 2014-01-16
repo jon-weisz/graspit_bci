@@ -13,17 +13,18 @@
 # the current directory where protoc is run. If you need to include additional
 # paths specify the PROTOPATH variable
 #
-
-VPATH += $$PROTOPATH
+PROTO_OUTPUT = gen_proto
+VPATH += $$PROTOPATH $$PROTO_OUTPUT
+PROTO_OUTPUT = gen_proto
+INCLUDEPATH += $$PROTO_OUTPUT
 LIBS += /usr/lib/libprotobuf.so
 
 
 for(p, PROTOPATH):PROTOPATHS += --proto_path=$${p}
-
 protobuf_decl.name = protobuf header
 protobuf_decl.input = PROTOS
 protobuf_decl.output = ${QMAKE_FILE_BASE}.pb.h
-protobuf_decl.commands = protoc --cpp_out="." $${PROTOPATHS} ${QMAKE_FILE_NAME}
+protobuf_decl.commands = protoc --cpp_out=$${PROTO_OUTPUT} $${PROTOPATHS} ${QMAKE_FILE_NAME}
 protobuf_decl.variable_out = GENERATED_FILES
 QMAKE_EXTRA_COMPILERS += protobuf_decl
 
