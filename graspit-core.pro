@@ -98,7 +98,8 @@ HEADERS	+= include/barrett.h \
 	include/FitParabola.h \
 	include/shadow.h \
      include/handView.h \
-    include/graspitProtobufServer.h
+    include/graspitProtobufServer.h \
+    ui/EGPlanner/binarycommandview.h
     
 
 

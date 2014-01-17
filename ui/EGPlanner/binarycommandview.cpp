@@ -1,7 +1,9 @@
 #include "binarycommandview.h"
+#include "Drawable.pb.h"
 
 BinaryCommandView::BinaryCommandView(QWidget * parent) :QWidget(parent)
 {
+    currentFrame = new DrawableFrame;
 }
 
 
@@ -37,3 +39,14 @@ void BinaryCommandView::updateCursor(double x, double y)
     cursorY = y/7.5;
     update();
 }
+
+
+QObject * shapeDrawableToQObject(ShapeDrawable & shape)
+{
+    shape.
+}
+
+ void BinaryCommandView::updateFrame(DrawableFrame & drawing)
+ {
+
+ }

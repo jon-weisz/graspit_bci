@@ -4,6 +4,7 @@
 
 #include <QPainter>
 #include<QWidget>
+class DrawableFrame;
 
 class BinaryCommandView: public QWidget
 {
@@ -12,13 +13,16 @@ public:
     BinaryCommandView(QWidget * parent);
 
     virtual void updateCursor(double, double);
+public slots:
+    virtual void updateFrame(DrawableFrame & drawing);
 
 protected:
     double cursorX;
     double cursorY;
+    DrawableFrame * currentFrame;
     void paintEvent(QPaintEvent*);
 signals:
-public slots:
+
 
 };
 
