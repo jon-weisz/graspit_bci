@@ -1,6 +1,0 @@
-import "Drawable.proto";
-
-message GraspitProtobufMessage
-{
-optional DrawableFrame drawable_frame = 1;
-}
