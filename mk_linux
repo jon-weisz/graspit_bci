@@ -12,7 +12,7 @@ libspaths="\"LIBS+=-L/usr/local/lib\""
 qmake $libspaths ./graspit.pro 
 
 
-make
+make -j4
 
 
 
