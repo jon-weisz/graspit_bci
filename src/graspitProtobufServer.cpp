@@ -2,6 +2,9 @@
 #include "Drawable.pb.h"
 #include "GraspitMessage.pb.h"
 #include "debug.h"
+#include "graspitGUI.h"
+#include "ivmgr.h"
+#include "world.h"
 
 GraspitProtobufConnection::GraspitProtobufConnection(QObject *parent, QTcpSocket *socket,
                                                      unsigned int maximum_len) :
@@ -9,7 +12,7 @@ GraspitProtobufConnection::GraspitProtobufConnection(QObject *parent, QTcpSocket
     sock(socket),
     max_len(maximum_len)
 {
-    connect(this,SLOT(parseMessage()), sock, SIGNAL(readyRead()));
+    connect(sock, SIGNAL(readyRead()),this,SLOT(parseMessage()));
     msg = new GraspitProtobufMessage;
 }
 
@@ -25,7 +28,8 @@ void GraspitProtobufConnection::parseMessage()
       DBGP("GraspitProtobufConnection::parseMessage::Failed to parse message")
       return;
   }
-
+  DrawableFrame drawableFrame = msg->drawable_frame();
+  graspItGUI->getIVmgr()->getWorld()->emitDrawableFrame(&drawableFrame);
 }
 
 bool GraspitProtobufConnection::readMessage()
@@ -37,18 +41,18 @@ bool GraspitProtobufConnection::readMessage()
 }
 
 
-GraspitProtobufServer::GraspitProtobufServer(QObject * parent, unsigned int port_num) :
+GraspitProtobufServer::GraspitProtobufServer(unsigned int port_num, QObject * parent ) :
     QTcpServer(parent)
 {
     connect(this, SIGNAL(newConnection()), this, SLOT(onConnection()));
+    this->listen(QHostAddress::Any,port_num);
 }
 
 void GraspitProtobufServer::onConnection()
 {
 
-    QTcpSocket *clientConnection = nextPendingConnection();
+    QTcpSocket *clientQTcpSocketConnection = nextPendingConnection();
 
-    GraspitProtobufConnection *newConnection = new GraspitProtobufConnection(NULL, clientConnection);
-    connect(clientConnection, SIGNAL(disconnected()),
-            newConnection, SLOT(deleteLater()));
+    GraspitProtobufConnection *newGraspitProtobufConnection = new GraspitProtobufConnection(NULL, clientQTcpSocketConnection);
+    connect(clientQTcpSocketConnection, SIGNAL(disconnected()),newGraspitProtobufConnection, SLOT(deleteLater()));
 }

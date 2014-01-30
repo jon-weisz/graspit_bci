@@ -2,6 +2,7 @@
 #define GRASPITPROTOBUFSERVER_H
 #include <QtNetwork>
 class GraspitProtobufMessage;
+class DrawableFrame;
 
 class GraspitProtobufConnection : public QObject
 {
@@ -10,6 +11,10 @@ public:
     GraspitProtobufConnection(QObject * parent, QTcpSocket * socket,
                               unsigned int maximum_len = 5000);
     ~GraspitProtobufConnection();
+
+signals:
+    void updateFrame(DrawableFrame & drawing);
+
 private:
   QTcpSocket * sock;
   unsigned int max_len;
@@ -27,7 +32,7 @@ class GraspitProtobufServer : public QTcpServer
 {
     Q_OBJECT
 public:
-    GraspitProtobufServer(QObject * parent, unsigned int port_num);
+    GraspitProtobufServer(unsigned int port_num,QObject * parent = 0);
 private slots:
     void onConnection();
 };
