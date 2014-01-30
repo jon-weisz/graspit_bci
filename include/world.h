@@ -59,6 +59,7 @@ class SoSeparator;
 class SoIdleSensor;
 class SoSensor;
 class EGPlanner;
+class DrawableFrame;
 //! The simulation world holds the world elements and handles their static and dynamic interactions
 /*! A world object keeps track of all of the world elements (bodies and robots)
     contained within it.  It allows collisions to be turned on or off,
@@ -224,6 +225,8 @@ signals:
 
   //! signal to give cursor position for binary message cursor
   void cursorPosition(double x, double y);
+
+  void drawShapes(DrawableFrame *drawableFrame);
 
 public:	
   //! public constructor
@@ -486,6 +489,7 @@ public:
   void emitTargetBodyChanged(GraspableBody * b){emit targetBodyChanged(b);}
   void emitResetStateMachine(){resetStateMachine();}
   void emitCursorPosition(double x, double y){emit cursorPosition(x,y);}
+  void emitDrawableFrame(DrawableFrame *drawableFrame){emit drawShapes(drawableFrame);}
 
   //! Returns the currently active planner
   EGPlanner * getCurrentPlanner(){return currentPlanner;}

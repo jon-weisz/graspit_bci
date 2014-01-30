@@ -48,6 +48,7 @@
 #include <graspitApp.h>
 #include "graspitGUI.h"
 #include "graspitServer.h"
+#include "graspitProtobufServer.h"
 #include "mainWindow.h"
 
 #ifdef Q_WS_WIN
@@ -79,6 +80,8 @@ int main(int argc, char **argv)
   //On some machines, the Q3Socket segfaults at exit, so this is commented out by
   //default
   GraspItServer server(4765);
+  unsigned int portNumber = 4766;
+  GraspitProtobufServer protobufServer(portNumber);
  
   app.setMainWidget(gui.getMainWindow()->mWindow);
   QObject::connect(qApp, SIGNAL(lastWindowClosed()), qApp, SLOT(quit()));
