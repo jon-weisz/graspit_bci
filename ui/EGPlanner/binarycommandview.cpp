@@ -133,8 +133,9 @@ void BinaryCommandView::drawShape(const ShapeDrawable & shape, QPainter & painte
 
         painter.setFont(font);
         painter.drawText(origin,QString(shape.text().c_str()));
+	break;
     }
-        break;
+       
     }
 }
 
