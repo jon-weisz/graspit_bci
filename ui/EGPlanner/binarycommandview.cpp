@@ -4,10 +4,14 @@
 #include <functional>
 #include <QBrush>
 #include <QPen>
+#include <graspitGUI.h>
+#include <ivmgr.h>
+#include "world.h"
 
 BinaryCommandView::BinaryCommandView(QWidget * parent) :QWidget(parent)
 {
     currentFrame = new DrawableFrame;
+    connect(graspItGUI->getIVmgr()->getWorld() , SIGNAL(drawShapes(DrawableFrame*)),this,SLOT(updateFrame(DrawableFrame*)));
 }
 
 
