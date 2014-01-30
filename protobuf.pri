@@ -26,6 +26,8 @@ protobuf_decl.commands = $(MKDIR) $$PROTO_OUTPUT; protoc --cpp_out=$${PROTO_OUTP
 protobuf_decl.variable_out = GENERATED_FILES
 QMAKE_EXTRA_COMPILERS += protobuf_decl
 
+HEADERS += $$GENERATED_FILES
+
 protobuf_impl.name = protobuf implementation
 protobuf_impl.input = PROTOS
 protobuf_impl.output = $${PROTO_OUTPUT}/${QMAKE_FILE_BASE}.pb.cc
@@ -33,3 +35,5 @@ protobuf_impl.depends = ${QMAKE_FILE_BASE}.pb.h
 protobuf_impl.commands = $$escape_expand(\\n)
 protobuf_impl.variable_out = GENERATED_SOURCES
 QMAKE_EXTRA_COMPILERS += protobuf_impl
+
+SOURCES += $$GENERATED_SOURCES
