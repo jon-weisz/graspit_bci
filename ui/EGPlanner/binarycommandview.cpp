@@ -179,16 +179,16 @@ void BinaryCommandView::rebuildDrawableObjectMap()
 
 
 
- void BinaryCommandView::updateFrame(DrawableFrame & drawing)
+ void BinaryCommandView::updateFrame(DrawableFrame * drawing)
  {
-     if(drawing.cleardrawables())
+     if(drawing->cleardrawables())
      {
-         currentFrame->CopyFrom(drawing);
+         currentFrame->CopyFrom(*drawing);
          rebuildDrawableObjectMap();
      }
      else
      {
-       std::for_each(drawing.mutable_shapes()->begin(), drawing.mutable_shapes()->end(),
+       std::for_each(drawing->mutable_shapes()->begin(), drawing->mutable_shapes()->end(),
                      std::bind(&BinaryCommandView::updateDrawableObjects, this, std::placeholders::_1));
      }
  }

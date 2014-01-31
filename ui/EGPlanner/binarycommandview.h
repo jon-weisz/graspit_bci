@@ -17,7 +17,7 @@ public:
 
     virtual void updateCursor(double, double);
 public slots:
-    virtual void updateFrame(DrawableFrame & drawing);
+    virtual void updateFrame(DrawableFrame * drawing);
 
 protected:
     void updateDrawableObjects(ShapeDrawable & shape);
