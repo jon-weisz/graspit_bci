@@ -16,9 +16,9 @@ UI_DIR = ui
 
 # ---------------------- Graspit source code ----------------------------------------------
 
-INCLUDEPATH += src src/Collision include include/math include/Planner include/EGPlanner ui ui/Planner ui/EGPlanner
+INCLUDEPATH += src src/Collision include include/math include/Planner include/EGPlanner ui ui/Planner ui/EGPlanner include/Servers
 
-DEPENDPATH += src src/Collision include include/math include/Planner include/EGPlanner ui ui/Planner ui/EGPlanner
+DEPENDPATH += src src/Collision include include/math include/Planner include/EGPlanner ui ui/Planner ui/EGPlanner include/Servers
 
 HEADERS	+= include/barrett.h \
 	include/body.h \
@@ -65,7 +65,6 @@ HEADERS	+= include/barrett.h \
 	include/worldElement.h \
 	include/world.h \
 	include/graspitGUI.h \
-	include/graspitServer.h \
 	include/graspitApp.h \
 	include/dynJoint.h \
 	include/arch.h \
@@ -97,9 +96,10 @@ HEADERS	+= include/barrett.h \
 	include/EGPlanner/listPlanner.h \
 	include/FitParabola.h \
 	include/shadow.h \
-     include/handView.h \
-    include/graspitProtobufServer.h \
-    ui/EGPlanner/binarycommandview.h
+        include/handView.h \
+        include/Servers/graspitServer.h \
+        include/Servers/graspitProtobufServer.h \
+        ui/EGPlanner/binarycommandview.h
     
 
 
@@ -116,7 +116,6 @@ SOURCES	+= src/arch.cpp \
 	src/gloveInterface.cpp \
 	src/grasp.cpp \
 	src/graspitGUI.cpp \
-	src/graspitServer.cpp \
 	src/graspitApp.cpp \
 	src/graspRecord.cpp \
 	src/gws.cpp \
@@ -174,8 +173,10 @@ SOURCES	+= src/arch.cpp \
 	src/EGPlanner/graspTesterThread.cpp \
 	src/EGPlanner/onLineGraspInterface.cpp \
 	src/EGPlanner/listPlanner.cpp \
-     src/handView.cpp \
-    src/graspitProtobufServer.cpp
+        src/handView.cpp \
+        src/Servers/graspitServer.cpp \
+        src/Servers/graspitProtobufServer.cpp
+
    
 
 
