@@ -23,7 +23,7 @@ protected:
     void updateDrawableObjects(ShapeDrawable & shape);
     void rebuildDrawableObjectMap();
     void addToObjectMap(ShapeDrawable & shape);
-    void drawShape(const ShapeDrawable & shape, QPainter & painter);
+    void drawShape(const ShapeDrawable & shape);
     double cursorX;
     double cursorY;
     DrawableFrame * currentFrame;

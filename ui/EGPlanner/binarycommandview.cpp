@@ -18,27 +18,9 @@ BinaryCommandView::BinaryCommandView(QWidget * parent) :QWidget(parent)
 void BinaryCommandView::paintEvent(QPaintEvent *ev)
 {
 
-   QPainter painter(this);
-   painter.setBrush(Qt::blue);
-   float vwidth = width();//painter.viewport().width();
-   float vheight= height();//painter.viewport().height();
-   double cursorRadius = .3/7.5*vwidth;
-
-   painter.drawEllipse(cursorX*vwidth + cursorRadius, vheight - (cursorY*vheight+cursorRadius), cursorRadius, cursorRadius);
-
-   double rectWidth = 1.0/7.5*width();
-   double rect1XOffset = 2.5/7.5*width();
-   double rect2XOffset = 4.5/7.5*width();
-   double rect3XOffset = 6.5/7.5*width();
-
-   painter.drawRect(QRect(rect1XOffset,0,rectWidth,height()));
-   painter.drawRect(QRect(rect2XOffset,0,rectWidth,height()));
-   painter.drawRect(QRect(rect3XOffset,0,rectWidth,height()));
-
-   QPointF boundaryPoint1 = QPointF(0,height() - 2/7.5*height());
-   QPointF boundaryPoint2 = QPointF(width(),height() - 2/7.5*height());
-
-   painter.drawLine(boundaryPoint1, boundaryPoint2);
+    std::for_each(currentFrame->mutable_shapes()->begin(),
+                  currentFrame->mutable_shapes()->end(),
+                  std::bind(&BinaryCommandView::drawShape, this, std::placeholders::_1));
 }
 
 void BinaryCommandView::updateCursor(double x, double y)
@@ -101,8 +83,10 @@ Qt::PenStyle shapeStyleToPenStyle(const ShapeDrawable & shape)
 }
 
 
-void BinaryCommandView::drawShape(const ShapeDrawable & shape, QPainter & painter)
+//void BinaryCommandView::drawShape(const ShapeDrawable & shape, QPainter & painter)
+void BinaryCommandView::drawShape(const ShapeDrawable & shape)
 {
+    QPainter painter(this);
     Qt::BrushStyle fillStyle(shapeStyleToBrushStyle(shape));
     Qt::PenStyle outlineStyle(shapeStyleToPenStyle(shape));
     painter.setBrush(fillStyle);
