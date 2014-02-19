@@ -99,7 +99,9 @@ HEADERS	+= include/barrett.h \
 	include/shadow.h \
      include/handView.h \
     include/graspitProtobufServer.h \
-    ui/EGPlanner/binarycommandview.h
+    ui/EGPlanner/binarycommandview.h \
+    include/BCI/uiTools.h \
+    src/BCI/uiTools.cpp
     
 
 
