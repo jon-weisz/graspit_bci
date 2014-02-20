@@ -50,3 +50,4 @@ win32 {
 CONFIG += protobuf
 include(graspit-core.pro)
 
+

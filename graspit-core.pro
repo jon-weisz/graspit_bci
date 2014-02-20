@@ -99,8 +99,9 @@ HEADERS	+= include/barrett.h \
         include/handView.h \
         include/Servers/graspitServer.h \
         include/Servers/graspitProtobufServer.h \
-    	ui/EGPlanner/binarycommandview.h \
-    	include/BCI/uiTools.h \
+        include/BCI/uiTools.h \
+    ui/BCI/binarycommandview.h
+
     	
 
     
@@ -179,7 +180,9 @@ SOURCES	+= src/arch.cpp \
         src/handView.cpp \
         src/Servers/graspitServer.cpp \
         src/Servers/graspitProtobufServer.cpp \
-	src/BCI/uiTools.cpp
+        src/BCI/uiTools.cpp \
+    ui/BCI/binarycommandview.cpp
+
 
    
 
@@ -223,7 +226,9 @@ FORMS += ui/mainWindow.ui \
 	ui/Planner/plannerdlg.ui \
 	ui/EGPlanner/egPlannerDlg.ui \
 	ui/EGPlanner/compliantPlannerDlg.ui \
-	ui/EGPlanner/bciStageFrame.ui
+        ui/BCI/bciStageFrame.ui \
+        ui/BCI/bciControlWindow.ui \
+    ui/BCI/bciControlButtons.ui
 
 HEADERS += ui/mainWindow.h \
 	ui/archBuilderDlg.h \
@@ -240,8 +245,10 @@ HEADERS += ui/mainWindow.h \
 	ui/Planner/plannerdlg.h \
 	ui/EGPlanner/egPlannerDlg.h \
 	ui/EGPlanner/compliantPlannerDlg.h \
-     ui/EGPlanner/bciStageFrame.h \
-     ui/EGPlanner/binarycommandView.h
+        ui/BCI/bciStageFrame.h \
+        ui/BCI/binarycommandView.h \
+        ui/BCI/bciControlWindow.h
+
 
 SOURCES += ui/mainWindow.cpp \
 	ui/archBuilderDlg.cpp \
@@ -258,7 +265,8 @@ SOURCES += ui/mainWindow.cpp \
 	ui/Planner/plannerdlg.cpp \
 	ui/EGPlanner/egPlannerDlg.cpp \
 	ui/EGPlanner/compliantPlannerDlg.cpp \
-      ui/EGPlanner/binarycommandView.cpp
+        ui/BCI/binarycommandView.cpp \
+        ui/BCI/bciControlWindow.cpp
 
 #-------------------------------------- images and resources -------------------------------------------------------
 
