@@ -1,6 +1,15 @@
 #ifndef UITOOLS_H
 #define UITOOLS_H
+#include <Inventor/SbColor.h>
+#include <QString>
+#include <vector>
 
+class World;
+class Body;
+class Hand;
+class transf;
+class GraspableBody;
+class GraspPlanningState;
 
 namespace bci_experiment{
 
@@ -49,7 +58,7 @@ bool highlightAll();
 void moveBody(Body * b, const transf & relTran);
 
 //!Move all graspable bodies by some relative transform
-void moveAllBodies(const transf & relTran)
+void moveAllBodies(const transf & relTran);
 
 //! Add an experiment table to world or get a pointer to an existing one
 Body * getOrAddExperimentTable();

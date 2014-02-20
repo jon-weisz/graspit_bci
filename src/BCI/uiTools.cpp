@@ -1,4 +1,12 @@
 #include "BCI/uiTools.h"
+#include "world.h"
+#include "body.h"
+#include "ivmgr.h"
+#include "graspitGUI.h"
+#include <Inventor/nodes/SoMaterial.h>
+#include "robot.h"
+#include <Inventor/nodes/SoCamera.h>
+#include <searchState.h>
 
 namespace bci_experiment{
 

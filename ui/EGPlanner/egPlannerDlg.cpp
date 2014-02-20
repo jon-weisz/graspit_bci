@@ -63,7 +63,8 @@
 //#define GRASPITDBG
 #include "debug.h"
 
-#include "bciStageFrame.h"
+#include "BCI/uiTools.h"
+#include "BCI/bciStageFrame.h"
 #include <fstream>
 
 #define X_WINDOW_OFFSET 0

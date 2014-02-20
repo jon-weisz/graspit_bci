@@ -33,7 +33,7 @@
 #include <vector>
 #include <QtGui/QShortcut>
 #include "DBase/DBPlanner/sql_database_manager.h"
-#include "EGPlanner/bciStageFrame.h"
+#include "BCI/bciStageFrame.h"
 
 
 class QGridLayout;
