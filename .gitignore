@@ -77,3 +77,6 @@ qhull/rbox
 
 #image collection file that is rebuilt by qmake each time
 ui/qmake_image_collection.cpp
+
+bin/
+graspit.pro.user
