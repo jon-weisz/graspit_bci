@@ -99,7 +99,10 @@ HEADERS	+= include/barrett.h \
         include/handView.h \
         include/Servers/graspitServer.h \
         include/Servers/graspitProtobufServer.h \
-        ui/EGPlanner/binarycommandview.h
+    	ui/EGPlanner/binarycommandview.h \
+    	include/BCI/uiTools.h \
+    	
+
     
 
 
@@ -175,7 +178,8 @@ SOURCES	+= src/arch.cpp \
 	src/EGPlanner/listPlanner.cpp \
         src/handView.cpp \
         src/Servers/graspitServer.cpp \
-        src/Servers/graspitProtobufServer.cpp
+        src/Servers/graspitProtobufServer.cpp \
+	src/BCI/uiTools.cpp
 
    
 
