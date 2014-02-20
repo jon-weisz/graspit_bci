@@ -99,8 +99,7 @@ HEADERS	+= include/barrett.h \
         include/handView.h \
         include/Servers/graspitServer.h \
         include/Servers/graspitProtobufServer.h \
-        include/BCI/uiTools.h \
-    ui/BCI/binarycommandview.h
+        include/BCI/uiTools.h
 
     	
 
@@ -180,8 +179,7 @@ SOURCES	+= src/arch.cpp \
         src/handView.cpp \
         src/Servers/graspitServer.cpp \
         src/Servers/graspitProtobufServer.cpp \
-        src/BCI/uiTools.cpp \
-    ui/BCI/binarycommandview.cpp
+        src/BCI/uiTools.cpp
 
 
    
