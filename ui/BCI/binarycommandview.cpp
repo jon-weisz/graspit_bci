@@ -15,7 +15,7 @@ BinaryCommandView::BinaryCommandView(QWidget * parent) :QWidget(parent)
 }
 
 
-void BinaryCommandView::paintEvent(QPaintEvent *ev)
+void BinaryCommandView::paintEvent(QPaintEvent *)
 {
 
     std::for_each(currentFrame->mutable_shapes()->begin(),
