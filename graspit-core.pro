@@ -99,7 +99,8 @@ HEADERS	+= include/barrett.h \
         include/handView.h \
         include/Servers/graspitServer.h \
         include/Servers/graspitProtobufServer.h \
-        include/BCI/uiTools.h
+        include/BCI/uiTools.h \
+    include/BCI/onlinePlannerController.h
 
     	
 
@@ -179,7 +180,8 @@ SOURCES	+= src/arch.cpp \
         src/handView.cpp \
         src/Servers/graspitServer.cpp \
         src/Servers/graspitProtobufServer.cpp \
-        src/BCI/uiTools.cpp
+        src/BCI/uiTools.cpp \
+        src/BCI/onlinePlannerController.cpp
 
 
    
