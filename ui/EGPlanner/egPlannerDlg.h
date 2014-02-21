@@ -44,7 +44,7 @@ class QLabel;
 class QHBoxLayout;
 class QSlider;
 class QLabel;
-;
+
 class GraspPlanningState;
 class GraspableBody;
 class Hand;
@@ -147,8 +147,6 @@ public slots:
   void processNext();
   void processExec();
   void redrawCircles();
-  void plannerTimedUpdate();
-  void analyzeApproachDir();
 };
 
 #endif

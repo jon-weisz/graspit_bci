@@ -1250,27 +1250,6 @@ void EigenGraspPlannerDlg::inputLoadButton_clicked()
   updateInputLayout();
 }
 
-void EigenGraspPlannerDlg::analyzeApproachDir()
-{
-  GraspPlanningState * gs = new GraspPlanningState(mHand);
-  gs->setPostureType(POSE_DOF, false);
-  gs->saveCurrentHandState();
-  graspItGUI->getIVmgr()->emitAnalyzeApproachDir(gs);
-}
-
-void EigenGraspPlannerDlg::plannerTimedUpdate()
-{
-  analyzeApproachDir();
-  if(mPlanner && viewWindow)
-  {
-    if(graspItGUI->getIVmgr()->bciPlanningState == INITIAL_REVIEW_PHASE)
-    {
-      dynamic_cast<OnLinePlanner *>(mPlanner)->updateSolutionList();
-      updateResults(true, false);
-    }
-  }
-  QTimer::singleShot(1000, this, SLOT(plannerTimedUpdate()));
-}
 
 
 
