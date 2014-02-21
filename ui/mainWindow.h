@@ -156,6 +156,8 @@ public slots:
 	void TendonForceInput_valueChanged( int f);
 	void tendonNamesBoxActivated( int i);
 	void tendonVisibleCheckBox_toggled( bool vis);
+    //--------------
+    void actionBCIView();
 };
 
 #endif

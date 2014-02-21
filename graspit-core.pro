@@ -96,11 +96,11 @@ HEADERS	+= include/barrett.h \
 	include/EGPlanner/listPlanner.h \
 	include/FitParabola.h \
 	include/shadow.h \
-        include/handView.h \
         include/Servers/graspitServer.h \
         include/Servers/graspitProtobufServer.h \
-        include/BCI/uiTools.h
-
+        include/BCI/uiTools.h \
+    ui/BCI/state.h \
+    ui/BCI/BCIStateMachine.h
     	
 
     
@@ -176,10 +176,12 @@ SOURCES	+= src/arch.cpp \
 	src/EGPlanner/graspTesterThread.cpp \
 	src/EGPlanner/onLineGraspInterface.cpp \
 	src/EGPlanner/listPlanner.cpp \
-        src/handView.cpp \
         src/Servers/graspitServer.cpp \
         src/Servers/graspitProtobufServer.cpp \
-        src/BCI/uiTools.cpp
+        src/BCI/uiTools.cpp \
+    ui/BCI/state.cpp \
+    ui/BCI/BCIStateMachine.cpp
+
 
 
    
@@ -225,8 +227,7 @@ FORMS += ui/mainWindow.ui \
 	ui/EGPlanner/egPlannerDlg.ui \
 	ui/EGPlanner/compliantPlannerDlg.ui \
         ui/BCI/bciStageFrame.ui \
-        ui/BCI/bciControlWindow.ui \
-    ui/BCI/bciControlButtons.ui
+        ui/BCI/BCIControlWindowBase.ui
 
 HEADERS += ui/mainWindow.h \
 	ui/archBuilderDlg.h \
@@ -245,7 +246,8 @@ HEADERS += ui/mainWindow.h \
 	ui/EGPlanner/compliantPlannerDlg.h \
         ui/BCI/bciStageFrame.h \
         ui/BCI/binarycommandView.h \
-        ui/BCI/bciControlWindow.h
+        ui/BCI/bciControlWindow.h \
+        ui/BCI/handView.h
 
 
 SOURCES += ui/mainWindow.cpp \
@@ -264,7 +266,8 @@ SOURCES += ui/mainWindow.cpp \
 	ui/EGPlanner/egPlannerDlg.cpp \
 	ui/EGPlanner/compliantPlannerDlg.cpp \
         ui/BCI/binarycommandView.cpp \
-        ui/BCI/bciControlWindow.cpp
+        ui/BCI/bciControlWindow.cpp \
+        ui/BCI/handView.cpp
 
 #-------------------------------------- images and resources -------------------------------------------------------
 

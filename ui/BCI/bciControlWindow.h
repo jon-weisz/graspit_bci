@@ -1,10 +1,22 @@
 #ifndef BCICONTROLWINDOW_H
 #define BCICONTROLWINDOW_H
 
-class BCIControlWindow
+#include <QDialog>
+#include "ui_BCIControlWindowBase.h"
+
+class BCIControlWindow: public QDialog, public Ui::BCIControlWindowBase
 {
 public:
-    BCIControlWindow();
+
+    BCIControlWindow(QWidget *parent = 0)
+          :QDialog(parent)
+    {
+        setupUi(this);
+    }
+
 };
+
+
+
 
 #endif // BCICONTROLWINDOW_H

@@ -80,7 +80,11 @@
 #include "sensorInputDlg.h"
 #endif
 #include <QtCore/QVariant>
-
+#include "BCI/bciControlWindow.h"
+#include "BCI/BCIStateMachine.h"
+#include <QState>
+#include <QStateMachine>
+#include "BCI/state.h"
 //------------------------------------ CONSTRUCTOR AND DESTRUCTOR -------------------------------------
 
 MainWindow::MainWindow(QWidget *parent) 
@@ -160,6 +164,7 @@ MainWindow::MainWindow(QWidget *parent)
 	QObject::connect(mUI->TendonForceInput, SIGNAL(valueChanged(int)), this, SLOT(TendonForceInput_valueChanged(int)));
 	QObject::connect(mUI->tendonNamesBox, SIGNAL(activated(int)), this, SLOT(tendonNamesBoxActivated(int)));
 	QObject::connect(mUI->tendonVisibleCheckBox, SIGNAL(toggled(bool)), this, SLOT(tendonVisibleCheckBox_toggled(bool)));  
+    QObject::connect(mUI->actionBCIView, SIGNAL(triggered()), this, SLOT(actionBCIView()));
 }
 
 /*!
@@ -1294,4 +1299,18 @@ void MainWindow::updateTendonNamesBox()
 	mUI->tendonNamesBox->insertItem( QString("--none selected--") );
 }
 
+
+void MainWindow::actionBCIView()
+{
+    BCIControlWindow *bciControlWindow = new BCIControlWindow(mWindow);
+    bciControlWindow->show();
+
+    //builds and starts a qtStateMachine
+    BCIStateMachine *bciStateMachine = new BCIStateMachine(bciControlWindow);
+    bciStateMachine->start();
+
+    //must run this for stateMachine to take effect
+    bciControlWindow->exec();
+
+}
 
