@@ -99,10 +99,9 @@ HEADERS	+= include/barrett.h \
         include/Servers/graspitServer.h \
         include/Servers/graspitProtobufServer.h \
         include/BCI/uiTools.h \
-    ui/BCI/state.h \
-    ui/BCI/BCIStateMachine.h \
-    ui/BCI/bciWorldView.h \
-    ui/BCI/bciPreviewView.h
+        include/BCI/state.h \
+        include/BCI/BCIStateMachine.h
+
     	
 
     
@@ -181,10 +180,10 @@ SOURCES	+= src/arch.cpp \
         src/Servers/graspitServer.cpp \
         src/Servers/graspitProtobufServer.cpp \
         src/BCI/uiTools.cpp \
-    ui/BCI/state.cpp \
-    ui/BCI/BCIStateMachine.cpp \
-    ui/BCI/bciWorldView.cpp \
-    ui/BCI/bciPreviewView.cpp
+        src/BCI/state.cpp \
+        src/BCI/BCIStateMachine.cpp
+
+
 
 
 
@@ -233,8 +232,8 @@ FORMS += ui/mainWindow.ui \
         ui/BCI/bciStageFrame.ui \
         ui/BCI/BCIControlWindowBase.ui \
         ui/BCI/bciWorldView.ui \
-    ui/BCI/bciPreviewView.ui \
-    ui/BCI/binaryCommandView.ui
+        ui/BCI/bciPreviewView.ui \
+        ui/BCI/binaryCommandView.ui
 
 HEADERS += ui/mainWindow.h \
 	ui/archBuilderDlg.h \
@@ -254,7 +253,9 @@ HEADERS += ui/mainWindow.h \
         ui/BCI/bciStageFrame.h \
         ui/BCI/binaryCommandView.h \
         ui/BCI/bciControlWindow.h \
-        ui/BCI/handView.h
+        ui/BCI/handView.h \
+        ui/BCI/bciWorldView.h \
+        ui/BCI/bciPreviewView.h
 
 
 SOURCES += ui/mainWindow.cpp \
@@ -274,7 +275,9 @@ SOURCES += ui/mainWindow.cpp \
 	ui/EGPlanner/compliantPlannerDlg.cpp \
         ui/BCI/binaryCommandView.cpp \
         ui/BCI/bciControlWindow.cpp \
-        ui/BCI/handView.cpp
+        ui/BCI/handView.cpp \
+        ui/BCI/bciWorldView.cpp \
+        ui/BCI/bciPreviewView.cpp
 
 #-------------------------------------- images and resources -------------------------------------------------------
 

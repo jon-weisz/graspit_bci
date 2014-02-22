@@ -4,7 +4,8 @@
 #include <QState>
 #include <QStateMachine>
 #include "state.h"
-#include "bciControlWindow.h"
+#include "BCI/bciControlWindow.h"
+
 class BCIStateMachine
 {
 public:
