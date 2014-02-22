@@ -18,12 +18,10 @@ BinaryCommandView::BinaryCommandView(QWidget *parent) :
     ui->setupUi(this);
     currentFrame = new DrawableFrame;
     connect(graspItGUI->getIVmgr()->getWorld() , SIGNAL(drawShapes(DrawableFrame*)),this,SLOT(updateFrame(DrawableFrame*)));
-
 }
 
 void BinaryCommandView::paintEvent(QPaintEvent *)
 {
-
     std::for_each(currentFrame->mutable_shapes()->begin(),
                   currentFrame->mutable_shapes()->end(),
                   std::bind(&BinaryCommandView::drawShape, this, std::placeholders::_1));

@@ -7,31 +7,33 @@ BCIWorldView::BCIWorldView(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    SoQtRenderArea * render = new SoQtRenderArea(this, " ",true);
-
-
-    SoSeparator * testRoot = new SoSeparator;
-    SoNode *ivRoot = graspItGUI->getIVmgr()->getViewer()->getSceneGraph();
-
-    SoMaterial * testMaterial = new SoMaterial;
-
-    testMaterial->diffuseColor.setValue(1,0,0);
-    testRoot->addChild(graspItGUI->getIVmgr()->getViewer()->getCamera());
+    SoQtRenderArea * renderArea = new SoQtRenderArea(this, " ",true);
+    SoSeparator * bciWorldViewRoot = new SoSeparator;
+    SoMaterial * soMaterial = new SoMaterial;
     SoTransformSeparator *lightSep = new SoTransformSeparator;
     SoRotation *lightDir = new SoRotation;
+    SoLightModel * lightModel = new SoLightModel;
+
+    SoNode *ivRoot = graspItGUI->getIVmgr()->getViewer()->getSceneGraph();
+
+    soMaterial->diffuseColor.setValue(1,0,0);
+
     lightDir->rotation.connectFrom(&graspItGUI->getIVmgr()->getViewer()->getCamera()->orientation);
     lightSep->addChild(lightDir);
     lightSep->addChild(graspItGUI->getIVmgr()->getViewer()->getHeadlight());
-    SoLightModel * model = new SoLightModel;
-    model->model=SoLightModel::PHONG;
-    testRoot->addChild(lightSep);
-    testRoot->addChild(model);
-    testRoot->addChild(ivRoot);
-    render->setSceneGraph(testRoot);
-    render->setBackgroundColor(SbColor(1,1,1));
-    render->scheduleRedraw();
-    render->render();
-    render->show();
+
+    lightModel->model=SoLightModel::PHONG;
+
+    bciWorldViewRoot->addChild(graspItGUI->getIVmgr()->getViewer()->getCamera());
+    bciWorldViewRoot->addChild(lightSep);
+    bciWorldViewRoot->addChild(lightModel);
+    bciWorldViewRoot->addChild(ivRoot);
+
+    renderArea->setSceneGraph(bciWorldViewRoot);
+    renderArea->setBackgroundColor(SbColor(1,1,1));
+    renderArea->scheduleRedraw();
+    renderArea->render();
+    renderArea->show();
 }
 
 BCIWorldView::~BCIWorldView()

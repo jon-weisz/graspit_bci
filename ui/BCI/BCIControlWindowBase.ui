@@ -114,10 +114,10 @@
   <widget class="BCIPreviewView" name="bciPreviewView" native="true">
    <property name="geometry">
     <rect>
-     <x>680</x>
+     <x>690</x>
      <y>70</y>
-     <width>261</width>
-     <height>181</height>
+     <width>251</width>
+     <height>161</height>
     </rect>
    </property>
   </widget>

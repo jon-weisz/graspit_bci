@@ -7,7 +7,6 @@
 #include <QDialog>
 #include "ui_BCIControlWindowBase.h"
 #include "BCI/uiTools.h"
-#include "BCI/bciWorldView.h"
 
 class BCIControlWindow: public QDialog, public Ui::BCIControlWindowBase
 {
