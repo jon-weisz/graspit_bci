@@ -5,6 +5,10 @@
 #include <QStateMachine>
 #include "state.h"
 #include "BCI/bciControlWindow.h"
+#include "BCI/states/objectSelectionState.h"
+#include "BCI/states/graspSelectionState.h"
+#include "BCI/states/placementLocationSelectionState.h"
+#include "BCI/states/confirmationState.h"
 
 class BCIStateMachine
 {

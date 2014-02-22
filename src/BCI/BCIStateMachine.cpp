@@ -1,5 +1,5 @@
-#include "BCIStateMachine.h"
 
+#include "BCI/BCIStateMachine.h"
 
 
 BCIStateMachine::BCIStateMachine(BCIControlWindow *_bciControlWindow)
@@ -9,10 +9,10 @@ BCIStateMachine::BCIStateMachine(BCIControlWindow *_bciControlWindow)
 
 void BCIStateMachine::start()
 {
-        State *objectSelectionState = new State("objectSelectionState");
-        State *graspSelectionState = new State("graspSelectionState");
-        State *placementLocationSelectionState = new State("placementLocationSelectionState");
-        State *confirmationState = new State("confirmationState");
+        State *objectSelectionState = new ObjectSelectionState("objectSelectionState");
+        State *graspSelectionState = new GraspSelectionState("graspSelectionState");
+        State *placementLocationSelectionState = new PlacementLocationSelectionState("placementLocationSelectionState");
+        State *confirmationState = new ConfirmationState("confirmationState");
 
         objectSelectionState->addTransition(bciControlWindow->button1, SIGNAL(clicked()), graspSelectionState);
         graspSelectionState->addTransition(bciControlWindow->button1, SIGNAL(clicked()), placementLocationSelectionState);
