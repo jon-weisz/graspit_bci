@@ -29,6 +29,22 @@ void BCIStateMachine::start()
         stateMachine.addState(placementLocationSelectionState);
         stateMachine.addState(confirmationState);
 
+        QObject::connect(bciControlWindow->button2,SIGNAL(clicked()),objectSelectionState,SLOT(button2Clicked()));
+        QObject::connect(bciControlWindow->button3,SIGNAL(clicked()),objectSelectionState,SLOT(button3Clicked()));
+        QObject::connect(bciControlWindow->button4,SIGNAL(clicked()),objectSelectionState,SLOT(button4Clicked()));
+
+        QObject::connect(bciControlWindow->button2,SIGNAL(clicked()),graspSelectionState,SLOT(button2Clicked()));
+        QObject::connect(bciControlWindow->button3,SIGNAL(clicked()),graspSelectionState,SLOT(button3Clicked()));
+        QObject::connect(bciControlWindow->button4,SIGNAL(clicked()),graspSelectionState,SLOT(button4Clicked()));
+
+        QObject::connect(bciControlWindow->button2,SIGNAL(clicked()),placementLocationSelectionState,SLOT(button2Clicked()));
+        QObject::connect(bciControlWindow->button3,SIGNAL(clicked()),placementLocationSelectionState,SLOT(button3Clicked()));
+        QObject::connect(bciControlWindow->button4,SIGNAL(clicked()),placementLocationSelectionState,SLOT(button4Clicked()));
+
+        QObject::connect(bciControlWindow->button2,SIGNAL(clicked()),confirmationState,SLOT(button2Clicked()));
+        QObject::connect(bciControlWindow->button3,SIGNAL(clicked()),confirmationState,SLOT(button3Clicked()));
+        QObject::connect(bciControlWindow->button4,SIGNAL(clicked()),confirmationState,SLOT(button4Clicked()));
+
         stateMachine.setInitialState(objectSelectionState);
         stateMachine.start();
 }
