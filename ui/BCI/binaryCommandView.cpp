@@ -1,4 +1,7 @@
-#include "binarycommandview.h"
+#include "binaryCommandView.h"
+#include "ui_binaryCommandView.h"
+
+
 #include "Drawable.pb.h"
 #include <algorithm>
 #include <functional>
@@ -8,12 +11,15 @@
 #include <ivmgr.h>
 #include "world.h"
 
-BinaryCommandView::BinaryCommandView(QWidget * parent) :QWidget(parent)
+BinaryCommandView::BinaryCommandView(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::BinaryCommandView)
 {
+    ui->setupUi(this);
     currentFrame = new DrawableFrame;
     connect(graspItGUI->getIVmgr()->getWorld() , SIGNAL(drawShapes(DrawableFrame*)),this,SLOT(updateFrame(DrawableFrame*)));
-}
 
+}
 
 void BinaryCommandView::paintEvent(QPaintEvent *)
 {
@@ -121,9 +127,9 @@ void BinaryCommandView::drawShape(const ShapeDrawable & shape)
 
         painter.setFont(font);
         painter.drawText(origin,QString(shape.text().c_str()));
-	break;
+    break;
     }
-       
+
     }
 }
 
@@ -177,4 +183,7 @@ void BinaryCommandView::rebuildDrawableObjectMap()
      }
  }
 
-
+BinaryCommandView::~BinaryCommandView()
+{
+    delete ui;
+}
