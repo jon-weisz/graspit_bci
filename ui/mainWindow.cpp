@@ -164,7 +164,7 @@ MainWindow::MainWindow(QWidget *parent)
 	QObject::connect(mUI->TendonForceInput, SIGNAL(valueChanged(int)), this, SLOT(TendonForceInput_valueChanged(int)));
 	QObject::connect(mUI->tendonNamesBox, SIGNAL(activated(int)), this, SLOT(tendonNamesBoxActivated(int)));
 	QObject::connect(mUI->tendonVisibleCheckBox, SIGNAL(toggled(bool)), this, SLOT(tendonVisibleCheckBox_toggled(bool)));  
-    QObject::connect(mUI->actionBCIView, SIGNAL(triggered()), this, SLOT(actionBCIView()));
+    QObject::connect(mUI->bciViewAction, SIGNAL(triggered()), this, SLOT(bciActionView()));
 }
 
 /*!
@@ -1300,7 +1300,7 @@ void MainWindow::updateTendonNamesBox()
 }
 
 
-void MainWindow::actionBCIView()
+void MainWindow::bciActionView()
 {
     BCIControlWindow *bciControlWindow = new BCIControlWindow(mWindow);
     bciControlWindow->show();
