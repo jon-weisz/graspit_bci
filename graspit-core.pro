@@ -97,10 +97,8 @@ HEADERS	+= include/barrett.h \
 	include/FitParabola.h \
 	include/shadow.h \
         include/handView.h \
-        include/Servers/graspitServer.h \
-        include/Servers/graspitProtobufServer.h \
-        include/BCI/uiTools.h \
-    include/BCI/onlinePlannerController.h
+        include/Servers/graspitServer.h
+
 
     	
 
@@ -178,10 +176,9 @@ SOURCES	+= src/arch.cpp \
 	src/EGPlanner/onLineGraspInterface.cpp \
 	src/EGPlanner/listPlanner.cpp \
         src/handView.cpp \
-        src/Servers/graspitServer.cpp \
-        src/Servers/graspitProtobufServer.cpp \
-        src/BCI/uiTools.cpp \
-        src/BCI/onlinePlannerController.cpp
+        src/Servers/graspitServer.cpp
+
+
 
 
    
@@ -226,9 +223,7 @@ FORMS += ui/mainWindow.ui \
 	ui/Planner/plannerdlg.ui \
 	ui/EGPlanner/egPlannerDlg.ui \
 	ui/EGPlanner/compliantPlannerDlg.ui \
-        ui/BCI/bciStageFrame.ui \
-        ui/BCI/bciControlWindow.ui \
-    ui/BCI/bciControlButtons.ui
+
 
 HEADERS += ui/mainWindow.h \
 	ui/archBuilderDlg.h \
@@ -244,10 +239,8 @@ HEADERS += ui/mainWindow.h \
 	ui/qmDlg.h \
 	ui/Planner/plannerdlg.h \
 	ui/EGPlanner/egPlannerDlg.h \
-	ui/EGPlanner/compliantPlannerDlg.h \
-        ui/BCI/bciStageFrame.h \
-        ui/BCI/binarycommandView.h \
-        ui/BCI/bciControlWindow.h
+        ui/EGPlanner/compliantPlannerDlg.h
+
 
 
 SOURCES += ui/mainWindow.cpp \
@@ -264,9 +257,7 @@ SOURCES += ui/mainWindow.cpp \
 	ui/settingsDlg.cpp \
 	ui/Planner/plannerdlg.cpp \
 	ui/EGPlanner/egPlannerDlg.cpp \
-	ui/EGPlanner/compliantPlannerDlg.cpp \
-        ui/BCI/binarycommandView.cpp \
-        ui/BCI/bciControlWindow.cpp
+        ui/EGPlanner/compliantPlannerDlg.cpp
 
 #-------------------------------------- images and resources -------------------------------------------------------
 
@@ -374,10 +365,39 @@ mosek {
 }
 
 
+
+#-------------------------------------- Protobuf Messages -------------------------------------------------------------
 protobuf {
   # add message files here
   PROTOS = Drawable.proto GraspitMessage.proto
   # add message path here
   PROTOPATH = ./protocols
   include(protobuf.pri) 
+}
+
+#-------------------------------------- BCI Experiment code -----------------------------------------------------------
+bci_experiment {
+   SOURCES += src/BCI/uiTools.cpp \
+              src/BCI/worldElementTools.cpp \
+              src/BCI/plannerTools.cpp \
+              ui/BCI/binarycommandView.cpp \
+              ui/BCI/bciControlWindow.cpp \
+              src/BCI/onlinePlannerController.cpp \
+              src/Servers/graspitProtobufServer.cpp
+
+
+
+   HEADERS += include/BCI/uiTools.h \
+               include/BCI/worldElementTools.h \
+               include/BCI/plannerTools.h \
+               ui/BCI/bciStageFrame.h \
+               ui/BCI/binarycommandView.h \
+               ui/BCI/bciControlWindow.h \
+               include/BCI/onlinePlannerController.h \
+               include/Servers/graspitProtobufServer.h
+
+
+   FORMS += ui/BCI/bciStageFrame.ui \
+            ui/BCI/bciControlWindow.ui \
+            ui/BCI/bciControlButtons.ui
 }
