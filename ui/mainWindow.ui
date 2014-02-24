@@ -456,6 +456,12 @@
         <addaction name="helpAboutAction" />
         <addaction name="helpAboutQTAction" />
       </widget>
+      <widget class="QMenu" name="BCIMenu" >
+        <property name="title" >
+          <string>BCI</string>
+        </property>
+        <addaction name="bciViewAction" />
+      </widget>
       <addaction name="fileMenu" />
       <addaction name="elementMenu" />
       <addaction name="graspMenu" />
@@ -464,6 +470,7 @@
       <addaction name="Stereo" />
       <addaction name="Misc" />
       <addaction name="helpMenu" />
+      <addaction name="BCIMenu" />
     </widget>
     <action name="fileNewAction" >
       <property name="name" >
@@ -968,6 +975,29 @@
         <string>Database Planner...</string>
       </property>
     </action>
+    <action name="bciViewAction" >
+        <property name="name" >
+          <cstring>selectToolAction</cstring>
+        </property>
+        <property name="checkable" >
+          <bool>false</bool>
+        </property>
+        <property name="icon" >
+          <iconset>selectTool.xpm</iconset>
+        </property>
+        <property name="iconText" >
+          <string>bciView</string>
+        </property>
+        <property name="text" >
+          <string>bciView</string>
+        </property>
+        <property name="toolTip" >
+          <string>Select</string>
+        </property>
+        <property name="shortcut" >
+          <string>F8</string>
+        </property>
+      </action>
     <actiongroup name="elementGroup" >
       <action name="translateToolAction" >
         <property name="name" >

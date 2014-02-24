@@ -803,66 +803,7 @@ void EigenGraspPlannerDlg::initializeHandviewWindow()
 }
 
 
-void EigenGraspPlannerDlg::loadGraspsToHandviewWindow()
-{
-    
-  // Get corresponding model from database
-  std::vector<db_planner::Model*> modelList;    
-  mDbMgr->ModelList(&modelList,db_planner::FilterList::USE_FILE_NAME,
-    '/' + mHand->getGrasp()->getObject()->getFilename().split('/').back());
-  // If no model can be found return
-  if (modelList.size()==0)
-  {
-    std::cout << "No Models Found \n";
-    return;
-  }
-  // Using the found model, retrieve the grasps
-  std::vector<db_planner::Grasp*> grasps;
-  mDbMgr->GetGrasps(*modelList[modelList.size()-1], GraspitDBGrasp::getHandDBName(mHand).toStdString(), &grasps);
-  HandObjectState hs(mHand);
-  hs.setPositionType(SPACE_COMPLETE);
-  hs.setPostureType(POSE_DOF);
-  hs.saveCurrentHandState();
-  // Load the grasps into the grasp planner list.        
-  unsigned int numGrasps = std::min<unsigned int>(grasps.size(), 10);
-  for (unsigned int gNum = 0; gNum < numGrasps; ++gNum)
-    {          
-      GraspPlanningState *s = new GraspPlanningState(static_cast<GraspitDBGrasp *>
-						     (grasps[gNum])->getFinalGraspPlanningState());
-      
-      s->setObject(mHand->getGrasp()->getObject());
-      s->setRefTran(mHand->getGrasp()->getObject()->getTran());
-      float testResult = -2*bci_experiment::testGraspCollisions(mHand, s);
-      s->addAttribute("graspId", gNum);
-      s->addAttribute("testResult", testResult);
-      s->addAttribute("testTime", 0);
-      //bci_experiment::printTestResult(*s);
-      mPlanner->addSolution(s);
-  }
-  if (numGrasps){
-    graspItGUI->getIVmgr()->emitAnalyzeNextGrasp();        
-    std::cout<< "emitted analyze grasp\n";
-  }
-  hs.execute(mHand);
-  dynamic_cast<OnLinePlanner *>(mPlanner)->updateSolutionList();
-  
-  for(int i = 0; i < std::min<unsigned int>(mPlanner->getListSize(), 10); ++i)
-  {
-      viewWindow->addView(*const_cast<GraspPlanningState*>(mPlanner->getGrasp(i)), i);     
-      viewWindow->getViewWindow()->show();        
-      viewWindow->getViewWindow()->update();
-  } 
 
-  viewWindow->getViewWindow()->sizeIncrement();
-
-}
-
-
-void EigenGraspPlannerDlg::initializeTarget()
-{
-
-  
-}
 
 
 void EigenGraspPlannerDlg::plannerExec()

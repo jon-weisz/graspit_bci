@@ -6,13 +6,24 @@
 #include "robot.h"
 #include "searchState.h"
 #include "grasp.h"
+#include "graspitGUI.h"
+#include "ivmgr.h"
 
 namespace bci_experiment{
 
+OnlinePlannerController::getInstance()
+{
+    if(mController)
+        return mController;
+    return new OnlinePlannerController(NULL);
+}
+
 OnlinePlannerController::OnlinePlannerController(QObject *parent) :
     QObject(parent),
-    mDBMgr(NULL)
+    mDBMgr(NULL),
+    currentTarget(NULL)
 {
+
 }
 
 
@@ -56,6 +67,8 @@ OnlinePlannerController::plannerTimedUpdate()
     }
     QTimer::singleShot(1000, this, SLOT(plannerTimedUpdate()));
 }
+
+
 
 
 void OnlinePlannerController::initializeDbInterface()
@@ -129,6 +142,25 @@ void OnlinePlannerController::initializeTarget(Hand * currentHand,
     emit targetSelected();
 }
 
+void OnlinePlannerController::highlightAllBodies()
+{
+    ui_tools::highlightAll();
+}
+
+void OnlinePlannerController::unhighlightAllBodies()
+{
+    ui_tools::unhighlightAll();
+}
+
+void OnlinePlannerController::highlightNextBody()
+{
+    currentTarget = ui_tools::highlightNextGraspableBody(currentTarget);
+}
+
+void OnlinePlannerController::runObjectRecognition()
+{
+    graspItGUI->getIVmgr()->emitRunObjectRecognition();
+}
 
 }
 

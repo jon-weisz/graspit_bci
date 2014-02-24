@@ -80,3 +80,4 @@ ui/qmake_image_collection.cpp
 
 bin/
 graspit.pro.user
+gen_proto/

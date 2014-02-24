@@ -15,8 +15,9 @@ public:
     this->show();
 
   }
-  void setUpState(char * currentName, char * button1string, char * button2string)
+  void setUpState(QString currentName, QString button1string,QString button2string)
     {
+
       currentStageName->setText(currentName);
       button1ActionText->setText(button1string);
       button2ActionText->setText(button2string);

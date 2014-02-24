@@ -29,7 +29,7 @@
 #include <QDialog>
 
 #include "ui_egPlannerDlg.h"
-#include "handView.h"
+#include "BCI/handView.h"
 #include <vector>
 #include <QtGui/QShortcut>
 #include "DBase/DBPlanner/sql_database_manager.h"
@@ -97,11 +97,11 @@ private:
 public:
   EigenGraspPlannerDlg(QWidget *parent = 0) : 
         QDialog(parent),viewWindow(NULL), 
-        bciStageFrame(NULL), mDbMgr(NULL)
+        bciStageFrame(NULL)
 
   {
-		setupUi(this);
-		init();
+      setupUi(this);
+      init();
 	}
 	
 	~EigenGraspPlannerDlg(){delete bciStageFrame; destroy();}
@@ -126,8 +126,8 @@ public slots:
 	void plannerReset_clicked(); 
 	void plannerStart_clicked();
 	void plannerNext();
-  void plannerExec();
-  void updateObject(GraspableBody *b);
+    void plannerExec();
+    void updateObject(GraspableBody *b);
 	void plannerTypeBox_activated( const QString & );
 	void autoGraspBox_clicked();
 	void onlinePlannerUpdate();
@@ -141,11 +141,14 @@ public slots:
 	void useRealBarrettBox_toggled( bool s);
 	void inputGloveBox_toggled( bool on);
 	void inputLoadButton_clicked();
+
   void resetStateMachine();
   void cursorPosition(double x, double y);
   void processNext();
   void processExec();
   void redrawCircles();
+
+
 };
 
 #endif

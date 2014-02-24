@@ -96,8 +96,8 @@ HEADERS	+= include/barrett.h \
 	include/EGPlanner/listPlanner.h \
 	include/FitParabola.h \
 	include/shadow.h \
-        include/handView.h \
         include/Servers/graspitServer.h
+
 
 
     	
@@ -175,10 +175,7 @@ SOURCES	+= src/arch.cpp \
 	src/EGPlanner/graspTesterThread.cpp \
 	src/EGPlanner/onLineGraspInterface.cpp \
 	src/EGPlanner/listPlanner.cpp \
-        src/handView.cpp \
         src/Servers/graspitServer.cpp
-
-
 
 
    
@@ -222,7 +219,7 @@ FORMS += ui/mainWindow.ui \
 	ui/settingsDlg.ui \
 	ui/Planner/plannerdlg.ui \
 	ui/EGPlanner/egPlannerDlg.ui \
-	ui/EGPlanner/compliantPlannerDlg.ui \
+	ui/EGPlanner/compliantPlannerDlg.ui
 
 
 HEADERS += ui/mainWindow.h \
@@ -243,6 +240,8 @@ HEADERS += ui/mainWindow.h \
 
 
 
+
+
 SOURCES += ui/mainWindow.cpp \
 	ui/archBuilderDlg.cpp \
 	ui/barrettHandDlg.cpp \
@@ -258,6 +257,8 @@ SOURCES += ui/mainWindow.cpp \
 	ui/Planner/plannerdlg.cpp \
 	ui/EGPlanner/egPlannerDlg.cpp \
         ui/EGPlanner/compliantPlannerDlg.cpp
+
+
 
 #-------------------------------------- images and resources -------------------------------------------------------
 
@@ -379,25 +380,52 @@ protobuf {
 bci_experiment {
    SOURCES += src/BCI/uiTools.cpp \
               src/BCI/worldElementTools.cpp \
-              src/BCI/plannerTools.cpp \
-              ui/BCI/binarycommandView.cpp \
-              ui/BCI/bciControlWindow.cpp \
+              src/BCI/plannerTools.cpp \              
               src/BCI/onlinePlannerController.cpp \
-              src/Servers/graspitProtobufServer.cpp
+              src/BCI/state.cpp \
+              src/BCI/BCIStateMachine.cpp \
+              src/BCI/states/objectSelectionState.cpp \
+              src/BCI/states/confirmationState.cpp \ 
+              src/Servers/graspitProtobufServer.cpp \
+              ui/BCI/binaryCommandView.cpp \
+              ui/BCI/bciControlWindow.cpp \
+              ui/BCI/handView.cpp \
+              ui/BCI/bciWorldView.cpp \
+              ui/BCI/bciPreviewView.cpp \
+              src/BCI/states/onlinePlanningState.cpp
 
 
 
    HEADERS += include/BCI/uiTools.h \
                include/BCI/worldElementTools.h \
                include/BCI/plannerTools.h \
-               ui/BCI/bciStageFrame.h \
-               ui/BCI/binarycommandView.h \
-               ui/BCI/bciControlWindow.h \
                include/BCI/onlinePlannerController.h \
-               include/Servers/graspitProtobufServer.h
+               include/Servers/graspitProtobufServer.h \ 
+               include/BCI/uiTools.h \
+               include/BCI/state.h \
+               include/BCI/BCIStateMachine.h \
+               include/BCI/states/objectSelectionState.h \
+               include/BCI/states/graspSelectionState.h \
+               include/BCI/states/placementLocationSelectionState.h \
+               include/BCI/states/confirmationState.h \
+               ui/EGPlanner/compliantPlannerDlg.h \
+               ui/BCI/bciStageFrame.h \
+               ui/BCI/binaryCommandView.h \
+               ui/BCI/bciControlWindow.h \
+               ui/BCI/handView.h \
+               ui/BCI/bciWorldView.h \
+               ui/BCI/bciPreviewView.h \
+               include/BCI/states/onlinePlanningState.h
+
+
 
 
    FORMS += ui/BCI/bciStageFrame.ui \
-            ui/BCI/bciControlWindow.ui \
-            ui/BCI/bciControlButtons.ui
+            ui/BCI/bciStageFrame.ui \
+            ui/BCI/BCIControlWindowBase.ui \
+            ui/BCI/bciWorldView.ui \
+            ui/BCI/bciPreviewView.ui \
+            ui/BCI/binaryCommandView.ui
+            
 }
+

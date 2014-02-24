@@ -469,10 +469,10 @@
    <widget class="BinaryCommandView" name="binaryCommandView" native="true">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>391</width>
-      <height>271</height>
+      <x>40</x>
+      <y>30</y>
+      <width>211</width>
+      <height>181</height>
      </rect>
     </property>
    </widget>
@@ -482,7 +482,7 @@
   <customwidget>
    <class>BinaryCommandView</class>
    <extends>QWidget</extends>
-   <header>binarycommandview.h</header>
+   <header>BCI/binaryCommandView.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

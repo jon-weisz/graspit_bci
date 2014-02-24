@@ -1,21 +1,27 @@
-
 #ifndef BINARYCOMMANDVIEW_H
 #define BINARYCOMMANDVIEW_H
 
+#include <QWidget>
 #include <QPainter>
-#include<QWidget>
 #include <map>
 #include <string>
 class DrawableFrame;
 class ShapeDrawable;
 
-class BinaryCommandView: public QWidget
+
+namespace Ui {
+class BinaryCommandView;
+}
+
+class BinaryCommandView : public QWidget
 {
     Q_OBJECT
+    
 public:
-    BinaryCommandView(QWidget * parent);
-
+    explicit BinaryCommandView(QWidget *parent = 0);
     virtual void updateCursor(double, double);
+    ~BinaryCommandView();
+
 public slots:
     virtual void updateFrame(DrawableFrame * drawing);
 
@@ -29,8 +35,9 @@ protected:
     DrawableFrame * currentFrame;
     std::map<std::string, ShapeDrawable *> drawable_object_map;
     void paintEvent(QPaintEvent*);
-signals:
+    
+private:
+    Ui::BinaryCommandView *ui;
 };
 
 #endif // BINARYCOMMANDVIEW_H
-
