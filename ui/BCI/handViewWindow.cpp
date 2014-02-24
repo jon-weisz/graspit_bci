@@ -2,7 +2,7 @@
 
 //HandViewWindow:
 //Set the HandViewWindow which contains he views themselves
-HandViewWindow::HandViewWindow(QWidget * parent, Hand * h, const QRect & geom, SoNode * IVRoot, QWidget * stageFrame):currentPreview(-1),
+HandViewWindow::HandViewWindow(QWidget * parent, Hand * h, const QRect & geom, SoNode * IVRoot, QWidget * stageFrame):currentPreviewIndex(-1),
 maxViewSize(3), cloneHand(new Hand(h->getWorld(), "newHand")), geom_(geom), grid(NULL), stageFrame_(stageFrame)
 {
 
@@ -140,16 +140,16 @@ void HandViewWindow::setCurrentView(int num)
 {
   if (num > maxViewSize - 1)
     return;
-  if (currentPreview >= 0)
-    views[currentPreview]->getViewWindow()->move(views[currentPreview]->getViewWindow()->x(),views[currentPreview]->getViewWindow()->y()+10);
+  if (currentPreviewIndex >= 0)
+    views[currentPreviewIndex]->getViewWindow()->move(views[currentPreviewIndex]->getViewWindow()->x(),views[currentPreviewIndex]->getViewWindow()->y()+10);
 
-  currentPreview = num;
+  currentPreviewIndex = num;
 
-  views[currentPreview]->getViewWindow()->move(views[currentPreview]->getViewWindow()->x(),views[currentPreview]->getViewWindow()->y()-10);
+  views[currentPreviewIndex]->getViewWindow()->move(views[currentPreviewIndex]->getViewWindow()->x(),views[currentPreviewIndex]->getViewWindow()->y()-10);
 }
 
 //Returns which grasp is currently in the preview window
 int HandViewWindow::getCurrentGrasp()
 {
-  return currentPreview;
+  return currentPreviewIndex;
 }

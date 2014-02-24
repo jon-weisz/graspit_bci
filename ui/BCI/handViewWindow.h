@@ -4,7 +4,6 @@
 #include <Q3MainWindow>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-//#include <QMainWindow>
 #include <QString>
 #include <QObject>
 #include <QtGui/QShortcut>
@@ -72,7 +71,7 @@ class HandViewWindow{
   Hand * cloneHand;
 
   //! Index of current Handview stored in the previewWindow
-  int currentPreview;
+  int currentPreviewIndex;
 
   QRect geom_;
 
