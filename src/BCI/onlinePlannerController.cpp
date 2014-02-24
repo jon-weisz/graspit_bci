@@ -35,7 +35,7 @@ void
 OnlinePlannerController::plannerTimedUpdate()
 {
     OnLinePlanner * op =
-            dynamic_cast<OnlinePlanner>(bci_experiment::getCurrentPlanner());
+            dynamic_cast<OnlinePlanner>(planner_tools::getCurrentPlanner());
 
     /* If there is a planner and the planner has found some solutions
     * do some tests.

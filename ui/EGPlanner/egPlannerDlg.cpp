@@ -792,16 +792,6 @@ void EigenGraspPlannerDlg::processExec()
 
 
 
-void EigenGraspPlannerDlg::initializeDbInterface()
-{
-  if (!mDbMgr)
-    mDbMgr = new db_planner::SqlDatabaseManager("tonga.cs.columbia.edu", 5432,
-						"postgres","roboticslab","armdb",
-						new GraspitDBModelAllocator,
-						new GraspitDBGraspAllocator(mHand));
-}
-
-
 void EigenGraspPlannerDlg::initializeHandviewWindow()
 {
 	//Open view window
@@ -870,34 +860,6 @@ void EigenGraspPlannerDlg::loadGraspsToHandviewWindow()
 
 void EigenGraspPlannerDlg::initializeTarget()
 {
-  bci_experiment::sendSetTarget(mObject);
-  bci_experiment::disableNontargetCollisions(mHand, mObject);
-  bci_experiment::disableTableObjectCollisions();  
-
-  //Initialize Handview Window
-  initializeHandviewWindow();
-  
-  //start planner        
-  if (mPlanner)
-    plannerReset_clicked();      
-  plannerInit_clicked();
-  
-  
-  // Download grasps from database
-  initializeDbInterface();
-  
-  
-  // Load the grasps into the grasp planner list.        
-  loadGraspsToHandviewWindow();
-  mPlanner->getGrasp(0)->execute(mHand);
-  //Draw new first grasp
-  updateResults(true, false);
-  
-  std::ofstream time_out("grasp_timing.txt", std::ios_base::out | std::ios_base::app);
-  time_out << "Object: " << mObject->getName().toStdString() << "\n";  
-  timer.start();
-  graspItGUI->getIVmgr()->setFocus();    
-  graspItGUI->getIVmgr()->setActiveWindow();
 
   
 }

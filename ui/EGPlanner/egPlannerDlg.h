@@ -79,7 +79,6 @@ private:
   int mDisplayState;
   EGPlanner *mPlanner;
   BciStageFrame * bciStageFrame;
-  db_planner::SqlDatabaseManager * mDbMgr;
   void init();
   void destroy();
   void setVariableLayout();

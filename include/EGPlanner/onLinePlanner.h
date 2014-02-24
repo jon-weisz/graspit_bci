@@ -117,6 +117,7 @@ public:
 	OnLinePlanner(Hand *h);
 	~OnLinePlanner();
 	virtual PlannerType getType(){return PLANNER_ONLINE;}
+    virtual Hand * getRefHand(){return mRefHand;}
 
 	void startPlanner();
 	void pausePlanner();
