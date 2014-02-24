@@ -17,14 +17,18 @@ BinaryCommandView::BinaryCommandView(QWidget *parent) :
 {
     ui->setupUi(this);
     currentFrame = new DrawableFrame;
-    connect(graspItGUI->getIVmgr()->getWorld() , SIGNAL(drawShapes(DrawableFrame*)),this,SLOT(updateFrame(DrawableFrame*)));
+    connect(graspItGUI->getIVmgr()->getWorld() ,
+            SIGNAL(drawShapes(DrawableFrame*)),
+            this,SLOT(updateFrame(DrawableFrame*)));
 }
 
 void BinaryCommandView::paintEvent(QPaintEvent *)
 {
     std::for_each(currentFrame->mutable_shapes()->begin(),
                   currentFrame->mutable_shapes()->end(),
-                  std::bind(&BinaryCommandView::drawShape, this, std::placeholders::_1));
+                  std::bind(&BinaryCommandView::drawShape,
+                            this,
+                            std::placeholders::_1));
 }
 
 void BinaryCommandView::updateCursor(double x, double y)
@@ -87,7 +91,6 @@ Qt::PenStyle shapeStyleToPenStyle(const ShapeDrawable & shape)
 }
 
 
-//void BinaryCommandView::drawShape(const ShapeDrawable & shape, QPainter & painter)
 void BinaryCommandView::drawShape(const ShapeDrawable & shape)
 {
     QPainter painter(this);
@@ -113,7 +116,9 @@ void BinaryCommandView::drawShape(const ShapeDrawable & shape)
     }
     case ShapeDrawable::Line:
     {
-        QPointF lineEnding(shape.x() + shape.width(), shape.y() + shape.width());
+        QPointF lineEnding(shape.x() + shape.width(),
+                           shape.y() + shape.width());
+
         painter.drawLine(origin, lineEnding);
         break;
     }
@@ -162,7 +167,8 @@ void BinaryCommandView::rebuildDrawableObjectMap()
     drawable_object_map.clear();
     std::for_each(currentFrame->mutable_shapes()->begin(),
                   currentFrame->mutable_shapes()->end(),
-                  std::bind(&BinaryCommandView::addToObjectMap, this, std::placeholders::_1));
+                  std::bind(&BinaryCommandView::addToObjectMap,
+                            this, std::placeholders::_1));
 }
 
 
@@ -176,8 +182,10 @@ void BinaryCommandView::rebuildDrawableObjectMap()
      }
      else
      {
-       std::for_each(drawing->mutable_shapes()->begin(), drawing->mutable_shapes()->end(),
-                     std::bind(&BinaryCommandView::updateDrawableObjects, this, std::placeholders::_1));
+       std::for_each(drawing->mutable_shapes()->begin(),
+                     drawing->mutable_shapes()->end(),
+                     std::bind(&BinaryCommandView::updateDrawableObjects, this,
+                               std::placeholders::_1));
      }
  }
 

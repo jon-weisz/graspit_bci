@@ -15,18 +15,18 @@ public:
 
 public slots:
     void setName( const QString& name ) { m_name = name; }
-    void setPrefix( const QString& prefix ) { m_prefix = prefix; }
-    void button2Clicked(){}
-    void button3Clicked(){}
-    void button4Clicked(){}
+    void setPrefix( const QString& prefix ) { m_prefix = prefix; }    
 
 protected:
     virtual void onEntry( QEvent* e );
     virtual void onExit( QEvent* e );
 
+
 protected:
     QString m_name;
     QString m_prefix;
 };
+
+
 
 #endif

@@ -9,6 +9,8 @@
 #include "BCI/states/graspSelectionState.h"
 #include "BCI/states/placementLocationSelectionState.h"
 #include "BCI/states/confirmationState.h"
+#include "BCI/states/onlinePlanningState.h"
+
 
 class BCIStateMachine
 {

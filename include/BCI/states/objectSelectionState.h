@@ -6,8 +6,10 @@
 class ObjectSelectionState:public State
 {
 public:
-    ObjectSelectionState(const QString& name, QState* parent = 0 )
-        :State(name, parent){}
+    ObjectSelectionState(const QString& name, QState* parent = 0 );
+    virtual void onEntry(QEvent *e);
+    virtual void onExit(QEvent *e);
+
 };
 
 #endif // OBJECTSELECTIONSTATE_H

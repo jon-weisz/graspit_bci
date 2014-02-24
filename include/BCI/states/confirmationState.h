@@ -9,6 +9,7 @@ class ConfirmationState:public State
 public:
     ConfirmationState(const QString& name, QState* parent = 0 )
         :State(name, parent){}
+    virtual void onEntry(QEvent *e);
 };
 
 

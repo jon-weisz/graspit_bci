@@ -21,90 +21,84 @@ INCLUDEPATH += src src/Collision include include/math include/Planner include/EG
 DEPENDPATH += src src/Collision include include/math include/Planner include/EGPlanner ui ui/Planner ui/EGPlanner include/Servers
 
 HEADERS	+= include/barrett.h \
-    include/body.h \
-    include/bbox.h \
-    include/bbox_inl.h \
-    include/contact.h \
-    include/contactSetting.h \
-    include/debug.h \
-    include/dof.h \
-    include/dynamics.h \
-    include/eigenGrasp.h \
-    include/gloveInterface.h \
-    include/grasp.h \
-    include/graspRecord.h \
-    include/gws.h \
-    include/gwsprojection.h \
-    include/ivmgr.h \
-    include/jacobian.h \
-    include/joint.h \
-    include/kinematicChain.h \
-    include/lmiOptimizer.h \
-    include/material.h \
-    include/matvec3D.h \
-    include/matvecIO.h \
-    include/maxdet.h \
-    include/mcGrip.h \
-    include/mytools.h \
-    include/profiling.h \
-    include/puma560.h \
-    include/qhull_mutex.h \
-    include/quality.h \
-    include/pr2Gripper.h \
-    include/m7.h \
-    include/m7tool.h \
-    include/robonaut.h \
-    include/robot.h \
-    include/humanHand.h \
-    include/SoArrow.h \
-    include/SoComplexShape.h \
-    include/SoTorquePointer.h \
-    include/scanSimulator.h \
-    include/triangle_inl.h \
-    include/triangle.h \
-    include/worldElement.h \
-    include/world.h \
-    include/graspitGUI.h \
-    include/graspitApp.h \
-    include/dynJoint.h \
-    include/arch.h \
-    include/math/matrix.h \
-    src/Collision/collisionInterface.h \
-    src/Collision/collisionStructures.h \
-    include/Planner/grasp_visualization.h \
-    include/Planner/grasp_tester.h \
-    include/Planner/grasp_preshape.h \
-    include/Planner/grasp_presenter.h \
-    include/Planner/grasp_planner.h \
-    include/Planner/grasp_manager.h \
-    include/Planner/grasp_grasps.h \
-    include/Planner/grasp_directions.h \
-    include/Planner/grasp_coordinates.h \
-    include/EGPlanner/search.h \
-    include/EGPlanner/simAnn.h \
-    include/EGPlanner/searchState.h \
-    include/EGPlanner/searchStateImpl.h \
-    include/EGPlanner/searchEnergy.h \
-    include/EGPlanner/onLinePlanner.h \
-    include/EGPlanner/egPlanner.h \
-    include/EGPlanner/simAnnPlanner.h \
-    include/EGPlanner/guidedPlanner.h \
-    include/EGPlanner/loopPlanner.h \
-    include/EGPlanner/timeTest.h \
-    include/EGPlanner/graspTesterThread.h \
-    include/EGPlanner/onLineGraspInterface.h \
-    include/EGPlanner/listPlanner.h \
-    include/FitParabola.h \
-    include/shadow.h \
-    include/Servers/graspitServer.h \
-    include/Servers/graspitProtobufServer.h \
-    include/BCI/uiTools.h \
-    include/BCI/state.h \
-    include/BCI/BCIStateMachine.h \
-    include/BCI/states/objectSelectionState.h \
-    include/BCI/states/graspSelectionState.h \
-    include/BCI/states/placementLocationSelectionState.h \
-    include/BCI/states/confirmationState.h
+	include/body.h \
+	include/bbox.h \
+	include/bbox_inl.h \
+	include/contact.h \
+	include/contactSetting.h \
+	include/debug.h \
+	include/dof.h \
+	include/dynamics.h \
+	include/eigenGrasp.h \
+	include/gloveInterface.h \
+	include/grasp.h \
+	include/graspRecord.h \
+	include/gws.h \
+	include/gwsprojection.h \
+	include/ivmgr.h \
+	include/jacobian.h \
+	include/joint.h \
+	include/kinematicChain.h \
+	include/lmiOptimizer.h \
+	include/material.h \
+	include/matvec3D.h \
+	include/matvecIO.h \
+	include/maxdet.h \
+	include/mcGrip.h \
+	include/mytools.h \
+	include/profiling.h \
+	include/puma560.h \
+	include/qhull_mutex.h \
+	include/quality.h \
+	include/pr2Gripper.h \
+	include/m7.h \
+	include/m7tool.h \
+	include/robonaut.h \
+	include/robot.h \
+	include/humanHand.h \
+	include/SoArrow.h \
+	include/SoComplexShape.h \
+	include/SoTorquePointer.h \
+	include/scanSimulator.h \
+	include/triangle_inl.h \
+	include/triangle.h \
+	include/worldElement.h \
+	include/world.h \
+	include/graspitGUI.h \
+	include/graspitApp.h \
+	include/dynJoint.h \
+	include/arch.h \
+	include/math/matrix.h \
+	src/Collision/collisionInterface.h \
+	src/Collision/collisionStructures.h \
+	include/Planner/grasp_visualization.h \
+	include/Planner/grasp_tester.h \
+	include/Planner/grasp_preshape.h \
+	include/Planner/grasp_presenter.h \
+	include/Planner/grasp_planner.h \
+	include/Planner/grasp_manager.h \
+	include/Planner/grasp_grasps.h \
+	include/Planner/grasp_directions.h \
+	include/Planner/grasp_coordinates.h \
+	include/EGPlanner/search.h \
+	include/EGPlanner/simAnn.h \
+	include/EGPlanner/searchState.h \
+	include/EGPlanner/searchStateImpl.h \
+	include/EGPlanner/searchEnergy.h \
+	include/EGPlanner/onLinePlanner.h \
+	include/EGPlanner/egPlanner.h \
+	include/EGPlanner/simAnnPlanner.h \
+	include/EGPlanner/guidedPlanner.h \
+	include/EGPlanner/loopPlanner.h \
+	include/EGPlanner/timeTest.h \
+	include/EGPlanner/graspTesterThread.h \
+	include/EGPlanner/onLineGraspInterface.h \
+	include/EGPlanner/listPlanner.h \
+	include/FitParabola.h \
+	include/shadow.h \
+        include/Servers/graspitServer.h
+
+
 
 
     	
@@ -113,85 +107,76 @@ HEADERS	+= include/barrett.h \
 
 
 SOURCES	+= src/arch.cpp \
-    src/barrett.cpp \
-    src/bbox.cpp \
-    src/body.cpp \
-    src/contact.cpp \
-    src/contactSetting.cpp \
-    src/dof.cpp \
-    src/dynamics.cpp \
-    src/dynJoint.cpp \
-    src/eigenGrasp.cpp \
-    src/gloveInterface.cpp \
-    src/grasp.cpp \
-    src/graspitGUI.cpp \
-    src/graspitApp.cpp \
-    src/graspRecord.cpp \
-    src/gws.cpp \
-    src/gwsprojection.cpp \
-    src/humanHand.cpp \
-    src/ivmgr.cpp \
-    src/jacobian.cpp \
-    src/joint.cpp \
-    src/kinematicChain.cpp \
-    src/lmiOptimizer.cpp \
-    src/main.cpp \
-    src/material.cpp \
-    src/matvec.cpp \
-    src/matvecIO.cpp \
-    src/maxdet_src.cpp \
-    src/mcGrip.cpp \
-    src/mytools.cpp \
-    src/profiling.cpp \
-    src/pr2Gripper.cpp \
-    src/m7.cpp \
-    src/m7tool.cpp \
-    src/puma560.cpp \
-    src/quality.cpp \
-    src/robonaut.cpp \
-    src/robot.cpp \
-    src/scanSimulator.cpp \
-    src/shadow.cpp \
-    src/SoArrow.cpp \
-    src/SoComplexShape.cpp \
-    src/SoTorquePointer.cpp \
-    src/triangle.cpp \
-    src/world.cpp \
-    src/worldElement.cpp \
-    src/math/matrix.cpp \
-    src/Collision/collisionInterface.cpp \
-    src/Planner/grasp_visualization.cpp \
-    src/Planner/grasp_tester.cpp \
-    src/Planner/grasp_preshape.cpp \
-    src/Planner/grasp_presenter.cpp \
-    src/Planner/grasp_planner.cpp \
-    src/Planner/grasp_manager.cpp \
-    src/Planner/grasp_grasps.cpp \
-    src/Planner/grasp_directions.cpp \
-    src/Planner/grasp_coordinates.cpp \
-    src/EGPlanner/simAnn.cpp \
-    src/EGPlanner/searchState.cpp \
-    src/EGPlanner/searchStateImpl.cpp \
-    src/EGPlanner/searchEnergy.cpp \
-    src/EGPlanner/onLinePlanner.cpp \
-    src/EGPlanner/egPlanner.cpp \
-    src/EGPlanner/simAnnPlanner.cpp \
-    src/EGPlanner/guidedPlanner.cpp \
-    src/EGPlanner/loopPlanner.cpp \
-    src/EGPlanner/timeTest.cpp \
-    src/EGPlanner/graspTesterThread.cpp \
-    src/EGPlanner/onLineGraspInterface.cpp \
-    src/EGPlanner/listPlanner.cpp \
-    src/Servers/graspitServer.cpp \
-    src/Servers/graspitProtobufServer.cpp \
-    src/BCI/uiTools.cpp \
-    src/BCI/state.cpp \
-    src/BCI/BCIStateMachine.cpp \
-    src/BCI/states/objectSelectionState.cpp \
-    src/BCI/states/confirmationState.cpp
-
-
-
+	src/barrett.cpp \
+	src/bbox.cpp \
+	src/body.cpp \
+	src/contact.cpp \
+	src/contactSetting.cpp \
+	src/dof.cpp \
+	src/dynamics.cpp \
+	src/dynJoint.cpp \
+	src/eigenGrasp.cpp \
+	src/gloveInterface.cpp \
+	src/grasp.cpp \
+	src/graspitGUI.cpp \
+	src/graspitApp.cpp \
+	src/graspRecord.cpp \
+	src/gws.cpp \
+	src/gwsprojection.cpp \
+	src/humanHand.cpp \
+	src/ivmgr.cpp \
+	src/jacobian.cpp \
+	src/joint.cpp \
+	src/kinematicChain.cpp \
+	src/lmiOptimizer.cpp \
+	src/main.cpp \
+	src/material.cpp \
+	src/matvec.cpp \
+	src/matvecIO.cpp \
+	src/maxdet_src.cpp \
+	src/mcGrip.cpp \
+	src/mytools.cpp \
+	src/profiling.cpp \
+	src/pr2Gripper.cpp \
+	src/m7.cpp \
+	src/m7tool.cpp \
+	src/puma560.cpp \
+	src/quality.cpp \
+	src/robonaut.cpp \
+	src/robot.cpp \
+	src/scanSimulator.cpp \
+	src/shadow.cpp \
+	src/SoArrow.cpp \
+	src/SoComplexShape.cpp \
+	src/SoTorquePointer.cpp \	
+	src/triangle.cpp \
+	src/world.cpp \
+	src/worldElement.cpp \
+	src/math/matrix.cpp \
+	src/Collision/collisionInterface.cpp \
+	src/Planner/grasp_visualization.cpp \
+	src/Planner/grasp_tester.cpp \
+	src/Planner/grasp_preshape.cpp \
+	src/Planner/grasp_presenter.cpp \
+	src/Planner/grasp_planner.cpp \
+	src/Planner/grasp_manager.cpp \
+	src/Planner/grasp_grasps.cpp \
+	src/Planner/grasp_directions.cpp \
+	src/Planner/grasp_coordinates.cpp \
+	src/EGPlanner/simAnn.cpp \
+	src/EGPlanner/searchState.cpp \
+	src/EGPlanner/searchStateImpl.cpp \
+	src/EGPlanner/searchEnergy.cpp \
+	src/EGPlanner/onLinePlanner.cpp \
+	src/EGPlanner/egPlanner.cpp \
+	src/EGPlanner/simAnnPlanner.cpp \
+	src/EGPlanner/guidedPlanner.cpp \
+	src/EGPlanner/loopPlanner.cpp \
+	src/EGPlanner/timeTest.cpp \
+	src/EGPlanner/graspTesterThread.cpp \
+	src/EGPlanner/onLineGraspInterface.cpp \
+	src/EGPlanner/listPlanner.cpp \
+        src/Servers/graspitServer.cpp
 
 
 
@@ -236,12 +221,8 @@ FORMS += ui/mainWindow.ui \
 	ui/settingsDlg.ui \
 	ui/Planner/plannerdlg.ui \
 	ui/EGPlanner/egPlannerDlg.ui \
-	ui/EGPlanner/compliantPlannerDlg.ui \
-        ui/BCI/bciStageFrame.ui \
-        ui/BCI/BCIControlWindowBase.ui \
-        ui/BCI/bciWorldView.ui \
-        ui/BCI/bciPreviewView.ui \
-        ui/BCI/binaryCommandView.ui
+	ui/EGPlanner/compliantPlannerDlg.ui
+
 
 HEADERS += ui/mainWindow.h \
 	ui/archBuilderDlg.h \
@@ -257,14 +238,8 @@ HEADERS += ui/mainWindow.h \
 	ui/qmDlg.h \
 	ui/Planner/plannerdlg.h \
 	ui/EGPlanner/egPlannerDlg.h \
-	ui/EGPlanner/compliantPlannerDlg.h \
-        ui/BCI/bciStageFrame.h \
-        ui/BCI/binaryCommandView.h \
-        ui/BCI/bciControlWindow.h \
-        ui/BCI/handView.h \
-        ui/BCI/bciWorldView.h \
-        ui/BCI/bciPreviewView.h \
-        ui/BCI/handViewWindow.h
+        ui/EGPlanner/compliantPlannerDlg.h
+
 
 
 SOURCES += ui/mainWindow.cpp \
@@ -281,13 +256,7 @@ SOURCES += ui/mainWindow.cpp \
 	ui/settingsDlg.cpp \
 	ui/Planner/plannerdlg.cpp \
 	ui/EGPlanner/egPlannerDlg.cpp \
-	ui/EGPlanner/compliantPlannerDlg.cpp \
-        ui/BCI/binaryCommandView.cpp \
-        ui/BCI/bciControlWindow.cpp \
-        ui/BCI/handView.cpp \
-        ui/BCI/bciWorldView.cpp \
-        ui/BCI/bciPreviewView.cpp \
-        ui/BCI/handViewWindow.cpp
+        ui/EGPlanner/compliantPlannerDlg.cpp
 
 #-------------------------------------- images and resources -------------------------------------------------------
 
@@ -395,6 +364,8 @@ mosek {
 }
 
 
+
+#-------------------------------------- Protobuf Messages -------------------------------------------------------------
 protobuf {
   # add message files here
   PROTOS = Drawable.proto GraspitMessage.proto
@@ -402,3 +373,57 @@ protobuf {
   PROTOPATH = ./protocols
   include(protobuf.pri) 
 }
+
+#-------------------------------------- BCI Experiment code -----------------------------------------------------------
+bci_experiment {
+   SOURCES += src/BCI/uiTools.cpp \
+              src/BCI/worldElementTools.cpp \
+              src/BCI/plannerTools.cpp \              
+              src/BCI/onlinePlannerController.cpp \
+              src/BCI/state.cpp \
+              src/BCI/BCIStateMachine.cpp \
+              src/BCI/states/objectSelectionState.cpp \
+              src/BCI/states/confirmationState.cpp \ 
+              src/Servers/graspitProtobufServer.cpp \
+              ui/BCI/binaryCommandView.cpp \
+              ui/BCI/bciControlWindow.cpp \
+              ui/BCI/handView.cpp \
+              ui/BCI/bciWorldView.cpp \
+              ui/BCI/bciPreviewView.cpp \
+              src/BCI/states/onlinePlanningState.cpp
+
+
+
+   HEADERS += include/BCI/uiTools.h \
+               include/BCI/worldElementTools.h \
+               include/BCI/plannerTools.h \
+               include/BCI/onlinePlannerController.h \
+               include/Servers/graspitProtobufServer.h \ 
+               include/BCI/uiTools.h \
+               include/BCI/state.h \
+               include/BCI/BCIStateMachine.h \
+               include/BCI/states/objectSelectionState.h \
+               include/BCI/states/graspSelectionState.h \
+               include/BCI/states/placementLocationSelectionState.h \
+               include/BCI/states/confirmationState.h \
+               ui/EGPlanner/compliantPlannerDlg.h \
+               ui/BCI/bciStageFrame.h \
+               ui/BCI/binaryCommandView.h \
+               ui/BCI/bciControlWindow.h \
+               ui/BCI/handView.h \
+               ui/BCI/bciWorldView.h \
+               ui/BCI/bciPreviewView.h \
+               include/BCI/states/onlinePlanningState.h
+
+
+
+
+   FORMS += ui/BCI/bciStageFrame.ui \
+            ui/BCI/bciStageFrame.ui \
+            ui/BCI/BCIControlWindowBase.ui \
+            ui/BCI/bciWorldView.ui \
+            ui/BCI/bciPreviewView.ui \
+            ui/BCI/binaryCommandView.ui
+            
+}
+

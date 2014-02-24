@@ -1,49 +1,60 @@
 
 #include "BCI/BCIStateMachine.h"
-
+#include "ivmgr.h"
+#include "BCI/worldElementTools.h"
+#include "BCI/uiTools.h"
+#include <QSignalTransition>
 
 BCIStateMachine::BCIStateMachine(BCIControlWindow *_bciControlWindow)
 {
     bciControlWindow = _bciControlWindow;
 }
 
+
+
+
+
 void BCIStateMachine::start()
-{
-        State *objectSelectionState = new ObjectSelectionState("objectSelectionState");
-        State *graspSelectionState = new GraspSelectionState("graspSelectionState");
-        State *placementLocationSelectionState = new PlacementLocationSelectionState("placementLocationSelectionState");
-        State *confirmationState = new ConfirmationState("confirmationState");
+{        
+    World * currentWorld = bci_experiment::world_element_tools::getWorld();
 
-        objectSelectionState->addTransition(bciControlWindow->button1, SIGNAL(clicked()), graspSelectionState);
-        graspSelectionState->addTransition(bciControlWindow->button1, SIGNAL(clicked()), placementLocationSelectionState);
-        placementLocationSelectionState->addTransition(bciControlWindow->button1, SIGNAL(clicked()), confirmationState);
-        confirmationState->addTransition(bciControlWindow->button1, SIGNAL(clicked()), objectSelectionState);
+    State *objectSelectionState = new ObjectSelectionState("objectSelectionState");
+    State *initialGraspSelectionState = new GraspSelectionState("initialGraspSelectionState");
+    State * onlinePlanningState = new OnlinePlanningState("onlinePlanningState");
+    State *finalGraspSelectionState = new GraspSelectionState("finalGraspSelectionState");
+    State *confirmationState = new ConfirmationState("confirmationState");
 
-        objectSelectionState->assignProperty(bciControlWindow->currentState, "text", "Object Selection State");
-        graspSelectionState->assignProperty(bciControlWindow->currentState, "text", "Grasp Selection State");
-        placementLocationSelectionState->assignProperty(bciControlWindow->currentState, "text", "Placement Location Selection State");
-        confirmationState->assignProperty(bciControlWindow->currentState, "text", "Confirmation State");
+    //State *placementLocationSelectionState = new PlacementLocationSelectionState("placementLocationSelectionState");
+
+
+    //Exec goes to next state.
+    objectSelectionState->addTransition(currentWorld,SIGNAL(exec), initialGraspSelectionState);
+
+    //Exec goes to next state
+    initialGraspSelectionState->addTransition(currentWorld, SIGNAL(exec),
+                                           onlinePlanningState);
+
+
+    //exec goes to next state
+    onlinePlanningState->addTransition(currentWorld, SIGNAL(exec), confirmationState);
+
+    //next returns to prior state
+    confirmationState->addTransition(currentWorld, SIGNAL(next), onlinePlanningState);
+
+
+    objectSelectionState->assignProperty(bciControlWindow->currentState, "text", "Object Selection State");
+    finalGraspSelectionState->assignProperty(bciControlWindow->currentState, "text", "Grasp Selection State");
+    initialGraspSelectionState->assignProperty(bciControlWindow->currentState, "text", "Initial Selection State");
+    onlinePlanningSelectionState->assignProperty(bciControlWindow->currentState, "text", "Online Planning State");
+    //placementLocationSelectionState->assignProperty(bciControlWindow->currentState, "text", "Placement Location Selection State");
+    confirmationState->assignProperty(bciControlWindow->currentState, "text", "Confirmation State");
 
         stateMachine.addState(objectSelectionState);
-        stateMachine.addState(graspSelectionState);
-        stateMachine.addState(placementLocationSelectionState);
+        stateMachine.addState(finalGraspSelectionState);
+        stateMachine.addState(onlinePlanningState);
+        stateMachine.addState(finalGraspSelectionState);
+        //stateMachine.addState(placementLocationSelectionState);
         stateMachine.addState(confirmationState);
-
-        QObject::connect(bciControlWindow->button2,SIGNAL(clicked()),objectSelectionState,SLOT(button2Clicked()));
-        QObject::connect(bciControlWindow->button3,SIGNAL(clicked()),objectSelectionState,SLOT(button3Clicked()));
-        QObject::connect(bciControlWindow->button4,SIGNAL(clicked()),objectSelectionState,SLOT(button4Clicked()));
-
-        QObject::connect(bciControlWindow->button2,SIGNAL(clicked()),graspSelectionState,SLOT(button2Clicked()));
-        QObject::connect(bciControlWindow->button3,SIGNAL(clicked()),graspSelectionState,SLOT(button3Clicked()));
-        QObject::connect(bciControlWindow->button4,SIGNAL(clicked()),graspSelectionState,SLOT(button4Clicked()));
-
-        QObject::connect(bciControlWindow->button2,SIGNAL(clicked()),placementLocationSelectionState,SLOT(button2Clicked()));
-        QObject::connect(bciControlWindow->button3,SIGNAL(clicked()),placementLocationSelectionState,SLOT(button3Clicked()));
-        QObject::connect(bciControlWindow->button4,SIGNAL(clicked()),placementLocationSelectionState,SLOT(button4Clicked()));
-
-        QObject::connect(bciControlWindow->button2,SIGNAL(clicked()),confirmationState,SLOT(button2Clicked()));
-        QObject::connect(bciControlWindow->button3,SIGNAL(clicked()),confirmationState,SLOT(button3Clicked()));
-        QObject::connect(bciControlWindow->button4,SIGNAL(clicked()),confirmationState,SLOT(button4Clicked()));
 
         stateMachine.setInitialState(objectSelectionState);
         stateMachine.start();

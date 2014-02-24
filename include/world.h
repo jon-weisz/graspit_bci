@@ -60,6 +60,7 @@ class SoIdleSensor;
 class SoSensor;
 class EGPlanner;
 class DrawableFrame;
+
 //! The simulation world holds the world elements and handles their static and dynamic interactions
 /*! A world object keeps track of all of the world elements (bodies and robots)
     contained within it.  It allows collisions to be turned on or off,
@@ -494,6 +495,7 @@ public:
   //! Returns the currently active planner
   EGPlanner * getCurrentPlanner(){return currentPlanner;}
   void setCurrentPlanner(EGPlanner *p){currentPlanner = p;}
+
 
 };
 

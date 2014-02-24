@@ -46,6 +46,8 @@ win32 {
 	include(graspit-lib-LINUX.pro)
 }
 
+CONFIG += bci_experiment
+
 #------------------GraspIt! core files---------------------
 CONFIG += protobuf
 include(graspit-core.pro)

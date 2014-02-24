@@ -44,7 +44,7 @@ class QLabel;
 class QHBoxLayout;
 class QSlider;
 class QLabel;
-;
+
 class GraspPlanningState;
 class GraspableBody;
 class Hand;
@@ -79,7 +79,6 @@ private:
   int mDisplayState;
   EGPlanner *mPlanner;
   BciStageFrame * bciStageFrame;
-  db_planner::SqlDatabaseManager * mDbMgr;
   void init();
   void destroy();
   void setVariableLayout();
@@ -98,7 +97,7 @@ private:
 public:
   EigenGraspPlannerDlg(QWidget *parent = 0) : 
         QDialog(parent),viewWindow(NULL), 
-        bciStageFrame(NULL), mDbMgr(NULL)
+        bciStageFrame(NULL)
 
   {
       setupUi(this);
@@ -142,13 +141,14 @@ public slots:
 	void useRealBarrettBox_toggled( bool s);
 	void inputGloveBox_toggled( bool on);
 	void inputLoadButton_clicked();
-    void resetStateMachine();
-    void cursorPosition(double x, double y);
-    void processNext();
-    void processExec();
-    void redrawCircles();
-    void plannerTimedUpdate();
-    void analyzeApproachDir();
+
+  void resetStateMachine();
+  void cursorPosition(double x, double y);
+  void processNext();
+  void processExec();
+  void redrawCircles();
+
+
 };
 
 #endif
