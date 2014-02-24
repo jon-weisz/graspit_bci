@@ -106,6 +106,7 @@ HEADERS	+= include/barrett.h \
     include/BCI/states/placementLocationSelectionState.h \
     include/BCI/states/confirmationState.h
 
+
     	
 
     
@@ -193,6 +194,7 @@ SOURCES	+= src/arch.cpp \
 
 
 
+
    
 
 
@@ -261,7 +263,8 @@ HEADERS += ui/mainWindow.h \
         ui/BCI/bciControlWindow.h \
         ui/BCI/handView.h \
         ui/BCI/bciWorldView.h \
-        ui/BCI/bciPreviewView.h
+        ui/BCI/bciPreviewView.h \
+        ui/BCI/handViewWindow.h
 
 
 SOURCES += ui/mainWindow.cpp \
@@ -283,7 +286,8 @@ SOURCES += ui/mainWindow.cpp \
         ui/BCI/bciControlWindow.cpp \
         ui/BCI/handView.cpp \
         ui/BCI/bciWorldView.cpp \
-        ui/BCI/bciPreviewView.cpp
+        ui/BCI/bciPreviewView.cpp \
+        ui/BCI/handViewWindow.cpp
 
 #-------------------------------------- images and resources -------------------------------------------------------
 
