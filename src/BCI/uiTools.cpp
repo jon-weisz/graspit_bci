@@ -9,6 +9,9 @@
 #include <searchState.h>
 #include "BCI/worldElementTools.h"
 
+using bci_experiment::world_element_tools::getWorld;
+using bci_experiment::world_element_tools::getObjectByName;
+using bci_experiment::world_element_tools::getNextGraspableBody;
 
 namespace bci_experiment{
 namespace ui_tools{

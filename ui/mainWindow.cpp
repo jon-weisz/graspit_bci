@@ -82,9 +82,6 @@
 #include <QtCore/QVariant>
 #include "BCI/bciControlWindow.h"
 #include "BCI/BCIStateMachine.h"
-#include <QState>
-#include <QStateMachine>
-#include "BCI/state.h"
 //------------------------------------ CONSTRUCTOR AND DESTRUCTOR -------------------------------------
 
 MainWindow::MainWindow(QWidget *parent) 

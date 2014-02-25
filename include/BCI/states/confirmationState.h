@@ -6,10 +6,12 @@
 #include "BCI/state.h"
 class ConfirmationState:public State
 {
+    Q_OBJECT
+
 public:
-    ConfirmationState(const QString& name, QState* parent = 0 )
-        :State(name, parent){}
-    virtual void onEntry(QEvent *e);
+    ConfirmationState(const QString& name, QState* parent = 0 );
+public slots:
+    void onExec();
 };
 
 

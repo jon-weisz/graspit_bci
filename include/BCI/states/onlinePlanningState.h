@@ -1,11 +1,18 @@
 #ifndef ONLINESELECTIONSTATE_H
 #define ONLINESELECTIONSTATE_H
 
-class OnlinePlanningState : public State
+
+#include "BCI/states/handRotationState.h"
+#include "BCI/worldElementTools.h"
+
+class OnlinePlanningState : public HandRotationState
 {
 public:
-    OnlinePlanningState(const QString& name, QState* parent = 0 )
-        :State(name, parent){}
+    OnlinePlanningState(const QString& name, QState* parent = 0);
+    virtual void onEntry(QEvent * e);
+    virtual void onExit(QEvent * e);
+
+
 };
 
 #endif // ONLINESELECTIONSTATE_H
