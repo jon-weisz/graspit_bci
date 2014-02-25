@@ -1,8 +1,5 @@
-#include "BCI/worldElementTools.h"
-#include "body.h"
-#include "world.h"
-#include "robot.h"
 
+#include "BCI/worldElementTools.h"
 
 namespace bci_experiment{
 namespace world_element_tools{
@@ -151,7 +148,7 @@ Body * addBodyIfUnique(const QString & bodyName)
   return newBody;
 }
 
-}
+
 
 
 //!  Realigns the hand so that it is facing the object and at a reasonable distance
@@ -170,4 +167,5 @@ void realignHand(Hand * h)
   graspItGUI->getIVmgr()->align();
 }
 
+}
 }

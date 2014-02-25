@@ -1085,13 +1085,13 @@ bool ClientSocket::verifyInput(int minimum_arg_number){
 
 
 bool ClientSocket::rotateHandLat(){  
-  graspItGUI->getIVmgr()->rotateLat();
+  graspItGUI->getIVmgr()->getWorld()->emitRotLat();
 
   return true;
 }
 
 bool ClientSocket::rotateHandLong(){  
-  graspItGUI->getIVmgr()->rotateLong();
+  graspItGUI->getIVmgr()->getWorld()->emitRotLong();
 
   return true;
 }

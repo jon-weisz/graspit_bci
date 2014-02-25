@@ -335,6 +335,7 @@ cgdb{
 		     src/DBase/DBPlanner/sql_database_manager.cpp \
 		     src/DBase/graspit_db_planner.cpp
 
+
 	HEADERS += src/DBase/dbaseDlg.h \
 		     src/DBase/dbasePlannerDlg.h \
 		     src/DBase/dbase_grasp.h \
@@ -383,6 +384,7 @@ bci_experiment {
               src/BCI/state.cpp \
               src/BCI/BCIStateMachine.cpp \
               src/BCI/states/objectSelectionState.cpp \
+              src/BCI/states/graspSelectionState.cpp \
               src/BCI/states/confirmationState.cpp \ 
               src/Servers/graspitProtobufServer.cpp \
               ui/BCI/binaryCommandView.cpp \
@@ -390,7 +392,9 @@ bci_experiment {
               ui/BCI/handView.cpp \
               ui/BCI/bciWorldView.cpp \
               ui/BCI/bciPreviewView.cpp \
-              src/BCI/states/onlinePlanningState.cpp
+              src/BCI/states/onlinePlanningState.cpp \
+              src/BCI/states/handRotationState.cpp \
+              src/BCI/states/activateRefinementState.cpp
 
 
 
@@ -403,7 +407,6 @@ bci_experiment {
                include/BCI/state.h \
                include/BCI/BCIStateMachine.h \
                include/BCI/states/objectSelectionState.h \
-               include/BCI/states/graspSelectionState.h \
                include/BCI/states/placementLocationSelectionState.h \
                include/BCI/states/confirmationState.h \
                ui/EGPlanner/compliantPlannerDlg.h \
@@ -413,8 +416,10 @@ bci_experiment {
                ui/BCI/handView.h \
                ui/BCI/bciWorldView.h \
                ui/BCI/bciPreviewView.h \
-               include/BCI/states/onlinePlanningState.h
-
+               include/BCI/states/onlinePlanningState.h \
+               include/BCI/states/handRotationState.h \
+               include/BCI/states/graspSelectionState.h \
+               include/BCI/states/activateRefinementState.h
 
 
 

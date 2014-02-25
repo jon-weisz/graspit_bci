@@ -726,60 +726,60 @@ void EigenGraspPlannerDlg::processNext()
 
 void EigenGraspPlannerDlg::plannerNext() 
 {
-  switch(graspItGUI->getIVmgr()->bciPlanningState)
-    {
-    case INITIALIZATION_PHASE:
-      {
-       graspItGUI->getIVmgr()->getViewer()->viewAll();
-	     graspItGUI->getIVmgr()->emitRunObjectRecognition();
-       mHand->setTransparency(1);
-	     break;
-      }
-    case OBJECT_SELECTION_PHASE:
-      {
-        GraspableBody * gb = bci_experiment::highlightNextGraspableBody(mObject);
-	if(!gb)
-	  return;
-	updateObject(gb);
-	break;
-      }
-    case INITIAL_REVIEW_PHASE:
-      {
-	if (!mPlanner)
-	  return;
-	// show next grasp in big window using clone hand
-	nextGraspButton_clicked();       
-	break;
-      }
+//  switch(graspItGUI->getIVmgr()->bciPlanningState)
+//    {
+//    case INITIALIZATION_PHASE:
+//      {
+//       graspItGUI->getIVmgr()->getViewer()->viewAll();
+//	     graspItGUI->getIVmgr()->emitRunObjectRecognition();
+//       mHand->setTransparency(1);
+//	     break;
+//      }
+//    case OBJECT_SELECTION_PHASE:
+//      {
+//        GraspableBody * gb = bci_experiment::highlightNextGraspableBody(mObject);
+//	if(!gb)
+//	  return;
+//	updateObject(gb);
+//	break;
+//      }
+//    case INITIAL_REVIEW_PHASE:
+//      {
+//	if (!mPlanner)
+//	  return;
+//	// show next grasp in big window using clone hand
+//	nextGraspButton_clicked();
+//	break;
+//      }
       
-    case START_PHASE:    
-      {
-	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, CONFIRM_PHASE);
-	break;
-      }
-    case PLANNING_PHASE:
-      {	
-	// show next grasp in big window using clone hand
-	nextGraspButton_clicked();
-	break;
-      }
-    case FINAL_REVIEW_PHASE:
-      {
-	// show next grasp in big window using clone hand
-	nextGraspButton_clicked();        
-        break;
-      }
-    case CONFIRM_PHASE://fall through
-    case EXECUTION_PHASE:
-      {        
-	//return to planning phase
-	//move hand back to planning distance
-	realignHand(mHand);        
-	plannerStart_clicked();
-	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, PLANNING_PHASE);
-	break;
-      }
-    }
+//    case START_PHASE:
+//      {
+//	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, CONFIRM_PHASE);
+//	break;
+//      }
+//    case PLANNING_PHASE:
+//      {
+//	// show next grasp in big window using clone hand
+//	nextGraspButton_clicked();
+//	break;
+//      }
+//    case FINAL_REVIEW_PHASE:
+//      {
+//	// show next grasp in big window using clone hand
+//	nextGraspButton_clicked();
+//        break;
+//      }
+//    case CONFIRM_PHASE://fall through
+//    case EXECUTION_PHASE:
+//      {
+//	//return to planning phase
+//	//move hand back to planning distance
+//	realignHand(mHand);
+//	plannerStart_clicked();
+//	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, PLANNING_PHASE);
+//	break;
+//      }
+//    }
 }
  
 
@@ -808,89 +808,89 @@ void EigenGraspPlannerDlg::initializeHandviewWindow()
 
 void EigenGraspPlannerDlg::plannerExec()
 {
-  switch(graspItGUI->getIVmgr()->bciPlanningState)
-    {
-    case INITIALIZATION_PHASE:
-      {
-	//If there are no objects, don't allow it to go on.
-	if(bci_experiment::getWorld()->getNumGB() == 0)
-	  return;
+//  switch(graspItGUI->getIVmgr()->bciPlanningState)
+//    {
+//    case INITIALIZATION_PHASE:
+//      {
+//	//If there are no objects, don't allow it to go on.
+//	if(bci_experiment::getWorld()->getNumGB() == 0)
+//	  return;
 		
-	//Next Phase
-	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, OBJECT_SELECTION_PHASE);
+//	//Next Phase
+//	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, OBJECT_SELECTION_PHASE);
 		
-	GraspableBody * gb = bci_experiment::getWorld()->getGB(0);
-  bci_experiment::highlightAll();
-  bci_experiment::setPointcloudTransparency(.2);
-	bci_experiment::highlightBody(gb, SbColor(0,1,0));
-  if(gb)
-	  updateObject(gb);  
+//	GraspableBody * gb = bci_experiment::getWorld()->getGB(0);
+//  bci_experiment::highlightAll();
+//  bci_experiment::setPointcloudTransparency(.2);
+//	bci_experiment::highlightBody(gb, SbColor(0,1,0));
+//  if(gb)
+//	  updateObject(gb);
 	
-	break;
-      }
-    case OBJECT_SELECTION_PHASE:
-      {
-  bci_experiment::unhighlightAll();
-  bci_experiment::setPointcloudTransparency(0);
-	bci_experiment::setObjectCentral(mObject);
-	initializeTarget();
-	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, INITIAL_REVIEW_PHASE);  
-	realignHand(mHand);        
-  bci_experiment::viewHand(mHand);
-  mHand->setTransparency(0.0);
-	break;
-      }
+//	break;
+//      }
+//    case OBJECT_SELECTION_PHASE:
+//      {
+//  bci_experiment::unhighlightAll();
+//  bci_experiment::setPointcloudTransparency(0);
+//	bci_experiment::setObjectCentral(mObject);
+//	initializeTarget();
+//	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, INITIAL_REVIEW_PHASE);
+//	realignHand(mHand);
+//  bci_experiment::viewHand(mHand);
+//  mHand->setTransparency(0.0);
+//	break;
+//      }
 
-    case INITIAL_REVIEW_PHASE:
-      {        
+//    case INITIAL_REVIEW_PHASE:
+//      {
       
-	//Select current grasp to start from
-	if(mPlanner->getListSize() > 0)
-	  mPlanner->getGrasp(mDisplayState)->execute(mHand);
+//	//Select current grasp to start from
+//	if(mPlanner->getListSize() > 0)
+//	  mPlanner->getGrasp(mDisplayState)->execute(mHand);
       
-	realignHand(mHand);  
-	//next grasp in big window and on hand
-	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, START_PHASE);
-	break;
-      }
-    case START_PHASE:
-      {
+//	realignHand(mHand);
+//	//next grasp in big window and on hand
+//	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, START_PHASE);
+//	break;
+//      }
+//    case START_PHASE:
+//      {
       
-	plannerStart_clicked();
-	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, PLANNING_PHASE);
-	break;
-      }
-    case PLANNING_PHASE:
-      {
-	// show next grasp in big window
-	stopPlanner();
-	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, FINAL_REVIEW_PHASE);
-	break;
-      }
-    case FINAL_REVIEW_PHASE:
-      {
+//	plannerStart_clicked();
+//	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, PLANNING_PHASE);
+//	break;
+//      }
+//    case PLANNING_PHASE:
+//      {
+//	// show next grasp in big window
+//	stopPlanner();
+//	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, FINAL_REVIEW_PHASE);
+//	break;
+//      }
+//    case FINAL_REVIEW_PHASE:
+//      {
         
-        //next grasp in big window and on hand
-	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, CONFIRM_PHASE);
-        break;
-      }
-    case CONFIRM_PHASE:
-      {
-	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, EXECUTION_PHASE);
-        bciStageFrame->setActiveWindow();
+//        //next grasp in big window and on hand
+//	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, CONFIRM_PHASE);
+//        break;
+//      }
+//    case CONFIRM_PHASE:
+//      {
+//	bciStageFrame->setBCIState(&graspItGUI->getIVmgr()->bciPlanningState, EXECUTION_PHASE);
+//        bciStageFrame->setActiveWindow();
        
-      }
-    case EXECUTION_PHASE:
-      {        
-        int time = timer.elapsed();
-        std::ofstream time_out("grasp_timing.txt", std::ios_base::out | std::ios_base::app);
+//      }
+//    case EXECUTION_PHASE:
+//      {
+//        int time = timer.elapsed();
+//        std::ofstream time_out("grasp_timing.txt", std::ios_base::out | std::ios_base::app);
         
-        time_out << " " << time <<std::endl;
-        executeGraspButton_clicked();
-        break;  
-      }
+//        time_out << " " << time <<std::endl;
+//        executeGraspButton_clicked();
+//        break;
+//      }
         
-    }
+//    }
 }
 
 void EigenGraspPlannerDlg::resetStateMachine()

@@ -3,6 +3,8 @@
 
 #include <QState>
 #include <QStateMachine>
+#include <QSignalTransition>
+
 #include "state.h"
 #include "BCI/bciControlWindow.h"
 #include "BCI/states/objectSelectionState.h"
@@ -10,6 +12,11 @@
 #include "BCI/states/placementLocationSelectionState.h"
 #include "BCI/states/confirmationState.h"
 #include "BCI/states/onlinePlanningState.h"
+#include "BCI/states/activateRefinementState.h"
+
+#include "ivmgr.h"
+
+
 
 
 class BCIStateMachine

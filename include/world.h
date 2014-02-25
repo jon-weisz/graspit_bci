@@ -227,7 +227,16 @@ signals:
   //! signal to give cursor position for binary message cursor
   void cursorPosition(double x, double y);
 
+  //! signal to have something draw 2D shapes
   void drawShapes(DrawableFrame *drawableFrame);
+
+  //! signal to rotate the hand longitudinally around the target object
+  void rotLong();
+
+  //! signal to rotate the hand latitudinally around the target object
+  void rotLat();
+
+
 
 public:	
   //! public constructor
@@ -491,6 +500,9 @@ public:
   void emitResetStateMachine(){resetStateMachine();}
   void emitCursorPosition(double x, double y){emit cursorPosition(x,y);}
   void emitDrawableFrame(DrawableFrame *drawableFrame){emit drawShapes(drawableFrame);}
+  void emitRotLat(){emit rotLat();}
+  void emitRotLong(){emit rotLong();}
+
 
   //! Returns the currently active planner
   EGPlanner * getCurrentPlanner(){return currentPlanner;}

@@ -1,39 +1,55 @@
 #include "BCI/states/objectSelectionState.h"
-#include "BCI/worldElementTools.h"
-#include "world.h"
-#include <QSignalTransition>
-#include "BCI/onlinePlannerController.h"
-#include "BCI/plannerTools.h"
+
 
 using bci_experiment::world_element_tools::getWorld;
+using bci_experiment::OnlinePlannerController;
 
-ObjectSelectionState::ObjectSelectionState(const QString& name,
-                                           QState* parent = 0 ) :
-    State(name, parent){
+ObjectSelectionState::ObjectSelectionState(const QString& name,QState* parent) :
+    State(name, parent)
+{
 
+    //Create responder for next signals that highlights the next available body
     QSignalTransition * nextTransition =
-            new QSignalTransition(getWorld(), SIGNAL(exec()));
-    connect(nextTransition, SIGNAL(triggered()),
-            onlinePlannerController, SLOT(highlightNextBody()));
+            new QSignalTransition(getWorld(), SIGNAL(next()));
 
+    connect(nextTransition, SIGNAL(triggered()),this, SLOT(onNext()));
+
+    addTransition(nextTransition);
+
+
+    //Respond to bodies getting added or removed from the world by updating the selected
+    //object and highlighting it if needed.
     QSignalTransition * bodyAddedTransition =
             new QSignalTransition(getWorld(), SIGNAL(numElementsChanged()));
-    connect(bodyAddedTransition, SIGNAL(triggered()),
-            OnlinePlannerController::getInstance(), SLOT(highlightAllBodies()));
+
+    connect(bodyAddedTransition, SIGNAL(triggered()),        
+            this, SLOT(onBodyAdded()));
+
+    addTransition(bodyAddedTransition);
 
 }
 
 
 void ObjectSelectionState::onEntry(QEvent *e)
 {
-    // First time we should run the object recognition
-    OnlinePlannerController::getInstance()->runObjectRecognition();
-
+    // Right now, we run recognition on every entry.
+    OnlinePlannerController::getSingleton()->runObjectRecognition();
 }
+
 
 void ObjectSelectionState::onExit(QEvent * e)
 {
     Q_UNUSED(e);
-    OnlinePlannerController::getInstance()->unhighlightAllObjects();
+    OnlinePlannerController::getSingleton()->getSingleton()->unhighlightAllBodies();
+}
+
+void ObjectSelectionState::onNext()
+{
+    OnlinePlannerController::getSingleton()->highlightNextBody();
+}
+
+void ObjectSelectionState::onBodyAdded()
+{
+  //stub
 }
 
