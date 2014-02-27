@@ -8,7 +8,6 @@
 #include "BCI/states/onlinePlanningState.h"
 #include "BCI/states/activateRefinementState.h"
 
-#include "BCI/events/bciNextEvent.h"
 #include "BCI/bciService.h"
 
 BCIStateMachine::BCIStateMachine(BCIControlWindow *_bciControlWindow)

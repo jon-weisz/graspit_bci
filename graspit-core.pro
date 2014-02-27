@@ -96,7 +96,8 @@ HEADERS	+= include/barrett.h \
 	include/EGPlanner/listPlanner.h \
 	include/FitParabola.h \
 	include/shadow.h \
-        include/Servers/graspitServer.h
+        include/Servers/graspitServer.h \
+    include/BCI/states/imageRecognitionState.h
 
 
 
@@ -176,7 +177,8 @@ SOURCES	+= src/arch.cpp \
 	src/EGPlanner/graspTesterThread.cpp \
 	src/EGPlanner/onLineGraspInterface.cpp \
 	src/EGPlanner/listPlanner.cpp \
-        src/Servers/graspitServer.cpp
+        src/Servers/graspitServer.cpp \
+    src/BCI/states/imageRecognitionState.cpp
 
 
 
