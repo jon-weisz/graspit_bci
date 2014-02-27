@@ -254,7 +254,7 @@ enableZCulling(void * userdata, SoAction * action)
   are also created.
 */
 IVmgr::IVmgr(QWidget *parent, const char *name, Qt::WFlags f) : 
-  QWidget(parent,name,f), bciPlanningState(INITIALIZATION_PHASE)
+  QWidget(parent,name,f)
 {
   ivmgr = this;
   camerafp = NULL;
@@ -1833,24 +1833,7 @@ IVmgr::keyPressed(SoEventCallback *eventCB)
 	  clone->setTran( h->getTran() );
   }
 
-  if (SO_KEY_RELEASE_EVENT(event,T)) {
-	  choice1();
-  }
-  if (SO_KEY_RELEASE_EVENT(event,F)) {
-	  choice2();
-  }
-  if (SO_KEY_RELEASE_EVENT(event,A)) {
-	  align();
-  }
-  if (SO_KEY_RELEASE_EVENT(event,E)) {
-	  exec();
-  }
-  if (SO_KEY_RELEASE_EVENT(event,D)) {
-	  next();
-  }
-  if (SO_KEY_RELEASE_EVENT(event,M)) {
-    getWorld()->emitResetStateMachine();
-  }
+
   if (SO_KEY_RELEASE_EVENT(event,S)) {
 	  world->getCurrentHand()->saveState();
 	  /*
@@ -2241,7 +2224,7 @@ IVmgr::rotateLat() {
  */
 void
 IVmgr::rotateLong() {
-
+    DBGA("ivMgr rotateLong");
 	  if(!world->getCurrentHand()->getIVRoot()->getByName("ctrlPointsX")) {
 		  align();
 	  }
@@ -2310,78 +2293,7 @@ IVmgr::rotateLong() {
 
 }
 
-/*
- *  Process choice 1
- */
-void
-IVmgr::choice1()
-{
-  rotateLat();
-  return;
-}
 
-/*
- *  Process choice 2
- */
-void
-IVmgr::choice2()
-{
-  rotateLong();
-  return;
-}
 
-/*
- *  Process exec
- */
-void
-IVmgr::exec()
-{
-  getWorld()->emitExec();
-  return;
-}
 
-/*
- *  Process next
- */
-void
-IVmgr::next()
-{
-  getWorld()->emitNext();
-  return;
-}
 
-SoSeparator *  makeCircleSep(const QString & name)
-{
-  SoSeparator * circleSep = new SoSeparator;
-  circleSep->setName(name.toStdString().c_str());
-  SoTransform * circTran = new SoTransform;
-  circTran->rotation.setValue(SbVec3f(1,0,0),-M_PI/2);
-  circleSep->addChild(circTran);
-  circleSep->addChild(new SoMaterial);
-  SoCone * circGeom(new SoCone);
-  circGeom->removePart(SoCone::BOTTOM);
-  circleSep->addChild(circGeom);
-  
-  static_cast<SoSeparator *>(SoSeparator::getByName("hud"))->addChild(circleSep);
-
-  return circleSep;
-}
-
-void
-IVmgr::drawCircle(const QString & circleName, double x, double y, float radius, SbColor & color,
-                   double thickness, double transparency)
-{
-   x = x* myViewer->getViewportRegion().getViewportAspectRatio(); 
-  QString circleSepName(circleName + "sep");
-  SoSeparator * circleSep = static_cast<SoSeparator *>(SoSeparator::getByName(circleSepName.toStdString().c_str()));
-  if(!circleSep)
-    circleSep = makeCircleSep(circleName + "sep");
-  SoTransform * circTran = static_cast<SoTransform * >(circleSep->getChild(0));
-  circTran->translation.setValue(x,y, -2*(1-thickness));
-  SoMaterial * circMat = static_cast<SoMaterial * >(circleSep->getChild(1));
-  circMat->diffuseColor.setValue(color);
-  circMat->transparency.setValue(transparency);
-  SoCone * circGeom = static_cast<SoCone * >(circleSep->getChild(2));
-  circGeom->bottomRadius = radius;
-  //circGeom->height = 1/thickness;
-}

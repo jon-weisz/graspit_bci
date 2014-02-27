@@ -1,5 +1,5 @@
 #include "BCI/state.h"
-
+#include "BCI/events/bciEvent.h"
 #include <QDebug>
 
 State::State( const QString& name, QState* parent )
@@ -45,3 +45,16 @@ void State::onExit( QEvent* e )
     }
     qDebug() << m_prefix << "Exiting state:" << state;
 }
+
+void State::addSelfTransition(QObject *sender, const char * signal, const QObject *receiver, const char* slot  )
+{
+    QSignalTransition * newTransition =
+            new QSignalTransition(sender, signal);
+
+    addTransition(newTransition);
+
+    connect(newTransition, SIGNAL(triggered()),
+            receiver, slot);
+}
+
+

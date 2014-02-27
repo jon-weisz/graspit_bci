@@ -212,32 +212,6 @@ signals:
 
 
 
-  //! Signal to planner to execute
-  void exec();
-
-  //! Signal to planner to go to next state
-  void next();
-
-  //! Target body changed
-  void targetBodyChanged(GraspableBody * b);
-
-  //! Reset the current state machine
-  void resetStateMachine();
-
-  //! signal to give cursor position for binary message cursor
-  void cursorPosition(double x, double y);
-
-  //! signal to have something draw 2D shapes
-  void drawShapes(DrawableFrame *drawableFrame);
-
-  //! signal to rotate the hand longitudinally around the target object
-  void rotLong();
-
-  //! signal to rotate the hand latitudinally around the target object
-  void rotLat();
-
-
-
 public:	
   //! public constructor
   World(QObject *parent=0,const char *name=0, IVmgr *mgr=NULL);
@@ -493,16 +467,6 @@ public:
 
   //! Emits the signal that informs that grasps have been updated
   void emitGraspsUpdated(){emit graspsUpdated();}
-
-  void emitExec(){emit exec();}
-  void emitNext(){emit next();}
-  void emitTargetBodyChanged(GraspableBody * b){emit targetBodyChanged(b);}
-  void emitResetStateMachine(){resetStateMachine();}
-  void emitCursorPosition(double x, double y){emit cursorPosition(x,y);}
-  void emitDrawableFrame(DrawableFrame *drawableFrame){emit drawShapes(drawableFrame);}
-  void emitRotLat(){emit rotLat();}
-  void emitRotLong(){emit rotLong();}
-
 
   //! Returns the currently active planner
   EGPlanner * getCurrentPlanner(){return currentPlanner;}

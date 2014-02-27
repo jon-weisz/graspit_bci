@@ -7,9 +7,8 @@
 #include <functional>
 #include <QBrush>
 #include <QPen>
-#include <graspitGUI.h>
-#include <ivmgr.h>
-#include "world.h"
+
+#include "BCI/bciService.h"
 
 BinaryCommandView::BinaryCommandView(QWidget *parent) :
     QWidget(parent),
@@ -17,7 +16,7 @@ BinaryCommandView::BinaryCommandView(QWidget *parent) :
 {
     ui->setupUi(this);
     currentFrame = new DrawableFrame;
-    connect(graspItGUI->getIVmgr()->getWorld() ,
+    connect(BCIService::getInstance() ,
             SIGNAL(drawShapes(DrawableFrame*)),
             this,SLOT(updateFrame(DrawableFrame*)));
 }

@@ -2,9 +2,8 @@
 #include "Drawable.pb.h"
 #include "GraspitMessage.pb.h"
 #include "debug.h"
-#include "graspitGUI.h"
-#include "ivmgr.h"
-#include "world.h"
+
+#include "BCI/bciService.h"
 
 GraspitProtobufConnection::GraspitProtobufConnection(QObject *parent, QTcpSocket *socket,
                                                      unsigned int maximum_len) :
@@ -29,7 +28,7 @@ void GraspitProtobufConnection::parseMessage()
       return;
   }
   DrawableFrame drawableFrame = msg->drawable_frame();
-  graspItGUI->getIVmgr()->getWorld()->emitDrawableFrame(&drawableFrame);
+  BCIService::getInstance()->emitDrawableFrame(&drawableFrame);
 }
 
 bool GraspitProtobufConnection::readMessage()

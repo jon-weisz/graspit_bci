@@ -1,18 +1,29 @@
 #include "BCI/states/handRotationState.h"
+#include "BCI/onlinePlannerController.h"
+#include "BCI/bciService.h"
 
 
 using bci_experiment::world_element_tools::getWorld;
 using bci_experiment::OnlinePlannerController;
 
-HandRotationState::HandRotationState(const QString& name,QState* parent):
-    State(name,parent)
+
+HandRotationState::HandRotationState(QString name , BCIControlWindow *_bciControlWindow,QState* parent):
+      State(name, parent),bciControlWindow(_bciControlWindow)
 {
-    QSignalTransition *rotateLatTransition = new QSignalTransition(getWorld(),SIGNAL(rotLat()));
-    connect(rotateLatTransition,SIGNAL(triggered()), OnlinePlannerController::getSingleton(), SLOT(rotateHandLat()));
+    addSelfTransition(BCIService::getInstance(),SIGNAL(rotLat()), this, SLOT(onRotateHandLat()));
+    addSelfTransition(BCIService::getInstance(),SIGNAL(rotLong()), this, SLOT(onRotateHandLong()));
+    DBGA("HandRotationState");
+}
 
-    QSignalTransition *rotateLongTransition = new QSignalTransition(getWorld(),SIGNAL(rotLong()));
-    connect(rotateLongTransition,SIGNAL(triggered()), OnlinePlannerController::getSingleton(), SLOT(rotateHandLong()));
-    addTransition(rotateLatTransition);
-    addTransition(rotateLongTransition);
 
+void HandRotationState::onRotateHandLong()
+{
+    DBGA("onRotateHandLong");
+    OnlinePlannerController::getInstance()->rotateHandLong();
+}
+
+void HandRotationState::onRotateHandLat()
+{
+    DBGA("onRotateHandLat");
+    OnlinePlannerController::getInstance()->rotateHandLat();
 }

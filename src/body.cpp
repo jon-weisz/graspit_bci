@@ -1182,7 +1182,7 @@ void Body::createAxesGeometry()
     SoSeparator *axesSep = new SoSeparator;
     axesTranToCOG = new SoTranslation;
     axesTranToCOG->translation.setValue(0,0,0);
-    //axesSep->addChild(axesTranToCOG);
+    axesSep->addChild(axesTranToCOG);
     axesSep->addChild(IVWorstCase);
     
     axesScale = new SoScale;

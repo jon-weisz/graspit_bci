@@ -2,6 +2,8 @@
 #define STATE_H
 
 #include <QState>
+#include <QSignalTransition>
+class BCIEvent;
 
 class State : public QState
 {
@@ -20,6 +22,7 @@ public slots:
 protected:
     virtual void onEntry( QEvent* e );
     virtual void onExit( QEvent* e );
+    void addSelfTransition(QObject * sender, const char * signal, const QObject *receiver, const char *slot  );
 
 
 protected:

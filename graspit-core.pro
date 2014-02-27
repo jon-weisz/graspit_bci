@@ -100,6 +100,7 @@ HEADERS	+= include/barrett.h \
 
 
 
+
     	
 
     
@@ -176,6 +177,7 @@ SOURCES	+= src/arch.cpp \
 	src/EGPlanner/onLineGraspInterface.cpp \
 	src/EGPlanner/listPlanner.cpp \
         src/Servers/graspitServer.cpp
+
 
 
 
@@ -397,7 +399,8 @@ bci_experiment {
               ui/BCI/bciPreviewView.cpp \
               src/BCI/states/onlinePlanningState.cpp \
               src/BCI/states/handRotationState.cpp \
-              src/BCI/states/activateRefinementState.cpp
+              src/BCI/states/activateRefinementState.cpp \
+                src/BCI/bciService.cpp
 
 
 
@@ -413,7 +416,6 @@ bci_experiment {
                include/BCI/states/placementLocationSelectionState.h \
                include/BCI/states/confirmationState.h \
                ui/EGPlanner/compliantPlannerDlg.h \
-               ui/BCI/bciStageFrame.h \
                ui/BCI/binaryCommandView.h \
                ui/BCI/bciControlWindow.h \
                ui/BCI/handView.h \
@@ -422,7 +424,8 @@ bci_experiment {
                include/BCI/states/onlinePlanningState.h \
                include/BCI/states/handRotationState.h \
                include/BCI/states/graspSelectionState.h \
-               include/BCI/states/activateRefinementState.h
+               include/BCI/states/activateRefinementState.h \
+               include/BCI/bciService.h
 
 
 

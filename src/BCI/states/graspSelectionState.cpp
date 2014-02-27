@@ -1,11 +1,12 @@
 #include "BCI/states/graspSelectionState.h"
-
+#include "BCI/bciService.h"
 
 using bci_experiment::OnlinePlannerController;
 using bci_experiment::world_element_tools::getWorld;
 
-GraspSelectionState::GraspSelectionState(const QString &name, QState *parent)
-    :HandRotationState(name, parent)
+
+GraspSelectionState::GraspSelectionState(BCIControlWindow *_bciControlWindow,QState* parent):
+    HandRotationState("GraspSelectionState",_bciControlWindow, parent),bciControlWindow(_bciControlWindow)
 {
     /* What should next do?
 
@@ -20,27 +21,34 @@ GraspSelectionState::GraspSelectionState(const QString &name, QState *parent)
 
 
     */
-    QSignalTransition * incrementGraspIndexTransition =
-            new QSignalTransition(getWorld(), SIGNAL(next()));
 
-    connect(incrementGraspIndexTransition, SIGNAL(triggered()),
-            this, SLOT(onNext()));
-
+    addSelfTransition(BCIService::getInstance(),SIGNAL(next()), this, SLOT(onNext()));
+    addSelfTransition(BCIService::getInstance(),SIGNAL(rotLat()), this, SLOT(onRotateHandLat()));
+    addSelfTransition(BCIService::getInstance(),SIGNAL(rotLong()), this, SLOT(onRotateHandLong()));
 }
+
 
 void GraspSelectionState::onEntry(QEvent *e)
 {
-/* On entry, we must have a valid planner that is NOT running
- */
-    if(!OnlinePlannerController::getSingleton()->getPlanner())
-    {
-    //! Fixme change to error transition
-        DBGA("GraspSelectionState::onEntry::Failed to create planner");
-    }
-    OnlinePlannerController::getSingleton()->stopPlanner();
+    bciControlWindow->currentState->setText("Grasp Selection State");
+    OnlinePlannerController::getInstance()->setPlannerToReady();
 }
+
 
 void GraspSelectionState::onNext()
 {
-    OnlinePlannerController::getSingleton()->incrementGraspIndex();
+    OnlinePlannerController::getInstance()->incrementGraspIndex();
 }
+
+void GraspSelectionState::onRotateHandLong()
+{
+    OnlinePlannerController::getInstance()->rotateHandLong();
+}
+
+void GraspSelectionState::onRotateHandLat()
+{
+    OnlinePlannerController::getInstance()->rotateHandLat();
+}
+
+
+

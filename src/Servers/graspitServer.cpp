@@ -49,6 +49,7 @@
 #include <Inventor/nodes/SoDrawStyle.h>
 #include <Inventor/fields/SoSFVec3f.h>
 #include <QMutexLocker>
+#include "BCI/bciService.h"
 
 //helper function to get current world planner
 EGPlanner* currentWorldPlanner(){ return graspItGUI->getIVmgr()->getWorld()->getCurrentPlanner();}
@@ -509,7 +510,7 @@ void ClientSocket::drawCircle()
   
   SbColor circleColor(r,g,b);
   
-  graspItGUI->getIVmgr()->drawCircle(circleName, x, y, radius, circleColor, thickness, transparency);
+  //graspItGUI->getIVmgr()->drawCircle(circleName, x, y, radius, circleColor, thickness, transparency);
 }
 
 void ClientSocket::drawCursor()
@@ -519,9 +520,7 @@ void ClientSocket::drawCursor()
   strPtr++;
   double y = (strPtr->toDouble(&ok));
 
-
-
-  graspItGUI->getIVmgr()->getWorld()->emitCursorPosition(x,y);
+  BCIService::getInstance()->emitCursorPosition(x,y);
 }
 
 void ClientSocket::setGraspAttribute()
@@ -1084,30 +1083,28 @@ bool ClientSocket::verifyInput(int minimum_arg_number){
 }
 
 
-bool ClientSocket::rotateHandLat(){  
-  graspItGUI->getIVmgr()->getWorld()->emitRotLat();
-
-  return true;
+bool ClientSocket::rotateHandLat()
+{
+    BCIService::getInstance()->emitRotLat();
+    return true;
 }
 
-bool ClientSocket::rotateHandLong(){  
-  graspItGUI->getIVmgr()->getWorld()->emitRotLong();
-
-  return true;
+bool ClientSocket::rotateHandLong()
+{
+    BCIService::getInstance()->emitRotLong();
+    return true;
 }
 
 bool ClientSocket::exec()
 {
-  graspItGUI->getIVmgr()->getWorld()->emitExec();
-
-  return true;
+    BCIService::getInstance()->emitExec();
+    return true;
 }
 
 bool ClientSocket::next()
 {
-  graspItGUI->getIVmgr()->getWorld()->emitNext();
-
-  return true;    
+    BCIService::getInstance()->emitNext();
+    return true;
 }
 
 bool ClientSocket::setPlannerTarget(const QString & bodyName)
@@ -1158,7 +1155,7 @@ bool ClientSocket::setPlannerTarget(const QString & bodyName)
   b->setTran(t);
   //Disable collisions between main hand and the experiment table
   w->toggleCollisions(false, w->getCurrentHand(), b);
-  w->emitTargetBodyChanged(gb);
+  //w->emitTargetBodyChanged(gb);
   return true;  
 
 }

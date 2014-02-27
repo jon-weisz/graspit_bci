@@ -126,7 +126,7 @@ public:
 	double getSolutionDistance() const {return mSolutionDistance;}
 	double getObjectDistance() const {return mObjectDistance;}
 	int getSABufferSize() const {return (int)mCandidateList.size();}
-	int getFCBufferSize() const;
+    int getFCBufferSize();
 	//! Shows or hides the solution clone, not the planning clone
 	void showSolutionClone(bool s);
 	//! Shows or hides the planning clone, not the solution clone

@@ -4,13 +4,16 @@
 
 #include "BCI/states/handRotationState.h"
 #include "BCI/worldElementTools.h"
+#include "BCI/bciControlWindow.h"
 
 class OnlinePlanningState : public HandRotationState
 {
 public:
-    OnlinePlanningState(const QString& name, QState* parent = 0);
+    OnlinePlanningState(BCIControlWindow *_bciControlWindow, QState* parent = 0);
     virtual void onEntry(QEvent * e);
     virtual void onExit(QEvent * e);
+
+    BCIControlWindow *bciControlWindow;
 
 
 };

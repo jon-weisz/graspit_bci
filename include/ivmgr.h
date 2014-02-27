@@ -109,9 +109,6 @@ public:
 	float mFocalPlane;
 };
 
-enum BciPlanningState{START_PHASE, OBJECT_SELECTION_PHASE, INITIAL_REVIEW_PHASE, INITIALIZATION_PHASE, 
-                      PLANNING_PHASE, FINAL_REVIEW_PHASE, CONFIRM_PHASE,
-                      EXECUTION_PHASE};
 
 enum ToolType {TRANSLATE_TOOL,ROTATE_TOOL,SELECT_TOOL};
 
@@ -254,14 +251,7 @@ signals:
   //! Signal that planner grasps should be processed or sent out for execution
   void processWorldPlanner(int solutionIndex);
 
-  //! Signal that object recognition system should be rerun
-  void runObjectRecognition();
-  void sendString(const QString & s);
 
-  // determine reachability of the grasp at this index
-  void analyzeGrasp(const GraspPlanningState * gps);
-  void analyzeNextGrasp();
-  void analyzeApproachDir(GraspPlanningState * gs);
 public:
   IVmgr(QWidget *parent=0,const char *name=0,Qt::WFlags f=0);
   ~IVmgr();
@@ -270,21 +260,11 @@ public:
   void rotateLong();
   void align();
 
-  void choice1();
-  void choice2();
-  void exec();
-  void next();
 
-
-  void emitAnalyzeGrasp(const GraspPlanningState * gps) {emit analyzeGrasp(gps); }
-  void emitAnalyzeNextGrasp() {emit analyzeNextGrasp(); }
-  void emitRunObjectRecognition(){emit runObjectRecognition();}
   void emitProcessWorldPlanner(int i){emit processWorldPlanner(i);}
-  void emitSendString(const QString & s){emit sendString(s);}
   void blinkBackground(int mSecDuration = 100, int times = 1, SbColor newColor = SbColor(0.0,0.0,0.0));
-  void deselectBody(Body *b);
-  void emitAnalyzeApproachDir(GraspPlanningState * gs){emit analyzeApproachDir(gs);}
 
+  void deselectBody(Body *b);
   /*! 
     Returns a pointer to the main World that the user interacts with through
     this manager.
@@ -334,11 +314,6 @@ public:
 #endif
   void setStereoWindow(QWidget *parent);
 
-  void drawCircle(const QString & stringName, double x, double y, float scale, SbColor & color,
-                  double transparency, double thickness); 
-
-  //! Current State of BCI planner
-  BciPlanningState bciPlanningState;
 };
 
 class BackgroundBlinker : public QThread{

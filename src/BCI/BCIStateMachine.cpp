@@ -1,67 +1,56 @@
 
 #include "BCI/BCIStateMachine.h"
 
+#include "BCI/states/objectSelectionState.h"
+#include "BCI/states/graspSelectionState.h"
+#include "BCI/states/placementLocationSelectionState.h"
+#include "BCI/states/confirmationState.h"
+#include "BCI/states/onlinePlanningState.h"
+#include "BCI/states/activateRefinementState.h"
 
+#include "BCI/events/bciNextEvent.h"
+#include "BCI/bciService.h"
 
 BCIStateMachine::BCIStateMachine(BCIControlWindow *_bciControlWindow)
 {
     bciControlWindow = _bciControlWindow;
 }
 
-
-
-
-
 void BCIStateMachine::start()
 {        
-    World * currentWorld = bci_experiment::world_element_tools::getWorld();
+    BCIService * bciService = BCIService::getInstance();
 
-    ObjectSelectionState *objectSelectionState = new ObjectSelectionState("objectSelectionState");
-    GraspSelectionState *initialGraspSelectionState = new GraspSelectionState("initialGraspSelectionState");
-    OnlinePlanningState * onlinePlanningState = new OnlinePlanningState("onlinePlanningState");
-    //GraspSelectionState *finalGraspSelectionState = new GraspSelectionState("finalGraspSelectionState");
-    ConfirmationState *confirmationState = new ConfirmationState("confirmationState");
-    ActivateRefinementState *activateRefinementState = new ActivateRefinementState("activateRefinementState");
-
-    //State *placementLocationSelectionState = new PlacementLocationSelectionState("placementLocationSelectionState");
+    ObjectSelectionState *objectSelectionState = new ObjectSelectionState(bciControlWindow);
+    GraspSelectionState *initialGraspSelectionState = new GraspSelectionState(bciControlWindow);
+    OnlinePlanningState * onlinePlanningState = new OnlinePlanningState(bciControlWindow);
+    ActivateRefinementState *activateRefinementState = new ActivateRefinementState(bciControlWindow);
+    GraspSelectionState *finalGraspSelectionState = new GraspSelectionState(bciControlWindow);
+    ConfirmationState *confirmationState = new ConfirmationState(bciControlWindow);
 
 
-    //Exec goes to next state.
-    objectSelectionState->addTransition(currentWorld,SIGNAL(exec()), initialGraspSelectionState);
+    //Add all state transistions that are not self transitions----------------------------
 
-    //Exec goes to next state
-    initialGraspSelectionState->addTransition(currentWorld, SIGNAL(exec()),
-                                           activateRefinementState);
+    //exec always goes to the next state
+    objectSelectionState->addTransition(bciService,SIGNAL(exec()), initialGraspSelectionState);
+    initialGraspSelectionState->addTransition(bciService, SIGNAL(exec()), activateRefinementState);
+    activateRefinementState->addTransition(bciService, SIGNAL(exec()), onlinePlanningState);
+    finalGraspSelectionState->addTransition(bciService, SIGNAL(exec()),confirmationState);
+    onlinePlanningState->addTransition(bciService, SIGNAL(exec()), finalGraspSelectionState);
 
-    activateRefinementState->addTransition(currentWorld, SIGNAL(exec()),
-                                           onlinePlanningState);
+    //next returns us to the previous state in the confirmation state
+    confirmationState->addTransition(bciService, SIGNAL(next()), onlinePlanningState);
 
-    activateRefinementState->addTransition(currentWorld, SIGNAL(next()),
-                                           confirmationState);
-
-
-    //exec goes to next state
-    //onlinePlanningState->addTransition(currentWorld, SIGNAL(exec()), finalGraspSelectionState);
-
-    //finalGraspSelectionState->addTransition(currentWorld, SIGNAL(exec()),
-       //                                    confirmationState);
-
-    //next returns to prior state
-    confirmationState->addTransition(currentWorld, SIGNAL(next()), onlinePlanningState);
-
-
-    objectSelectionState->assignProperty(bciControlWindow->currentState, "text", "Object Selection State");
-    //finalGraspSelectionState->assignProperty(bciControlWindow->currentState, "text", "Grasp Selection State");
-    initialGraspSelectionState->assignProperty(bciControlWindow->currentState, "text", "Initial Selection State");
-    onlinePlanningState->assignProperty(bciControlWindow->currentState, "text", "Online Planning State");
-    //placementLocationSelectionState->assignProperty(bciControlWindow->currentState, "text", "Placement Location Selection State");
-    confirmationState->assignProperty(bciControlWindow->currentState, "text", "Confirmation State");
+    //------------------------------------------------------------------------------------
 
     stateMachine.addState(objectSelectionState);
-    //stateMachine.addState(finalGraspSelectionState);
+    stateMachine.addState(initialGraspSelectionState);
+    stateMachine.addState(activateRefinementState);
+    stateMachine.addState(finalGraspSelectionState);
     stateMachine.addState(onlinePlanningState);
     stateMachine.addState(confirmationState);
 
     stateMachine.setInitialState(objectSelectionState);
     stateMachine.start();
+
 }
+

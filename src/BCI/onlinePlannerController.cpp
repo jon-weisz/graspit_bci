@@ -1,13 +1,13 @@
 #include "BCI/onlinePlannerController.h"
 
-
 using bci_experiment::world_element_tools::getWorld;
-//using bci_experiment::planner_tools::getCurrentPlanner;
 
-namespace bci_experiment{
-OnlinePlannerController * OnlinePlannerController::mController = NULL;
+namespace bci_experiment
+{
 
-    OnlinePlannerController* OnlinePlannerController::getSingleton()
+    OnlinePlannerController * OnlinePlannerController::mController = NULL;
+
+    OnlinePlannerController* OnlinePlannerController::getInstance()
     {
         if(!mController)
         {
@@ -21,45 +21,44 @@ OnlinePlannerController * OnlinePlannerController::mController = NULL;
         QObject(parent),
         mDbMgr(NULL),
         currentTarget(NULL),
-        currentGraspIndex(0)
-    {
+        currentGraspIndex(0),
+	currentPlanner(NULL)
 
+    {
     }
 
 
-    void
-    OnlinePlannerController::analyzeApproachDir(OnLinePlanner * planner)
+    bool OnlinePlannerController::analyzeApproachDir()
     {
-        if(!planner)
-            return;
+        if(!currentPlanner)
+            return false;
 
-        Hand * refHand(planner->getRefHand());
+        Hand * refHand(currentPlanner->getRefHand());
         GraspPlanningState * graspPlanningState = new GraspPlanningState(refHand);
 
         graspPlanningState->setPostureType(POSE_DOF, false);
         graspPlanningState->saveCurrentHandState();
-        graspItGUI->getIVmgr()->emitAnalyzeApproachDir(graspPlanningState);
+        //graspItGUI->getIVmgr()->emitAnalyzeApproachDir(graspPlanningState);
+        return true;
     }
 
 
     void
     OnlinePlannerController::plannerTimedUpdate()
     {
-        OnLinePlanner * planner = dynamic_cast<OnLinePlanner*>(planner_tools::getCurrentPlanner());
 
         /* If there is a planner and the planner has found some solutions
         * do some tests.
         */
-        if(planner && planner->getListSize())
+        if(currentPlanner && currentPlanner->getListSize())
         {
             // Notify someone to analyze the current approach direction
-            analyzeApproachDir(planner);
+            analyzeApproachDir();
 
             // If the planner is itself not updating the order of the solution list
-            if(!planner->isRunning())
+            if(!currentPlanner->isRunning())
             {
-                dynamic_cast<OnLinePlanner *>(planner)->updateSolutionList();
-                planner->showGrasp(0);
+                currentPlanner->showGrasp(0);
                 // We should trigger a redraw here somehow of the grasp views
                 //updateResults(true, false);
             }
@@ -72,12 +71,11 @@ OnlinePlannerController * OnlinePlannerController::mController = NULL;
 
     void OnlinePlannerController::initializeDbInterface()
     {
-        EGPlanner * planner = planner_tools::getCurrentPlanner();
 
         if (!mDbMgr)
         {
 
-          if(!planner || !planner->getHand())
+          if(!currentPlanner || !currentPlanner->getHand())
           {
               return;
           }
@@ -86,18 +84,16 @@ OnlinePlannerController * OnlinePlannerController::mController = NULL;
             // If it is an online planner
             mDbMgr = new db_planner::SqlDatabaseManager("tonga.cs.columbia.edu", 5432,
                               "postgres","roboticslab","armdb",
-                              new GraspitDBModelAllocator,
-                              new GraspitDBGraspAllocator(planner->getHand()));
+			      new GraspitDBModelAllocator(),
+                              new GraspitDBGraspAllocator(currentPlanner->getHand()));
           }
 
-          planner_tools::importGraspsFromDBMgr(planner, mDbMgr);
+          planner_tools::importGraspsFromDBMgr(currentPlanner, mDbMgr);
         }
 
-        // If this planner is an online planner, reorder the solution list
-        OnLinePlanner * op = dynamic_cast<OnLinePlanner *>(planner);
-        if(op)
+        if(currentPlanner)
         {
-            op->updateSolutionList();
+            currentPlanner->updateSolutionList();
         }
 
     }
@@ -105,12 +101,11 @@ OnlinePlannerController * OnlinePlannerController::mController = NULL;
 
     void OnlinePlannerController::updateObject(GraspableBody * newTarget)
     {
-        EGPlanner * planner = planner_tools::getCurrentPlanner();
-        if(planner)
+        if(currentPlanner)
         {
-            if(!planner->getHand())
+            if(!currentPlanner->getHand())
                 return;
-            planner->getHand()->getGrasp()->setObjectNoUpdate(newTarget);
+            currentPlanner->getHand()->getGrasp()->setObjectNoUpdate(newTarget);
         }
     }
 
@@ -118,12 +113,6 @@ OnlinePlannerController * OnlinePlannerController::mController = NULL;
     void OnlinePlannerController::initializeTarget(Hand * currentHand,
                                                    GraspableBody * targetObject)
     {
-        OnLinePlanner * op =
-                dynamic_cast<OnLinePlanner *>(planner_tools::getCurrentPlanner());
-
-        // Ask someone to create a planner for us
-        if(!op)
-            return;
 
         // Set the grasps target to the new object
         updateObject(targetObject);
@@ -133,20 +122,19 @@ OnlinePlannerController * OnlinePlannerController::mController = NULL;
         world_element_tools::disableTableObjectCollisions();
 
         //start planner
-        op->resetPlanner();
+        currentPlanner->resetPlanner();
 
         // Download grasps from database and load them in to the planner
         initializeDbInterface();
 
         // Set the hand to it's highest ranked grasp
-        if(op->getListSize())
-            op->getGrasp(0)->execute(currentHand);
+        if(currentPlanner->getListSize())
+            currentPlanner->getGrasp(0)->execute(currentHand);
 
         // Realign the hand with respect to the object, moving the hand back to its
         // pregrasp pose
         world_element_tools::realignHand(currentHand);
 
-        emit targetSelected();
     }
 
     void OnlinePlannerController::highlightAllBodies()
@@ -168,13 +156,12 @@ OnlinePlannerController * OnlinePlannerController::mController = NULL;
 
     void OnlinePlannerController::runObjectRecognition()
     {
-        graspItGUI->getIVmgr()->emitRunObjectRecognition();
     }
 
 
     void OnlinePlannerController::createPlanner()
     {
-        OnLinePlanner * op = planner_tools::createDefaultPlanner();
+        currentPlanner = planner_tools::createDefaultPlanner();
 
         // If we haven't set up a target and there are graspable bodies in the world
         // target body 0
@@ -183,51 +170,58 @@ OnlinePlannerController * OnlinePlannerController::mController = NULL;
 
         // If a valid target exists
         if(currentTarget){
-            initializeTarget(op->getHand(), currentTarget);
-            initializeDbInterface();
+            initializeTarget(currentPlanner->getHand(), currentTarget);
+            //initializeDbInterface();
         }
 
     }
 
-    EGPlanner * OnlinePlannerController::getPlanner()
-    {
-        if(!planner_tools::getCurrentPlanner())
-            createPlanner();
-        return planner_tools::getCurrentPlanner();
-    }
 
     void OnlinePlannerController::startPlanner()
     {
-        OnLinePlanner * op = dynamic_cast<OnLinePlanner * >(getPlanner());
-        if(!op || !op->getTargetState()->getObject())
+        if(!currentPlanner || !currentPlanner->getTargetState()->getObject())
         {
             // emit error transition
 
         }
-        op->startThread();
-        op->startPlanner();
+        currentPlanner->startThread();
+        currentPlanner->startPlanner();
     }
 
-    void OnlinePlannerController::stopPlanner()
+    bool OnlinePlannerController::setPlannerToStopped()
     {
-        OnLinePlanner * op = dynamic_cast<OnLinePlanner * >(getPlanner());
-        if(op)
-            op->stopPlanner();
+        if(currentPlanner)
+        {
+            currentPlanner->stopPlanner();
+            return true;
+        }
+        return false;
     }
 
 
-    OnLinePlanner * OnlinePlannerController::getRunningPlanner()
+    bool OnlinePlannerController::setPlannerToRunning()
     {
-        OnLinePlanner * op = dynamic_cast<OnLinePlanner * >(getPlanner());
-        if(!op || !op->getTargetState()->getObject())
-            return NULL;
-        if(op && op->getState()==READY)
+        if(!currentPlanner || !currentPlanner->getTargetState()->getObject())
+            return false;
+        if(currentPlanner && currentPlanner->getState()==READY)
         {
             // might want to connect to idle sensor instead of own thread.
-            op->startThread();
-            op->startPlanner();
+            currentPlanner->startThread();
+            currentPlanner->startPlanner();
         }
-        return op;
+        return true;
+    }
+
+    //puts planner in ready state
+    bool OnlinePlannerController::setPlannerToReady()
+    {
+        if(!currentPlanner)
+        {
+            createPlanner();
+        }
+
+        currentPlanner->stopPlanner();
+        return true;
     }
 
 
@@ -244,7 +238,7 @@ OnlinePlannerController * OnlinePlannerController::mController = NULL;
 
     void OnlinePlannerController::incrementGraspIndex()
     {
-        currentGraspIndex = (currentGraspIndex + 1)%(bci_experiment::planner_tools::getCurrentPlanner()->getListSize());
+        currentGraspIndex = (currentGraspIndex + 1)%(currentPlanner->getListSize());
     }
 
 }

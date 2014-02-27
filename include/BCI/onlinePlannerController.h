@@ -30,42 +30,57 @@ namespace bci_experiment{
         Q_OBJECT
 
         public:
-            void analyzeApproachDir(OnLinePlanner * op);
+
+            static OnlinePlannerController * getInstance();
+
+            bool analyzeApproachDir();
             void initializeDbInterface();
             void updateObject(GraspableBody * newTarget);
-            static OnlinePlannerController * getSingleton();
-            EGPlanner * getPlanner();
-            OnLinePlanner * getRunningPlanner();
+            void runObjectRecognition();
 
+            // Needs the align method to move here
+            // Needs the align method broken in to the GUI part and the
+            // actual moving the hand part
 
-        private:
-            OnlinePlannerController(QObject *parent = 0);
-            OnlinePlannerController(OnlinePlannerController *);
-            db_planner::SqlDatabaseManager * mDbMgr;
-            GraspableBody * currentTarget;
-            static OnlinePlannerController * mController;
-            unsigned int currentGraspIndex;
+            void rotateHandLat();
+            void rotateHandLong();
 
-        signals:
-            void createPlannerSignal();
-            void targetSelected();
-
-        public slots:
-            // Perform any validation or processing that should update
-            // the planner or it's visualizations periodically
-            void plannerTimedUpdate();
-            void initializeTarget(Hand * currentHand,
-                                  GraspableBody * targetObject);
+            // Highlighting functionality should move to the view controller
+            // The method here should only care about setting the next target
+            // and possibly emitting a signal that the target has been emitted.
             void highlightAllBodies();
             void unhighlightAllBodies();
             void highlightNextBody();
-            void runObjectRecognition();
-            void rotateHandLat();
-            void rotateHandLong();
+
+            bool setPlannerToRunning();
+            bool setPlannerToStopped();
+            bool setPlannerToReady();
+
+            // Perform any validation or processing that should update
+            // the planner or it's visualizations periodically
+            void plannerTimedUpdate();
+            void initializeTarget(Hand * currentHand, GraspableBody * targetObject);
+
+            void incrementGraspIndex();
+
+
+        private:
+
+            OnlinePlannerController(QObject *parent = 0);
+            OnlinePlannerController(OnlinePlannerController *);
+            static OnlinePlannerController * mController;
+
+            db_planner::SqlDatabaseManager * mDbMgr;
+
+            GraspableBody * currentTarget;
+            unsigned int currentGraspIndex;
+            OnLinePlanner * currentPlanner;
+
             void startPlanner();
             void createPlanner();
-            void incrementGraspIndex();
             void stopPlanner();
+            OnLinePlanner * getPlanner();
+
     };
 
 }

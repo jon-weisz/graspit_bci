@@ -33,7 +33,6 @@
 #include <vector>
 #include <QtGui/QShortcut>
 #include "DBase/DBPlanner/sql_database_manager.h"
-#include "BCI/bciStageFrame.h"
 
 
 class QGridLayout;
@@ -72,13 +71,11 @@ private:
   std::vector<QHBoxLayout*> varLayouts;
   std::vector<QSlider*> varConfidence;
   std::vector<QLabel*> varTarget;
-  HandViewWindow * viewWindow;
   GraspPlanningState *mHandObjectState;
   GraspableBody *mObject;
   Hand *mHand;
   int mDisplayState;
   EGPlanner *mPlanner;
-  BciStageFrame * bciStageFrame;
   void init();
   void destroy();
   void setVariableLayout();
@@ -96,15 +93,14 @@ private:
   
 public:
   EigenGraspPlannerDlg(QWidget *parent = 0) : 
-        QDialog(parent),viewWindow(NULL), 
-        bciStageFrame(NULL)
+        QDialog(parent)
 
   {
       setupUi(this);
       init();
 	}
 	
-	~EigenGraspPlannerDlg(){delete bciStageFrame; destroy();}
+    ~EigenGraspPlannerDlg(){destroy();}
 
 public slots:
 	void exitButton_clicked();
@@ -125,8 +121,6 @@ public slots:
 	void plannerInit_clicked();
 	void plannerReset_clicked(); 
 	void plannerStart_clicked();
-	void plannerNext();
-    void plannerExec();
     void updateObject(GraspableBody *b);
 	void plannerTypeBox_activated( const QString & );
 	void autoGraspBox_clicked();
@@ -142,11 +136,6 @@ public slots:
 	void inputGloveBox_toggled( bool on);
 	void inputLoadButton_clicked();
 
-  void resetStateMachine();
-  void cursorPosition(double x, double y);
-  void processNext();
-  void processExec();
-  void redrawCircles();
 
 
 };

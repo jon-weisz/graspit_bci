@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>B1</string>
+    <string>Exec</string>
    </property>
   </widget>
   <widget class="QPushButton" name="button2">
@@ -36,7 +36,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>B2</string>
+    <string>Next</string>
    </property>
   </widget>
   <widget class="QPushButton" name="button3">
@@ -49,7 +49,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>B3</string>
+    <string>rotLat</string>
    </property>
   </widget>
   <widget class="QPushButton" name="button4">
@@ -62,7 +62,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>B4</string>
+    <string>rotLong</string>
    </property>
   </widget>
   <widget class="QLabel" name="currentStateLabel">

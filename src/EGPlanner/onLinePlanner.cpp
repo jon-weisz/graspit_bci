@@ -431,7 +431,7 @@ OnLinePlanner::graspLoop()
 
 
 int
-OnLinePlanner::getFCBufferSize() const
+OnLinePlanner::getFCBufferSize()
 {
 	return mGraspTester->getNumCandidates();
 }

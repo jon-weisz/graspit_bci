@@ -1,6 +1,12 @@
 #include "bciPreviewView.h"
 #include "ui_bciPreviewView.h"
+#include "debug.h"
 
+
+//SbBool testCallback(void *userData, SoQtRenderArea *renderArea)
+//{
+//    DBGA("Rendered preview view");
+//}
 
 BCIPreviewView::BCIPreviewView(QWidget *parent) :
     QWidget(parent),
@@ -39,14 +45,14 @@ BCIPreviewView::BCIPreviewView(QWidget *parent) :
 //    // and add to scene graph
 //    setupIVHandGeometry(currentHand);
 //    ivRoot->addChild(IVHandGeometry);
-
+//    //soQtRenderArea->setPostRenderCallback(testCallback);
 //    // Initialize object geometry and add to scene graph
 //    IVObjectGeometry = static_cast<SoSeparator*>(currentHand->getGrasp()->getObject()->getIVRoot()->copy(false));
 //    ivRoot->addChild(IVObjectGeometry);
 //    soQtRenderArea->setBackgroundColor(SbColor(1.0,1.0,1.0));
-//    soQtRenderArea->scheduleRedraw();
-//    soQtRenderArea->render();
-//    soQtRenderArea->show();
+//    //soQtRenderArea->scheduleRedraw();
+//    //soQtRenderArea->render();
+//    //soQtRenderArea->show();
 
 }
 

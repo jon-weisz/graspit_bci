@@ -1,8 +1,8 @@
 #include "BCI/states/activateRefinementState.h"
 
 
-ActivateRefinementState::ActivateRefinementState(const QString& name,QState* parent):
-    State(name, parent)
+ActivateRefinementState::ActivateRefinementState(BCIControlWindow *_bciControlWindow,QState* parent):
+    State("ActivateRefinementState", parent),bciControlWindow(_bciControlWindow)
 {
 
 }

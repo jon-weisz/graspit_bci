@@ -2,12 +2,16 @@
 #define PLACEMENTLOCATIONSELECTIONSTATE_H
 
 #include "BCI/state.h"
+#include "BCI/bciControlWindow.h"
 
 class PlacementLocationSelectionState:public State
 {
 public:
-    PlacementLocationSelectionState(const QString& name, QState* parent = 0 )
-        :State(name, parent){}
+    PlacementLocationSelectionState(BCIControlWindow *_bciControlWindow, QState* parent = 0 )
+        :State("PlacementLocationSelectionState", parent), bciControlWindow(_bciControlWindow){}
+
+    BCIControlWindow *bciControlWindow;
+
 };
 
 #endif // PLACEMENTLOCATIONSELECTIONSTATE_H
