@@ -27,7 +27,10 @@ class BCIWorldView : public QWidget
     
 public:
     explicit BCIWorldView(QWidget *parent = 0);
-    ~BCIWorldView();
+   ~BCIWorldView();
+public slots:
+    void drawGuides();
+
     
 private:
     Ui::BCIWorldView *ui;

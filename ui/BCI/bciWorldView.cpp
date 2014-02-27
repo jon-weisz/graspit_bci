@@ -40,3 +40,8 @@ BCIWorldView::~BCIWorldView()
 {
     delete ui;
 }
+
+void BCIWorldView::drawGuides()
+{
+
+}
