@@ -229,10 +229,8 @@ FORMS += ui/mainWindow.ui \
 	ui/settingsDlg.ui \
 	ui/Planner/plannerdlg.ui \
 	ui/EGPlanner/egPlannerDlg.ui \
-	ui/EGPlanner/compliantPlannerDlg.ui \
-    ui/BCI/state_views/objectSelectionView.ui \
-    ui/BCI/state_views/form1.ui \
-    ui/BCI/state_views/graspSelectionView.ui
+        ui/EGPlanner/compliantPlannerDlg.ui
+
 
 
 HEADERS += ui/mainWindow.h \
@@ -439,12 +437,15 @@ bci_experiment {
 
 
 
+
    FORMS += ui/BCI/bciStageFrame.ui \
             ui/BCI/bciStageFrame.ui \
             ui/BCI/BCIControlWindowBase.ui \
             ui/BCI/bciWorldView.ui \
             ui/BCI/bciPreviewView.ui \
-            ui/BCI/binaryCommandView.ui
+            ui/BCI/binaryCommandView.ui \
+            ui/BCI/state_views/objectSelectionView.ui \
+            ui/BCI/state_views/graspSelectionView.ui
             
 }
 
