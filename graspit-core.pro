@@ -98,7 +98,9 @@ HEADERS	+= include/barrett.h \
 	include/shadow.h \
         include/Servers/graspitServer.h \
     include/BCI/states/imageRecognitionState.h \
-    include/SoRing.h
+    include/SoRing.h \
+    ui/BCI/state_views/objectSelectionView.h \
+    ui/BCI/state_views/graspSelectionView.h
 
 
 
@@ -179,7 +181,9 @@ SOURCES	+= src/arch.cpp \
 	src/EGPlanner/listPlanner.cpp \
         src/Servers/graspitServer.cpp \
     src/BCI/states/imageRecognitionState.cpp \ 
-    src/SoRing.cpp
+    src/SoRing.cpp \
+    ui/BCI/state_views/objectSelectionView.cpp \
+    ui/BCI/state_views/graspSelectionView.cpp
 
 
 
@@ -225,7 +229,10 @@ FORMS += ui/mainWindow.ui \
 	ui/settingsDlg.ui \
 	ui/Planner/plannerdlg.ui \
 	ui/EGPlanner/egPlannerDlg.ui \
-	ui/EGPlanner/compliantPlannerDlg.ui
+	ui/EGPlanner/compliantPlannerDlg.ui \
+    ui/BCI/state_views/objectSelectionView.ui \
+    ui/BCI/state_views/form1.ui \
+    ui/BCI/state_views/graspSelectionView.ui
 
 
 HEADERS += ui/mainWindow.h \

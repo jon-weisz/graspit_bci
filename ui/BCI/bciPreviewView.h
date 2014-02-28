@@ -33,10 +33,13 @@ public:
     SoSeparator * IVObjectGeometry;
 
     explicit BCIPreviewView(QWidget *parent = 0);
+
+    void showBestGrasp();
     ~BCIPreviewView();
     
 private:
     Ui::BCIPreviewView *ui;
+    SoQtRenderArea *soQtRenderArea;
     void setupIVHandGeometry(Hand * h);
 };
 

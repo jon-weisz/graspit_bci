@@ -173,9 +173,6 @@ namespace bci_experiment
             return op;
         }
 
-
-
-
     }
 
 }

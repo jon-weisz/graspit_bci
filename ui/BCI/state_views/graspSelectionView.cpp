@@ -1,27 +1,34 @@
-#include "bciPreviewView.h"
-#include "ui_bciPreviewView.h"
-#include "debug.h"
-#include <Inventor/Qt/SoQt.h>
-#include <Inventor/Qt/SoQtRenderArea.h>
-#include <Inventor/nodes/SoCone.h>
-#include <Inventor/nodes/SoDirectionalLight.h>
-#include <Inventor/nodes/SoMaterial.h>
-#include <Inventor/nodes/SoPerspectiveCamera.h>
-#include <Inventor/nodes/SoRotationXYZ.h>
-#include <Inventor/nodes/SoSeparator.h>
-#include <Inventor/engines/SoElapsedTime.h>
+#include "graspSelectionView.h"
+#include "ui_graspSelectionView.h"
+#include "BCI/bciService.h"
 
-
-
-BCIPreviewView::BCIPreviewView(QWidget *parent) :
+GraspSelectionView::GraspSelectionView(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::BCIPreviewView)
+    ui(new Ui::GraspSelectionView)
 {
     ui->setupUi(this);
+
+    this->showSelectedGrasp();
+
+    connect(ui->ok, SIGNAL(clicked()), this, SLOT(onOk()));
+    connect(ui->refine_grasp, SIGNAL(clicked()), this, SLOT(onRefineGrasp()));
+
 }
 
-void BCIPreviewView::showBestGrasp()
+void GraspSelectionView::onRefineGrasp()
 {
+    BCIService::getInstance()->emitNext();
+}
+
+void GraspSelectionView::onOk()
+{
+    BCIService::getInstance()->emitExec();
+}
+
+
+void GraspSelectionView::showSelectedGrasp()
+{
+
     // create scene root
     SoSeparator *root = new SoSeparator;
     root->ref();
@@ -49,7 +56,7 @@ void BCIPreviewView::showBestGrasp()
     root->addChild(IVObjectGeometry);
 
     // create rendering window
-    soQtRenderArea = new SoQtRenderArea(this);
+    soQtRenderArea = new SoQtRenderArea(ui->renderArea);
     soQtRenderArea->setBackgroundColor(SbColor(1,1,1));
 
     // camera setup
@@ -60,12 +67,11 @@ void BCIPreviewView::showBestGrasp()
     soQtRenderArea->show();
 
     // show window and enter main loop
-    SoQt::show(this);
-
-
+    SoQt::show(ui->renderArea);
 }
 
-SoSeparator *  buildLinkCopy(Link * l)
+
+SoSeparator* GraspSelectionView::buildLinkCopy(Link * l)
 {
 //    SoSeparator * newRoot = new SoSeparator();
 //    SoTransform * newTran = newTran = l->getIVTran()->copy(false);
@@ -86,13 +92,13 @@ SoSeparator *  buildLinkCopy(Link * l)
 
   \param h a hand to copy
 */
- void BCIPreviewView::setupIVHandGeometry(Hand * h)
+ void GraspSelectionView::setupIVHandGeometry(Hand * h)
 {
   //Set up the scene graphs for the hand geometry
   IVHandGeometry = new SoSeparator;
   //copy palm geometry
-  //IVHandGeometry->addChild(h->getPalm()->getIVRoot()->copy(false));
-  IVHandGeometry->addChild(buildLinkCopy(h->getPalm()));
+  IVHandGeometry->addChild(h->getPalm()->getIVRoot()->copy(false));
+  //IVHandGeometry->addChild(buildLinkCopy(h->getPalm()));
   std::vector<DynamicBody *> links;
 
   //Get link pointers
@@ -101,13 +107,12 @@ SoSeparator *  buildLinkCopy(Link * l)
   //copy link geometry
   for(unsigned int i = 0; i < links.size(); ++i)
   {
-    //IVHandGeometry->addChild(links[i]->getIVRoot()->copy(false));
+    IVHandGeometry->addChild(links[i]->getIVRoot()->copy(false));
      // IVHandGeometry->addChild(buildLinkCopy(links.at(i)));
   }
 }
 
-BCIPreviewView::~BCIPreviewView()
+GraspSelectionView::~GraspSelectionView()
 {
     delete ui;
-    delete soQtRenderArea;
 }

@@ -9,6 +9,7 @@
 #include "BCI/plannerTools.h"
 #include "BCI/worldElementTools.h"
 #include "BCI/bciControlWindow.h"
+#include "BCI/state_views/objectSelectionView.h"
 
 class ObjectSelectionState:public State
 {
@@ -19,7 +20,9 @@ public:
     virtual void onEntry(QEvent *e);
     virtual void onExit(QEvent *e);
 
+private:
     BCIControlWindow *bciControlWindow;
+    ObjectSelectionView *objectSelectionView;
 
 
 public slots:

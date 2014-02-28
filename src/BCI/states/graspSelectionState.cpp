@@ -30,6 +30,9 @@ GraspSelectionState::GraspSelectionState(BCIControlWindow *_bciControlWindow,QSt
 
 void GraspSelectionState::onEntry(QEvent *e)
 {
+
+    graspSelectionView = new GraspSelectionView(bciControlWindow->currentFrame);
+    graspSelectionView->show();
     bciControlWindow->currentState->setText("Grasp Selection State");
     OnlinePlannerController::getInstance()->setPlannerToReady();
 }

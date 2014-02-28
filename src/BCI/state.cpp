@@ -1,5 +1,4 @@
 #include "BCI/state.h"
-#include "BCI/events/bciEvent.h"
 #include <QDebug>
 
 State::State( const QString& name, QState* parent )

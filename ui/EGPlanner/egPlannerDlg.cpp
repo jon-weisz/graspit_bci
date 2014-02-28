@@ -167,23 +167,6 @@ void EigenGraspPlannerDlg::destroy()
   varTarget.clear();
   varLayouts.clear();
 }
-/*
- *  Realigns the hand so that it is facing the object and at a reasonable distance
- */
-void realignHand(Hand * h)
-{
-  double approachDist;
-  h->quickOpen(1.0);
-  if(!h->getGrasp()->getObject())
-    approachDist = 300;
-  else
-    {          
-      approachDist = 300 - h->getTran().translation().len();
-     
-    }
-  h->approachToContact(-approachDist, true);
-  graspItGUI->getIVmgr()->align();
-}
 
 
 /*

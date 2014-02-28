@@ -47,10 +47,6 @@ namespace bci_experiment{
 
         OnLinePlanner * createDefaultPlanner();
 
-
-
-
-
     }
 
 

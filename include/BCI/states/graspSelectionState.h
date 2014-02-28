@@ -8,6 +8,7 @@
 #include "BCI/worldElementTools.h"
 #include "debug.h"
 #include "BCI/bciControlWindow.h"
+#include "BCI/state_views/graspSelectionView.h"
 
 class GraspSelectionState:public HandRotationState
 {
@@ -15,9 +16,13 @@ class GraspSelectionState:public HandRotationState
 
 public:
     GraspSelectionState(BCIControlWindow *_bciControlWindow, QState* parent = 0 );
-    BCIControlWindow *bciControlWindow;
+
 
     virtual void onEntry(QEvent *e);
+
+private:
+    BCIControlWindow *bciControlWindow;
+    GraspSelectionView *graspSelectionView;
 
 public slots:
     void onNext();
