@@ -76,15 +76,12 @@ void EigenGraspPlannerDlg::exitButton_clicked()
 void EigenGraspPlannerDlg::init()
 { 
 
-  this->setWindowState(Qt::WindowMinimized);
   energyBox->insertItem("Hand Contacts");
   energyBox->insertItem("Potential Quality");
   energyBox->insertItem("Contacts AND Quality");
   energyBox->insertItem("Autograsp Quality");
   energyBox->insertItem("Guided Autograsp");
   energyBox->setCurrentItem(1);//CHANGED!
-  initShortcut = new QShortcut (Qt::Key_Semicolon, this);
-  connect(initShortcut, SIGNAL(activated()), this, SLOT(plannerNext()));
   plannerTypeBox->insertItem("Sim. Ann.");
   plannerTypeBox->insertItem("Loop");
   plannerTypeBox->insertItem("Multi-Threaded");
@@ -137,8 +134,6 @@ void EigenGraspPlannerDlg::init()
   inputGloveBox->setEnabled(FALSE);
   inputLoadButton->setEnabled(FALSE);
  
-  graspItGUI->getMainWindow()->mWindow->setWindowState(Qt::WindowMinimized);
-  fprintf(stderr,"INIT DONE \n");
 }
 
 
@@ -223,7 +218,6 @@ void EigenGraspPlannerDlg::setMembers( Hand *h, GraspableBody *b )
   updateVariableLayout();
   updateInputLayout();  
  
-  QTimer::singleShot(100, this, SLOT(plannerTimedUpdate()));
 }
 
 // ----------------------------------- Search State and variable layout management -------------------------------
