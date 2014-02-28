@@ -34,15 +34,18 @@ void unhighlightBody(Body * b)
 
 GraspableBody * highlightNextGraspableBody(GraspableBody *b)
 {
-  if(!b)
-    return b;
-  GraspableBody * nextBody = getNextGraspableBody(b);
-  if(nextBody)
+    GraspableBody * nextBody = getNextGraspableBody(b);
+    //highlight the new body
+    if(nextBody)
     {
-      highlightBody(b, SbColor(1,0,0));
         highlightBody(nextBody, SbColor(0,1,0));
     }
-  return nextBody;
+    //if the old body is not null, return it to the unselected color
+    if(b)
+    {
+        highlightBody(b, SbColor(1,0,0));
+    }
+    return nextBody;
 }
 
 bool unhighlightAll()

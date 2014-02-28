@@ -18,6 +18,7 @@ void ObjectSelectionState::onEntry(QEvent *e)
     // Right now, we run recognition on every entry.
     BCIService::getInstance()->emitRunObjectRecognition();
     OnlinePlannerController::getInstance()->highlightAllBodies();
+    OnlinePlannerController::getInstance()->highlightNextBody();
     bciControlWindow->currentState->setText("Object Selection State");
 }
 

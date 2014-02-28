@@ -78,20 +78,26 @@ void disableTableObjectCollisions()
 
 GraspableBody * getNextGraspableBody(GraspableBody * b)
 {
-  GraspableBody * nextBody = NULL;
-  World * w = getWorld();
-  if(b)
+    GraspableBody * nextBody = NULL;
+    World * w = getWorld();
+    if(b)
     {
-  int bodyIndex = getGraspableBodyIndex(b);
-  if(bodyIndex == -1)
+        int bodyIndex = getGraspableBodyIndex(b);
+        if(bodyIndex == -1)
+        {
+            std::cout << "getNextGraspableBody -- ERROR -- attempted to get next of unregistered body -- \n";
+            return NULL;
+        }
+        int nextBodyIndex = (bodyIndex + 1) % w->getNumGB();
+        nextBody = w->getGB(nextBodyIndex);
+    }
+    else if(w->getNumGB() > 0)
     {
-      std::cout << "getNextGraspableBody -- ERROR -- attempted to get next of unregistered body -- \n";
-        return NULL;
+         nextBody = getWorld()->getGB(0);
     }
-  int nextBodyIndex = (bodyIndex + 1) % w->getNumGB();
-  nextBody = getWorld()->getGB(nextBodyIndex);
-    }
-  return nextBody;
+
+
+    return nextBody;
 }
 
 
