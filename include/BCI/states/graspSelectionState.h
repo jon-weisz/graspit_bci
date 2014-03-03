@@ -19,6 +19,7 @@ public:
 
 
     virtual void onEntry(QEvent *e);
+    virtual void onExit(QEvent *e);
 
 private:
     BCIControlWindow *bciControlWindow;

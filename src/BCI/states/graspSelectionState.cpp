@@ -38,6 +38,11 @@ void GraspSelectionState::onEntry(QEvent *e)
 }
 
 
+void GraspSelectionState::onExit(QEvent *e)
+{
+    bciControlWindow->currentFrame->removeChild(graspSelectionView);
+}
+
 void GraspSelectionState::onNext()
 {
     OnlinePlannerController::getInstance()->incrementGraspIndex();

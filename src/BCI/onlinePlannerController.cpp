@@ -156,17 +156,26 @@ namespace bci_experiment
 
     void OnlinePlannerController::runObjectRecognition()
     {
+        // If we haven't set up a target and there are graspable bodies in the world
+        // target body 0
+        if(!currentTarget && getWorld()->getNumGB())
+            currentTarget = getWorld()->getGB(0);
+    }
+
+    bool OnlinePlannerController::hasRecognizedObjects()
+    {
+       return world_element_tools::getWorld()->getNumGB();
+    }
+
+    GraspableBody* OnlinePlannerController::getCurrentBody()
+    {
+        return currentTarget;
     }
 
 
     void OnlinePlannerController::createPlanner()
     {
         currentPlanner = planner_tools::createDefaultPlanner();
-
-        // If we haven't set up a target and there are graspable bodies in the world
-        // target body 0
-        if(!currentTarget && getWorld()->getNumGB())
-            currentTarget = getWorld()->getGB(0);
 
         // If a valid target exists
         if(currentTarget){

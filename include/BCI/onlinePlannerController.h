@@ -37,6 +37,7 @@ namespace bci_experiment{
             void initializeDbInterface();
             void updateObject(GraspableBody * newTarget);
             void runObjectRecognition();
+            bool hasRecognizedObjects();
 
             // Needs the align method to move here
             // Needs the align method broken in to the GUI part and the
@@ -51,6 +52,8 @@ namespace bci_experiment{
             void highlightAllBodies();
             void unhighlightAllBodies();
             void highlightNextBody();
+
+            GraspableBody* getCurrentBody();
 
             bool setPlannerToRunning();
             bool setPlannerToStopped();

@@ -40,7 +40,7 @@ class ObjectSelectionView : public QWidget
     
 public:
     explicit ObjectSelectionView(QWidget *parent = 0);
-    void showSelectedObject();
+    void showSelectedObject(GraspableBody * currentTarget);
     ~ObjectSelectionView();
     
 private:
@@ -48,6 +48,9 @@ private:
     Ui::ObjectSelectionView *ui;
     SoQtRenderArea *soQtRenderArea;
     SoSeparator * IVObjectGeometry;
+    SoSeparator *root;
+
+    void initRenderArea();
 
 public slots:
     void onSelect();

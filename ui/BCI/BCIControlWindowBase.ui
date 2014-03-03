@@ -26,7 +26,7 @@
     <string>Current State:</string>
    </property>
   </widget>
-  <widget class="BinaryCommandView" name="bciControlWidget" native="true">
+  <widget class="SingleBandControl" name="bciControlWidget" native="true">
    <property name="geometry">
     <rect>
      <x>690</x>
@@ -84,9 +84,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>BinaryCommandView</class>
+   <class>SingleBandControl</class>
    <extends>QWidget</extends>
-   <header>BCI/binaryCommandView.h</header>
+   <header>BCI/control_views/singleBandControl.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

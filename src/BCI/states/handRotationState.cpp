@@ -18,12 +18,10 @@ HandRotationState::HandRotationState(QString name , BCIControlWindow *_bciContro
 
 void HandRotationState::onRotateHandLong()
 {
-    DBGA("onRotateHandLong");
     OnlinePlannerController::getInstance()->rotateHandLong();
 }
 
 void HandRotationState::onRotateHandLat()
 {
-    DBGA("onRotateHandLat");
     OnlinePlannerController::getInstance()->rotateHandLat();
 }

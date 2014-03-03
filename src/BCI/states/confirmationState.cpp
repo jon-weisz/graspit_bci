@@ -12,12 +12,23 @@ using bci_experiment::OnlinePlannerController;
 ConfirmationState::ConfirmationState(BCIControlWindow *_bciControlWindow,QState* parent):
         State("ConfirmationState", parent),bciControlWindow(_bciControlWindow)
 {    
-    addSelfTransition(BCIService::getInstance(),SIGNAL(exec()), this, SLOT(onExec()));
 }
 
 
-
-void ConfirmationState::onExec()
+void ConfirmationState::onEntry(QEvent *e)
 {
-    //OnlinePlannerController::getSingleton()->executeCurrentGrasp();
+    confirmationView = new ConfirmationView(bciControlWindow->currentFrame);
+    confirmationView->show();
+
+    bciControlWindow->currentState->setText("Confirmation State");
+
 }
+
+
+void ConfirmationState::onExit(QEvent * e)
+{
+    Q_UNUSED(e);
+    bciControlWindow->currentFrame->removeChild(confirmationView);
+}
+
+

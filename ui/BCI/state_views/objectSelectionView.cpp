@@ -8,7 +8,7 @@ ObjectSelectionView::ObjectSelectionView(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    this->showSelectedObject();
+    initRenderArea();
 
     connect(ui->next, SIGNAL(clicked()), this, SLOT(onNext()));
     connect(ui->select, SIGNAL(clicked()), this, SLOT(onSelect()));
@@ -16,14 +16,10 @@ ObjectSelectionView::ObjectSelectionView(QWidget *parent) :
 
 }
 
-void ObjectSelectionView::showSelectedObject()
+void ObjectSelectionView::initRenderArea()
 {
-    if(soQtRenderArea)
-    {
-        delete soQtRenderArea;
-    }
     // create scene root
-    SoSeparator *root = new SoSeparator;
+    root = new SoSeparator;
     root->ref();
 
     // camera
@@ -39,14 +35,6 @@ void ObjectSelectionView::showSelectedObject()
     material->diffuseColor.setValue(1.0, 0.0, 0.0);
     root->addChild(material);
 
-    //add hand
-    Hand *currentHand =   graspItGUI->getIVmgr()->getWorld()->getCurrentHand();
-    //setupIVHandGeometry(currentHand);
-    //root->addChild(IVHandGeometry);
-
-    //add object
-    IVObjectGeometry = static_cast<SoSeparator*>(currentHand->getGrasp()->getObject()->getIVRoot()->copy(false));
-    root->addChild(IVObjectGeometry);
 
     // create rendering window
     soQtRenderArea = new SoQtRenderArea(ui->rendeArea);
@@ -61,6 +49,36 @@ void ObjectSelectionView::showSelectedObject()
 
     // show window and enter main loop
     SoQt::show(ui->rendeArea);
+}
+
+void ObjectSelectionView::showSelectedObject(GraspableBody *newTarget)
+{
+    //add new target
+    if(newTarget)
+    {
+        SoNode* newTargetNode = newTarget->getIVRoot()->copy(false);
+
+        root->removeAllChildren();
+
+        // camera
+        SoQtExaminerViewer *mainViewer_ =  graspItGUI->getIVmgr()->getViewer();
+        SoCamera *camera = static_cast<SoCamera *>(mainViewer_->getCamera()->copy());
+        root->addChild(camera);
+
+        // light
+        root->addChild(new SoDirectionalLight);
+
+        // material
+        SoMaterial *material = new SoMaterial;
+        material->diffuseColor.setValue(1.0, 0.0, 0.0);
+
+        root->addChild(material);
+
+        root->addChild(newTargetNode);
+    }
+
+
+    soQtRenderArea->show();
 }
 
 void ObjectSelectionView::onNext()

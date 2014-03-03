@@ -97,10 +97,18 @@ HEADERS	+= include/barrett.h \
 	include/FitParabola.h \
 	include/shadow.h \
         include/Servers/graspitServer.h \
-    include/BCI/states/imageRecognitionState.h \
     include/SoRing.h \
     ui/BCI/state_views/objectSelectionView.h \
-    ui/BCI/state_views/graspSelectionView.h
+    ui/BCI/state_views/graspSelectionView.h \
+    ui/BCI/state_views/confirmationView.h \
+    ui/BCI/state_views/placementLocationSelectionView.h \
+    include/BCI/states/objectRecognitionState.h \
+    ui/BCI/state_views/objectRecognitionView.h \
+    ui/BCI/control_views/singleBandControl.h \
+    include/BCI/states/executionState.h \
+    ui/BCI/state_views/executionView.h \
+    include/BCI/states/stoppedExecutionState.h \
+    ui/BCI/state_views/stoppedExecutionView.h
 
 
 
@@ -180,10 +188,19 @@ SOURCES	+= src/arch.cpp \
 	src/EGPlanner/onLineGraspInterface.cpp \
 	src/EGPlanner/listPlanner.cpp \
         src/Servers/graspitServer.cpp \
-    src/BCI/states/imageRecognitionState.cpp \ 
     src/SoRing.cpp \
     ui/BCI/state_views/objectSelectionView.cpp \
-    ui/BCI/state_views/graspSelectionView.cpp
+    ui/BCI/state_views/graspSelectionView.cpp \
+    ui/BCI/state_views/confirmationView.cpp \
+    src/BCI/states/placementLocationSelectionState.cpp \
+    ui/BCI/state_views/placementLocationSelectionView.cpp \
+    src/BCI/states/objectRecognitionState.cpp \
+    ui/BCI/state_views/objectRecognitionView.cpp \
+    ui/BCI/control_views/singleBandControl.cpp \
+    include/BCI/states/executionState.cpp \
+    ui/BCI/state_views/executionView.cpp \
+    include/BCI/states/stoppedExecutionState.cpp \
+    ui/BCI/state_views/stoppedExecutionView.cpp
 
 
 
@@ -229,7 +246,13 @@ FORMS += ui/mainWindow.ui \
 	ui/settingsDlg.ui \
 	ui/Planner/plannerdlg.ui \
 	ui/EGPlanner/egPlannerDlg.ui \
-        ui/EGPlanner/compliantPlannerDlg.ui
+        ui/EGPlanner/compliantPlannerDlg.ui \
+    ui/BCI/state_views/confirmationView.ui \
+    ui/BCI/state_views/placementLocationSelectionView.ui \
+    ui/BCI/state_views/objectRecognitionView.ui \
+    ui/BCI/control_views/singleBandControl.ui \
+    ui/BCI/state_views/executionView.ui \
+    ui/BCI/state_views/stoppedExecutionView.ui
 
 
 
