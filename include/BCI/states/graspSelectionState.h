@@ -5,7 +5,6 @@
 #include "BCI/states/handRotationState.h"
 
 #include <QSignalTransition>
-#include "BCI/worldElementTools.h"
 #include "debug.h"
 #include "BCI/bciControlWindow.h"
 #include "BCI/state_views/graspSelectionView.h"

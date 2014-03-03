@@ -2,9 +2,9 @@
 #define ONLINEPLANNERCONTROLLER_H
 
 #include <QObject>
-#include "BCI/uiTools.h"
-#include "BCI/plannerTools.h"
-#include "BCI/worldElementTools.h"
+#include "BCI/utils/uiTools.h"
+#include "BCI/utils/plannerTools.h"
+#include "BCI/utils/worldElementTools.h"
 #include "robot.h"
 #include "searchState.h"
 #include "grasp.h"

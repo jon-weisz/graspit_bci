@@ -387,9 +387,9 @@ protobuf {
 
 #-------------------------------------- BCI Experiment code -----------------------------------------------------------
 bci_experiment {
-   SOURCES += src/BCI/uiTools.cpp \
-              src/BCI/worldElementTools.cpp \
-              src/BCI/plannerTools.cpp \              
+   SOURCES += src/BCI/utils/uiTools.cpp \
+              src/BCI/utils/worldElementTools.cpp \
+              src/BCI/utils/plannerTools.cpp \
               src/BCI/onlinePlannerController.cpp \
               src/BCI/state.cpp \
               src/BCI/BCIStateMachine.cpp \
@@ -421,9 +421,9 @@ bci_experiment {
 
 
 
-   HEADERS += include/BCI/uiTools.h \
-               include/BCI/worldElementTools.h \
-               include/BCI/plannerTools.h \
+   HEADERS += include/BCI/utils/uiTools.h \
+               include/BCI/utils/worldElementTools.h \
+               include/BCI/utils/plannerTools.h \
                include/BCI/onlinePlannerController.h \
                include/Servers/graspitProtobufServer.h \ 
                include/BCI/uiTools.h \

@@ -6,7 +6,6 @@
 
 #include <QDialog>
 #include "ui_BCIControlWindowBase.h"
-#include "BCI/uiTools.h"
 #include "BCI/bciService.h"
 #include "debug.h"
 

@@ -12,7 +12,6 @@ ObjectSelectionView::ObjectSelectionView(QWidget *parent) :
 
     connect(ui->next, SIGNAL(clicked()), this, SLOT(onNext()));
     connect(ui->select, SIGNAL(clicked()), this, SLOT(onSelect()));
-    connect(ui->prev, SIGNAL(clicked()), this, SLOT(onPrev()));
 
 }
 
@@ -82,11 +81,6 @@ void ObjectSelectionView::showSelectedObject(GraspableBody *newTarget)
 }
 
 void ObjectSelectionView::onNext()
-{
-    BCIService::getInstance()->emitNext();
-}
-
-void ObjectSelectionView::onPrev()
 {
     BCIService::getInstance()->emitNext();
 }

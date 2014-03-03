@@ -3,7 +3,6 @@
 
 
 #include "BCI/states/handRotationState.h"
-#include "BCI/worldElementTools.h"
 #include "BCI/bciControlWindow.h"
 
 class OnlinePlanningState : public HandRotationState

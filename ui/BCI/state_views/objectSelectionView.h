@@ -55,7 +55,6 @@ private:
 public slots:
     void onSelect();
     void onNext();
-    void onPrev();
 };
 
 #endif // OBJECTSELECTIONVIEW_H

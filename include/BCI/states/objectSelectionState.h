@@ -6,8 +6,6 @@
 #include "world.h"
 #include "BCI/state.h"
 #include "BCI/onlinePlannerController.h"
-#include "BCI/plannerTools.h"
-#include "BCI/worldElementTools.h"
 #include "BCI/bciControlWindow.h"
 #include "BCI/state_views/objectSelectionView.h"
 
