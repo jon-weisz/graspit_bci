@@ -37,9 +37,10 @@ void BCIStateMachine::start()
     //exec always goes to the next state
     objectRecognitionState->addTransition(bciService,SIGNAL(exec()), objectSelectionState);
     objectSelectionState->addTransition(bciService,SIGNAL(exec()), initialGraspSelectionState);
-    initialGraspSelectionState->addTransition(bciService, SIGNAL(next()), activateRefinementState);
+    initialGraspSelectionState->addTransition(bciService, SIGNAL(goToNextState2()), activateRefinementState);
+    initialGraspSelectionState->addTransition(bciService, SIGNAL(goToPreviousState()), objectSelectionState);
     initialGraspSelectionState->addTransition(bciService, SIGNAL(exec()), confirmationState);
-    activateRefinementState->addTransition(bciService, SIGNAL(exec()), onlinePlanningState);
+    activateRefinementState->addTransition(bciService, SIGNAL(goToNextState1()), confirmationState);
     finalGraspSelectionState->addTransition(bciService, SIGNAL(exec()),confirmationState);
     onlinePlanningState->addTransition(bciService, SIGNAL(exec()), finalGraspSelectionState);
     confirmationState->addTransition(bciService, SIGNAL(exec()), executionState);

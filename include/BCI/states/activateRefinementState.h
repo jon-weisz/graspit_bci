@@ -1,15 +1,34 @@
 #ifndef STARTSTATE_H
 #define STARTSTATE_H
 
-#include "BCI/state.h"
+#include "BCI/states/handRotationState.h"
+
+#include <QSignalTransition>
+#include "debug.h"
 #include "BCI/bciControlWindow.h"
+#include "BCI/state_views/activeRefinementView.h"
 
-class ActivateRefinementState: public State
+class ActivateRefinementState: public HandRotationState
 {
-public:
-    ActivateRefinementState(BCIControlWindow *_bciControlWindow, QState* parent = 0);
+    Q_OBJECT
 
+public:
+    ActivateRefinementState(BCIControlWindow *_bciControlWindow, QState* parent = 0 );
+
+
+    virtual void onEntry(QEvent *e);
+    virtual void onExit(QEvent *e);
+
+private:
     BCIControlWindow *bciControlWindow;
+    ActiveRefinementView *activeRefinementView;
+
+public slots:
+    void onRotateHandLat();
+    void onRotateHandLong();
 };
 
+
 #endif // STARTSTATE_H
+
+

@@ -20,6 +20,7 @@
 
 //class OnLinePlanner * op;
 class GraspableBody;
+class GraspPlanningState;
 
 namespace bci_experiment{
 
@@ -53,11 +54,15 @@ namespace bci_experiment{
             void unhighlightAllBodies();
             void highlightNextBody();
 
-            GraspableBody* getCurrentBody();
+            GraspableBody* getCurrentTarget();
+            Hand * getHand();
+            const GraspPlanningState * getGrasp(int index);
 
             bool setPlannerToRunning();
             bool setPlannerToStopped();
             bool setPlannerToReady();
+
+            void connectToPlannerUpdateSignal();
 
             // Perform any validation or processing that should update
             // the planner or it's visualizations periodically

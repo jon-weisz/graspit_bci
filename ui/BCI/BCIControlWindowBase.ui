@@ -26,16 +26,6 @@
     <string>Current State:</string>
    </property>
   </widget>
-  <widget class="SingleBandControl" name="bciControlWidget" native="true">
-   <property name="geometry">
-    <rect>
-     <x>690</x>
-     <y>380</y>
-     <width>241</width>
-     <height>191</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QLabel" name="currentState">
    <property name="geometry">
     <rect>
@@ -81,12 +71,6 @@
    <class>BCIWorldView</class>
    <extends>QWidget</extends>
    <header>BCI/bciWorldView.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>SingleBandControl</class>
-   <extends>QWidget</extends>
-   <header>BCI/control_views/singleBandControl.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

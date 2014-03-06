@@ -1,12 +1,12 @@
 #include "BCI/states/graspSelectionState.h"
 #include "BCI/bciService.h"
+#include "BCI/onlinePlannerController.h"
 
 using bci_experiment::OnlinePlannerController;
-using bci_experiment::world_element_tools::getWorld;
 
 
 GraspSelectionState::GraspSelectionState(BCIControlWindow *_bciControlWindow,QState* parent):
-    HandRotationState("GraspSelectionState",_bciControlWindow, parent),bciControlWindow(_bciControlWindow)
+    State("GraspSelectionState", parent),bciControlWindow(_bciControlWindow)
 {
     /* What should next do?
 
@@ -23,18 +23,20 @@ GraspSelectionState::GraspSelectionState(BCIControlWindow *_bciControlWindow,QSt
     */
 
     addSelfTransition(BCIService::getInstance(),SIGNAL(next()), this, SLOT(onNext()));
-    addSelfTransition(BCIService::getInstance(),SIGNAL(rotLat()), this, SLOT(onRotateHandLat()));
-    addSelfTransition(BCIService::getInstance(),SIGNAL(rotLong()), this, SLOT(onRotateHandLong()));
+
+
 }
 
 
 void GraspSelectionState::onEntry(QEvent *e)
 {
-
+    OnlinePlannerController::getInstance()->setPlannerToReady();
+    OnlinePlannerController::getInstance()->setPlannerToRunning();
     graspSelectionView = new GraspSelectionView(bciControlWindow->currentFrame);
+    bciControlWindow->currentFrame->show();
     graspSelectionView->show();
     bciControlWindow->currentState->setText("Grasp Selection State");
-    OnlinePlannerController::getInstance()->setPlannerToReady();
+
 }
 
 
@@ -46,16 +48,6 @@ void GraspSelectionState::onExit(QEvent *e)
 void GraspSelectionState::onNext()
 {
     OnlinePlannerController::getInstance()->incrementGraspIndex();
-}
-
-void GraspSelectionState::onRotateHandLong()
-{
-    OnlinePlannerController::getInstance()->rotateHandLong();
-}
-
-void GraspSelectionState::onRotateHandLat()
-{
-    OnlinePlannerController::getInstance()->rotateHandLat();
 }
 
 

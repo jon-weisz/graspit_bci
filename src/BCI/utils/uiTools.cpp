@@ -1,4 +1,4 @@
-#include "BCI/uiTools.h"
+#include "BCI/utils/uiTools.h"
 #include "world.h"
 #include "body.h"
 #include "ivmgr.h"
@@ -7,7 +7,7 @@
 #include "robot.h"
 #include <Inventor/nodes/SoCamera.h>
 #include <searchState.h>
-#include "BCI/worldElementTools.h"
+#include "BCI/utils/worldElementTools.h"
 
 using bci_experiment::world_element_tools::getWorld;
 using bci_experiment::world_element_tools::getObjectByName;

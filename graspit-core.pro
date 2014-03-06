@@ -97,7 +97,9 @@ HEADERS	+= include/barrett.h \
 	include/FitParabola.h \
 	include/shadow.h \
         include/Servers/graspitServer.h \
-    include/SoRing.h
+    include/SoRing.h \
+    ui/BCI/state_views/graspView.h \
+    ui/BCI/qtWaitingSpinner.h
 
 
 
@@ -178,7 +180,9 @@ SOURCES	+= src/arch.cpp \
 	src/EGPlanner/onLineGraspInterface.cpp \
 	src/EGPlanner/listPlanner.cpp \
         src/Servers/graspitServer.cpp \
-    src/SoRing.cpp
+    src/SoRing.cpp \
+    ui/BCI/state_views/graspView.cpp \
+    ui/BCI/qtWaitingSpinner.cpp
 
 
 
@@ -225,7 +229,8 @@ FORMS += ui/mainWindow.ui \
 	ui/settingsDlg.ui \
 	ui/Planner/plannerdlg.ui \
 	ui/EGPlanner/egPlannerDlg.ui \
-        ui/EGPlanner/compliantPlannerDlg.ui
+        ui/EGPlanner/compliantPlannerDlg.ui \
+    ui/BCI/state_views/graspView.ui
 
 
 
@@ -417,7 +422,8 @@ bci_experiment {
                 src/BCI/states/executionState.cpp \
                 ui/BCI/state_views/executionView.cpp \
                 src/BCI/states/stoppedExecutionState.cpp \
-                ui/BCI/state_views/stoppedExecutionView.cpp
+                ui/BCI/state_views/stoppedExecutionView.cpp \
+ ui/BCI/state_views/activeRefinementView.cpp
 
 
 
@@ -453,7 +459,11 @@ bci_experiment {
                 include/BCI/states/executionState.h \
                 ui/BCI/state_views/executionView.h \
                 include/BCI/states/stoppedExecutionState.h \
-                ui/BCI/state_views/stoppedExecutionView.h
+                ui/BCI/state_views/stoppedExecutionView.h \
+    ui/BCI/state_views/activeRefinementView.h
+
+
+
 
 
 
@@ -471,7 +481,8 @@ bci_experiment {
     ui/BCI/state_views/objectRecognitionView.ui \
     ui/BCI/control_views/singleBandControl.ui \
     ui/BCI/state_views/executionView.ui \
-    ui/BCI/state_views/stoppedExecutionView.ui
+    ui/BCI/state_views/stoppedExecutionView.ui \
+ui/BCI/state_views/activeRefinementView.ui
             
 }
 

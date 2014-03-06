@@ -298,6 +298,7 @@ public:
   SoMFColor getEmissiveColor() const;
   //! Sets the emissiveColor of this body for rendering
   void setEmissiveColor(SbColor &color);
+  void setEmissiveColorIgnored();
 
   //! Shows or hides the friction cones for this body
   void showFrictionCones(bool on, int vc=0);

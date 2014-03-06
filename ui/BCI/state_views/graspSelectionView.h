@@ -27,6 +27,8 @@
 #include "world.h"
 #include "robot.h"
 #include "grasp.h"
+#include "BCI/onlinePlannerController.h"
+#include "BCI/qtWaitingSpinner.h"
 
 namespace Ui {
 class GraspSelectionView;
@@ -44,16 +46,15 @@ public:
 public slots:
     void onRefineGrasp();
     void onOk();
+    void onBack();
 
 
     
 private:
-     void setupIVHandGeometry(Hand * h);
-     SoSeparator * buildLinkCopy(Link * l);
+     void showSpinner();
+     void hideSpinner();
 
-     SoQtRenderArea *soQtRenderArea;
-     SoSeparator *IVHandGeometry;
-     SoSeparator * IVObjectGeometry;
+     QtWaitingSpinner* spinner;
 
     Ui::GraspSelectionView *ui;
 };

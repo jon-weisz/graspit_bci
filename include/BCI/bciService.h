@@ -16,6 +16,10 @@ class BCIService:public QObject
 
 public:
 
+    void emitGoToNextState1(){emit goToNextState1();}
+    void emitGoToNextState2(){emit goToNextState2();}
+    void emitGoToPreviousState(){emit goToPreviousState();}
+
 
     void emitExec(){emit exec();}
     void emitNext(){emit next();}
@@ -39,6 +43,15 @@ public:
     static BCIService* getInstance();
 
 signals:
+
+    //tell state machine to go to next state
+    void goToNextState1();
+    //tell state machine to go to second option for next state
+    void goToNextState2();
+    //tell state machine to return to previous state;
+    void goToPreviousState();
+
+
 
 
     //! Signal to planner to execute

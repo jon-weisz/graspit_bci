@@ -22,9 +22,9 @@ namespace bci_experiment
         mDbMgr(NULL),
         currentTarget(NULL),
         currentGraspIndex(0),
-	currentPlanner(NULL)
-
+        currentPlanner(NULL)
     {
+
     }
 
 
@@ -129,7 +129,9 @@ namespace bci_experiment
 
         // Set the hand to it's highest ranked grasp
         if(currentPlanner->getListSize())
+        {
             currentPlanner->getGrasp(0)->execute(currentHand);
+        }
 
         // Realign the hand with respect to the object, moving the hand back to its
         // pregrasp pose
@@ -167,7 +169,7 @@ namespace bci_experiment
        return world_element_tools::getWorld()->getNumGB();
     }
 
-    GraspableBody* OnlinePlannerController::getCurrentBody()
+    GraspableBody* OnlinePlannerController::getCurrentTarget()
     {
         return currentTarget;
     }
@@ -178,12 +180,14 @@ namespace bci_experiment
         currentPlanner = planner_tools::createDefaultPlanner();
 
         // If a valid target exists
-        if(currentTarget){
+        if(currentTarget)
+        {
             initializeTarget(currentPlanner->getHand(), currentTarget);
-            //initializeDbInterface();
         }
 
     }
+
+
 
 
     void OnlinePlannerController::startPlanner()
@@ -210,8 +214,8 @@ namespace bci_experiment
 
     bool OnlinePlannerController::setPlannerToRunning()
     {
-        if(!currentPlanner || !currentPlanner->getTargetState()->getObject())
-            return false;
+        //if(!currentPlanner || !currentPlanner->getTargetState()->getObject())
+        //    return false;
         if(currentPlanner && currentPlanner->getState()==READY)
         {
             // might want to connect to idle sensor instead of own thread.
@@ -248,6 +252,16 @@ namespace bci_experiment
     void OnlinePlannerController::incrementGraspIndex()
     {
         currentGraspIndex = (currentGraspIndex + 1)%(currentPlanner->getListSize());
+    }
+
+    Hand * OnlinePlannerController::getHand()
+    {
+        return currentPlanner->getHand();
+    }
+
+    const GraspPlanningState * OnlinePlannerController::getGrasp(int index)
+    {
+        return currentPlanner->getGrasp(index);
     }
 
 }

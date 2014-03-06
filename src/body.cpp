@@ -198,7 +198,7 @@ Body::cloneFrom(const Body* original)
 	for (int i=0; i<numGeomChildren; i++) {
 		IVGeomRoot->addChild( original->getIVGeomRoot()->getChild(i) );
 	}
-	addIVMat(false);//CHANGED! From TRUE, now they all don't look to same transparency
+    addIVMat(false);//CHANGED! From TRUE, now they all don't look to same transparency
 
 
 	//add a CLONE to collision detection
@@ -726,6 +726,12 @@ Body::setEmissiveColor(SbColor & color)
 {
   IVMat->emissiveColor.setIgnored(false);
   IVMat->emissiveColor.setValue(color);
+}
+
+void
+Body::setEmissiveColorIgnored()
+{
+  IVMat->emissiveColor.setIgnored(true);
 }
 
   
