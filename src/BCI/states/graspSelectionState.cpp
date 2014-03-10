@@ -23,6 +23,7 @@ GraspSelectionState::GraspSelectionState(BCIControlWindow *_bciControlWindow,QSt
     */
 
     addSelfTransition(BCIService::getInstance(),SIGNAL(next()), this, SLOT(onNext()));
+    addSelfTransition(BCIService::getInstance(),SIGNAL(plannerUpdated()), this, SLOT(onPlannerUpdated()));
 
 
 }
@@ -48,6 +49,19 @@ void GraspSelectionState::onExit(QEvent *e)
 void GraspSelectionState::onNext()
 {
     OnlinePlannerController::getInstance()->incrementGraspIndex();
+}
+
+void GraspSelectionState::onPlannerUpdated()
+{
+    const GraspPlanningState *bestGrasp = OnlinePlannerController::getInstance()->getGrasp(0);
+
+    if(bestGrasp)
+    {
+        const GraspPlanningState *graspPlanningState = OnlinePlannerController::getInstance()->getGrasp(0);
+        graspSelectionView->showSelectedGrasp(graspPlanningState);
+        bciControlWindow->currentState->setText("Planner Updated");
+    }
+
 }
 
 

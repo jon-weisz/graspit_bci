@@ -164,12 +164,22 @@ namespace bci_experiment
                  return NULL;
              }
 
+             GraspPlanningState *mHandObjectState = new GraspPlanningState(w->getCurrentHand());
+             mHandObjectState->setPositionType(SPACE_AXIS_ANGLE);
+             mHandObjectState->setObject(w->getGB(0));
+             mHandObjectState->setRefTran(w->getGB(0)->getTran());
+             mHandObjectState->reset();
+
              OnLinePlanner * op = new OnLinePlanner(w->getCurrentHand());
              op->setContactType(CONTACT_PRESET);
              op->setEnergyType(ENERGY_CONTACT_QUALITY);
              op->setMaxSteps(2000);
-             op->resetPlanner();
+             op->setModelState(mHandObjectState);
+
              w->setCurrentPlanner(op);
+
+             op->resetPlanner();
+
             return op;
         }
 

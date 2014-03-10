@@ -143,7 +143,7 @@ public:
  
  
   //! Update handles the processing of viewWindows as they get moved about
-  bool update(HandObjectState & s, Hand & cloneHand);
+  bool update(const GraspPlanningState & s, Hand & cloneHand);
 
   //! Getter for RenderArea
   SoQtRenderArea * getRenderArea(){return viewViewer;}

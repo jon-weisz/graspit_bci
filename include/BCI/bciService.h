@@ -39,6 +39,7 @@ public:
 
     void emitAnalyzeApproachDir(GraspPlanningState * gs){emit analyzeApproachDir(gs);}
 
+    void onPlannerUpdated(){emit plannerUpdated();}
 
     static BCIService* getInstance();
 
@@ -51,7 +52,7 @@ signals:
     //tell state machine to return to previous state;
     void goToPreviousState();
 
-
+    void plannerUpdated();
 
 
     //! Signal to planner to execute

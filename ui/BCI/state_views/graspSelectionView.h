@@ -29,6 +29,7 @@
 #include "grasp.h"
 #include "BCI/onlinePlannerController.h"
 #include "BCI/qtWaitingSpinner.h"
+#include "BCI/handView.h"
 
 namespace Ui {
 class GraspSelectionView;
@@ -40,7 +41,7 @@ class GraspSelectionView : public QWidget
     
 public:
     explicit GraspSelectionView(QWidget *parent = 0);
-    void showSelectedGrasp();
+    void showSelectedGrasp(const GraspPlanningState *graspPlanningState);
     ~GraspSelectionView();
 
 public slots:
@@ -55,6 +56,7 @@ private:
      void hideSpinner();
 
      QtWaitingSpinner* spinner;
+     HandView *handView;
 
     Ui::GraspSelectionView *ui;
 };

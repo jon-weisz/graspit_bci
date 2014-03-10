@@ -1,5 +1,6 @@
 #include "BCI/onlinePlannerController.h"
-
+#include "BCI/bciService.h"
+#include "debug.h"
 using bci_experiment::world_element_tools::getWorld;
 
 namespace bci_experiment
@@ -63,6 +64,7 @@ namespace bci_experiment
                 //updateResults(true, false);
             }
         }
+        BCIService::getInstance()->onPlannerUpdated();
         QTimer::singleShot(1000, this, SLOT(plannerTimedUpdate()));
     }
 
@@ -175,31 +177,8 @@ namespace bci_experiment
     }
 
 
-    void OnlinePlannerController::createPlanner()
-    {
-        currentPlanner = planner_tools::createDefaultPlanner();
-
-        // If a valid target exists
-        if(currentTarget)
-        {
-            initializeTarget(currentPlanner->getHand(), currentTarget);
-        }
-
-    }
 
 
-
-
-    void OnlinePlannerController::startPlanner()
-    {
-        if(!currentPlanner || !currentPlanner->getTargetState()->getObject())
-        {
-            // emit error transition
-
-        }
-        currentPlanner->startThread();
-        currentPlanner->startPlanner();
-    }
 
     bool OnlinePlannerController::setPlannerToStopped()
     {
@@ -219,8 +198,9 @@ namespace bci_experiment
         if(currentPlanner && currentPlanner->getState()==READY)
         {
             // might want to connect to idle sensor instead of own thread.
-            currentPlanner->startThread();
+            //currentPlanner->startThread();
             currentPlanner->startPlanner();
+            plannerTimedUpdate();
         }
         return true;
     }
@@ -228,12 +208,20 @@ namespace bci_experiment
     //puts planner in ready state
     bool OnlinePlannerController::setPlannerToReady()
     {
+
         if(!currentPlanner)
         {
-            createPlanner();
+            currentPlanner = planner_tools::createDefaultPlanner();
+
+            // If a valid target exists
+            if(currentTarget)
+            {
+                initializeTarget(currentPlanner->getHand(), currentTarget);
+            }
         }
 
-        currentPlanner->stopPlanner();
+        //currentPlanner->stopPlanner();
+        currentPlanner->resetPlanner();
         return true;
     }
 
@@ -261,7 +249,11 @@ namespace bci_experiment
 
     const GraspPlanningState * OnlinePlannerController::getGrasp(int index)
     {
-        return currentPlanner->getGrasp(index);
+        if(currentPlanner->getListSize() > 0)
+        {
+            return currentPlanner->getGrasp(index);
+        }
+        return NULL;
     }
 
 }

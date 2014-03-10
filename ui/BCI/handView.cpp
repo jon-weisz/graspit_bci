@@ -148,7 +148,7 @@ void  copyLinkTransforms(Hand * h, SoSeparator * handIVRoot)
 */
 
 bool
-HandView::update(HandObjectState & s, Hand & cloneHand)
+HandView::update(const GraspPlanningState & s, Hand & cloneHand)
 {
   double testResult = s.getAttribute("testResult");
   double stateID = s.getAttribute("graspId");
@@ -358,7 +358,7 @@ void HandViewWindow::initViews(Hand * h)
 bool HandViewWindow::addView(HandObjectState& s, int i)
 {     
   if (i < maxViewSize)
-    views[i]->update(s,*cloneHand);
+    //views[i]->update(s,*cloneHand);
   return true;
 }
 

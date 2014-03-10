@@ -1,8 +1,6 @@
 #include "graspSelectionView.h"
 #include "ui_graspSelectionView.h"
 #include "BCI/bciService.h"
-#include "BCI/handView.h"
-
 
 using bci_experiment::OnlinePlannerController;
 
@@ -18,22 +16,12 @@ GraspSelectionView::GraspSelectionView(QWidget *parent) :
     connect(ui->buttonRefineGrasp, SIGNAL(clicked()), this, SLOT(onRefineGrasp()));
     connect(ui->buttonBack, SIGNAL(clicked()), this, SLOT(onBack()));
 
-    showSpinner();
+    //showSpinner();
+    showSelectedGrasp(NULL);
 
 }
-
-void GraspSelectionView::showSpinner()
-{
-    spinner->setSpeed(1.5);
-    spinner->start();
-    spinner->move(spinner->parentWidget()->geometry().center()/2.0);
-}
-
-void GraspSelectionView::hideSpinner()
-{
-    spinner->hide();
-}
-
+///////////////////////////////////////////////////
+//Button Callbacks
 void GraspSelectionView::onRefineGrasp()
 {
     BCIService::getInstance()->emitGoToNextState2();
@@ -49,14 +37,32 @@ void GraspSelectionView::onBack()
     BCIService::getInstance()->emitGoToPreviousState();
 }
 
-
-void GraspSelectionView::showSelectedGrasp()
+///////////////////////////////////////////////////
+//hide/show spinner and handView
+void GraspSelectionView::showSpinner()
 {
+    spinner->setSpeed(1.5);
+    spinner->start();
+    spinner->move(spinner->parentWidget()->geometry().center()/2.0);
+}
+
+void GraspSelectionView::hideSpinner()
+{
+    spinner->hide();
+}
+
+void GraspSelectionView::showSelectedGrasp(const GraspPlanningState *graspPlanningState)
+{
+    hideSpinner();
     SoQtExaminerViewer *mainViewer = graspItGUI->getIVmgr()->getViewer();
     Hand * h = graspItGUI->getIVmgr()->getWorld()->getCurrentHand();
     QFrame *parentWindow = this->ui->renderArea;
     QString viewName = QString("current best grasp");
-    HandView *handView = new HandView(mainViewer,h,*parentWindow,viewName);
+    handView = new HandView(mainViewer,h,*parentWindow,viewName);
+    if(graspPlanningState)
+    {
+        handView->update(*graspPlanningState, *h);
+    }
 }
 
 
