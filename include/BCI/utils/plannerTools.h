@@ -14,13 +14,6 @@ namespace bci_experiment{
         //! Get the current head planner in the world
           EGPlanner * getCurrentPlanner();
 
-        //! Tell the graspit socket server to emit an arbitrary string
-        void sendString(const QString & s);
-
-
-        //! send a message on the graspit server to inform a listener that a planning
-        //! target has been chosen
-        void sendSetTarget(Body * b);
 
         //! Verify that the pregrasp and grasp states are not in collision
         bool testGraspCollisions(Hand * h, const GraspPlanningState * s);

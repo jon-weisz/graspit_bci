@@ -2,6 +2,9 @@
 #define ACTIVEREFINEMENTVIEW_H
 
 #include <QWidget>
+#include "BCI/handView.h"
+
+class GraspPlanningState;
 
 namespace Ui {
 class ActiveRefinementView;
@@ -13,7 +16,9 @@ class ActiveRefinementView : public QWidget
     
 public:
     explicit ActiveRefinementView(QWidget *parent = 0);
+    void showSelectedGrasp(const GraspPlanningState *graspPlanningState);
     ~ActiveRefinementView();
+
 
 public slots:
     void onOk();
@@ -21,6 +26,7 @@ public slots:
     void onRotLong();
     
 private:
+    HandView *handView;
     Ui::ActiveRefinementView *ui;
 };
 

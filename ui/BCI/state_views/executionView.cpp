@@ -18,6 +18,6 @@ ExecutionView::~ExecutionView()
 
 void ExecutionView::onStopButtonPressed()
 {
-    BCIService::getInstance()->emitExec();
+    BCIService::getInstance()->emitGoToNextState1();
 }
 

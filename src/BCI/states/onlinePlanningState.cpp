@@ -14,12 +14,11 @@ OnlinePlanningState::OnlinePlanningState(BCIControlWindow *_bciControlWindow,QSt
 
 void OnlinePlanningState::onEntry(QEvent *e)
 {
-    //We must have a planner, a selected object, and the planner must be started
-    OnlinePlannerController::getInstance()->setPlannerToRunning();
+
 }
 
 
 void OnlinePlanningState::onExit(QEvent *e)
 {
-    OnlinePlannerController::getInstance()->setPlannerToStopped();
+
 }

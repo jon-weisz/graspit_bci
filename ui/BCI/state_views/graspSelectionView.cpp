@@ -29,7 +29,7 @@ void GraspSelectionView::onRefineGrasp()
 
 void GraspSelectionView::onOk()
 {
-    BCIService::getInstance()->emitExec();
+    BCIService::getInstance()->emitGoToNextState1();
 }
 
 void GraspSelectionView::onBack()
@@ -58,7 +58,7 @@ void GraspSelectionView::showSelectedGrasp(const GraspPlanningState *graspPlanni
     Hand * h = graspItGUI->getIVmgr()->getWorld()->getCurrentHand();
     QFrame *parentWindow = this->ui->renderArea;
     QString viewName = QString("current best grasp");
-    handView = new HandView(mainViewer,h,*parentWindow,viewName);
+    handView = new HandView(mainViewer,h,*parentWindow, viewName);
     if(graspPlanningState)
     {
         handView->update(*graspPlanningState, *h);

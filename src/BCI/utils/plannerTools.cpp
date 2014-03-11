@@ -94,51 +94,36 @@ namespace bci_experiment
         }
 
 
-        void sendString(const QString & s)
-        {
-          //emit graspItGUI->getIVmgr()->emitSendString(s);
-        }
-
-
-        void sendSetTarget(Body * b)
-        {
-          QString setTargetString = "setTarget " + b->getName();
-          sendString(setTargetString);
-        }
-
-
-        void importGraspsFromDBMgr( OnLinePlanner * mPlanner,
-                                    db_planner::DatabaseManager * mDbMgr)
+        void importGraspsFromDBMgr( OnLinePlanner * mPlanner, db_planner::DatabaseManager * mDbMgr)
         {
             Hand*mHand = mPlanner->getRefHand();
 
             // Get corresponding model from database
             std::vector<db_planner::Model*> modelList;
-            mDbMgr->ModelList(&modelList,db_planner::FilterList::USE_FILE_NAME,
-              '/' + mHand->getGrasp()->getObject()->getFilename().split('/').back());
+            QString *objectFilename = new QString('/' + mHand->getGrasp()->getObject()->getFilename().split('/').back());
+
+            mDbMgr->ModelList(&modelList,db_planner::FilterList::USE_FILE_NAME, *objectFilename);
 
 
-            // If no model can be found return
-            if (modelList.size()==0)
+            if(modelList.empty())
             {
-              std::cout << "No Models Found \n";
+              DBGA("No Models Found \n");
               return;
             }
 
-
             // Using the found model, retrieve the grasps
             std::vector<db_planner::Grasp*> grasps;
-            mDbMgr->GetGrasps(*modelList[modelList.size()-1], GraspitDBGrasp::getHandDBName(mHand).toStdString(), &grasps);
+            mDbMgr->GetGrasps(*modelList.back(), GraspitDBGrasp::getHandDBName(mHand).toStdString(), &grasps);
+
             HandObjectState hs(mHand);
             hs.setPositionType(SPACE_COMPLETE);
             hs.setPostureType(POSE_DOF);
             hs.saveCurrentHandState();
 
-
             // Load the grasps into the grasp planner list.
             unsigned int numGrasps = std::min<unsigned int>(grasps.size(), 10);
             for (unsigned int gNum = 0; gNum < numGrasps; ++gNum)
-              {
+            {
                 GraspPlanningState *s = new GraspPlanningState(static_cast<GraspitDBGrasp *>
                                        (grasps[gNum])->getFinalGraspPlanningState());
 
@@ -148,14 +133,12 @@ namespace bci_experiment
                 s->addAttribute("graspId", gNum);
                 s->addAttribute("testResult", testResult);
                 s->addAttribute("testTime", 0);
-                //bci_experiment::printTestResult(*s);
                 mPlanner->addSolution(s);
             }
 
         }
 
         OnLinePlanner * createDefaultPlanner(){
-            //need to fix not sure how.
 
              World * w = getWorld();
              if(!w->getCurrentHand())

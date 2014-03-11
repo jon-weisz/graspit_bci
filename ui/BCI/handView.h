@@ -4,7 +4,6 @@
 #include <Q3MainWindow>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-//#include <QMainWindow>
 #include <QString>
 #include <QObject>
 #include <QtGui/QShortcut>
@@ -94,8 +93,8 @@
 #include "graspitGUI.h"
 #include "humanHand.h"
 #include "body.h"
-
 #include "EGPlanner/searchState.h"
+
 class SoQtRenderArea;
 class SoQtExaminerViewer;
 class SoCoordinate3;
@@ -108,19 +107,21 @@ class Hand;
 
 class HandView
 {
+
 private:
-  //! A pointer to the QT widget holding the view proj wirn
-  QFrame *viewWin;
+
+  QFrame * parentWindow;
   
   //! A pointer to the viewer for this window
-  SoQtRenderArea *viewViewer;
+  SoQtRenderArea *handViewSoQtRenderArea;
 
   //! Root of local scene graph for view
   SoSeparator * IVRoot;
 
   //! Root of hand geometry for graph
   SoSeparator * IVHandGeometry;
-  //! Root of 
+
+  //! Root of object geometry for graph
   SoSeparator * IVObjectGeometry;
 
   //! The unique identifier of the view
@@ -128,99 +129,35 @@ private:
 
   //! The Examiner View used to initializr the views
   SoQtExaminerViewer * mainViewer_;
-  SoCamera * camera_;
+  SoCamera * ivCamera;
 
-  //! Copy the hand geometry
-  void setupIVHandGeometry(Hand * h);
   int stateID_;
+
+  //---------------Constructor Helpers-------------------
+  SoSeparator * initIVHandGeometry(Hand * h);
+  SoSeparator *initIVObjectGeometry(Hand * h);
+  SoTransformSeparator *initIVLightSeparator();
+  SoCamera *initIVCamera();
+
+  //---------------Update Helpers------------------------
+  void copyLinkTransforms(Hand * h, SoSeparator * handIVRoot);
+  void copyIVTran(SoSeparator * parentNode, const SoTransform & ivTran);
+
+
 public:
 
-  //! Constructor for the HandView
   HandView(SoQtExaminerViewer *mainViewer, Hand * h, QFrame &parentWindow, QString viewName);
    
-  //! Destructor
+  void update(const GraspPlanningState & s, Hand & cloneHand);
+
+
+  //---------------Getters/Setters-----------------------
+  QString getViewName();
+
+  //---------------Destructor----------------------------
   ~HandView();
- 
- 
-  //! Update handles the processing of viewWindows as they get moved about
-  bool update(const GraspPlanningState & s, Hand & cloneHand);
-
-  //! Getter for RenderArea
-  SoQtRenderArea * getRenderArea(){return viewViewer;}
   
-  //! Getter for viewName
-  QString getName();
-
-  //! Getter for the IVRoot
-  SoSeparator * getIVRoot();
-
-  //! Getter for the viewViewer
-  SoQtRenderArea * getViewViewer();
-  
-  //! Setter for the viewViewer
-  void setViewViewer(SoQtRenderArea * newView);
-  
-  //! Getter for the viewWindow
-  QFrame * getViewWindow();
 };
   
-
-
-class HandViewWindow{
-
-  //! viewsList
-  std::vector<HandView *> views;
-
-  //! The layout for the thumbnail views
-  QGridLayout * grid;
-  QHBoxLayout * hbox;
-  QVBoxLayout * vbox1;
-  QVBoxLayout * vbox2;
-  //! The container for the layout for the preview (created so that we
-  //   can use more than one preview window if so desired with different graphics applied)
-  QGridLayout * previewGrid;
-  QWidget * stageFrame_;
-  //! MaxViewSize - protect against over access on number of loaded thumbnail views
-  unsigned int maxViewSize;
-
-  //! The copied hand we use as a temporary storage as we load thumbnail and preview - views
-  Hand * cloneHand;
-
-  //! Index of current Handview stored in the previewWindow
-  int currentPreview;
-
-  QRect geom_;
-
-public:
-  //! the window containing the thumbnail views
-  QFrame * handViewWindow;
-  QFrame * viewHolder;
-  //! ConstructorNUL
-  HandViewWindow(QWidget * parent, Hand * h, const QRect & geom, SoNode * IVRoot = NULL, QWidget * stageFrame = NULL);
-  void initViews(Hand * h);
-  ~HandViewWindow(){
-    for (int i = 0; i < views.size(); ++i)
-      delete views[i];
-    delete cloneHand; 
-    delete handViewWindow;
-  }
-  //! Actually adds views at loop of initialization
-  bool addView(HandObjectState & s, int i);
-  void clearViews();
-  //! Simple getter for the viewWindow associated with our object
-  QFrame* getViewWindow(){
-    return handViewWindow;
-  }
-
- /* //! To determine which view appears in the preview window
-  void updateList();
-*/
-  //! Skip directly to the desired thumbnail frame
-  void setCurrentView(int num);
-
-  //! Returns the current grasp (as seen in the preview window)
-  int getCurrentGrasp();
-};
-
 
 #endif

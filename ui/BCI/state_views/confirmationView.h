@@ -3,6 +3,9 @@
 
 #include <QWidget>
 
+class GraspPlanningState;
+class HandView;
+
 namespace Ui {
 class ConfirmationView;
 }
@@ -13,6 +16,7 @@ class ConfirmationView : public QWidget
     
 public:
     explicit ConfirmationView(QWidget *parent = 0);
+    void showSelectedGrasp(const GraspPlanningState *graspPlanningState);
     ~ConfirmationView();
     
 public slots:
@@ -20,6 +24,7 @@ public slots:
     void onBack();
 
 private:
+    HandView *handView;
     Ui::ConfirmationView *ui;
 };
 

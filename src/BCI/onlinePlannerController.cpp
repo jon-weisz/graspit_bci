@@ -192,6 +192,16 @@ namespace bci_experiment
         return false;
     }
 
+    bool OnlinePlannerController::setPlannerToPaused()
+    {
+        if(currentPlanner)
+        {
+            currentPlanner->pausePlanner();
+            return true;
+        }
+        return false;
+    }
+
 
     bool OnlinePlannerController::setPlannerToRunning()
     {

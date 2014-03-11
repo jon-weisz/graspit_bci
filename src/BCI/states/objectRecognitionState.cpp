@@ -20,7 +20,7 @@ void ObjectRecognitionState::onEntry(QEvent *e)
 
     if(OnlinePlannerController::getInstance()->hasRecognizedObjects())
     {
-        BCIService::getInstance()->emitExec();
+        BCIService::getInstance()->emitGoToNextState1();
     }
 
 }

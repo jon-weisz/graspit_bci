@@ -60,6 +60,7 @@ namespace bci_experiment{
 
             bool setPlannerToRunning();
             bool setPlannerToStopped();
+            bool setPlannerToPaused();
             bool setPlannerToReady();
 
             void connectToPlannerUpdateSignal();

@@ -20,11 +20,11 @@ StoppedExecutionView::~StoppedExecutionView()
 
 void StoppedExecutionView::onContinueExecutionClicked()
 {
-    BCIService::getInstance()->emitExec();
+    BCIService::getInstance()->emitGoToNextState1();
 }
 
 
 void StoppedExecutionView::onStartOverClicked()
 {
-    BCIService::getInstance()->emitNext();
+    BCIService::getInstance()->emitGoToNextState2();
 }

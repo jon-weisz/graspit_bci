@@ -32,7 +32,6 @@ GraspSelectionState::GraspSelectionState(BCIControlWindow *_bciControlWindow,QSt
 void GraspSelectionState::onEntry(QEvent *e)
 {
     OnlinePlannerController::getInstance()->setPlannerToReady();
-    OnlinePlannerController::getInstance()->setPlannerToRunning();
     graspSelectionView = new GraspSelectionView(bciControlWindow->currentFrame);
     bciControlWindow->currentFrame->show();
     graspSelectionView->show();

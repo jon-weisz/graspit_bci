@@ -26,6 +26,7 @@ private:
 public slots:
     void onRotateHandLat();
     void onRotateHandLong();
+    void onPlannerUpdated();
 };
 
 
