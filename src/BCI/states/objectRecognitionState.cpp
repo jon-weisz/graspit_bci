@@ -6,13 +6,15 @@ using bci_experiment::OnlinePlannerController;
 ObjectRecognitionState::ObjectRecognitionState(BCIControlWindow *_bciControlWindow,QState* parent):
         State("ObjectRecognitionState", parent),bciControlWindow(_bciControlWindow)
 {
+     objectRecognitionView = new ObjectRecognitionView(bciControlWindow->currentFrame);
+     objectRecognitionView->hide();
 }
 
 
 void ObjectRecognitionState::onEntry(QEvent *e)
   {
 
-    objectRecognitionView = new ObjectRecognitionView(bciControlWindow->currentFrame);
+
     objectRecognitionView->show();
     bciControlWindow->currentState->setText("Object Recognition State");
 
@@ -28,5 +30,5 @@ void ObjectRecognitionState::onEntry(QEvent *e)
 
 void ObjectRecognitionState::onExit(QEvent *e)
 {
-    bciControlWindow->currentFrame->removeChild(objectRecognitionView);
+     objectRecognitionView->hide();
 }

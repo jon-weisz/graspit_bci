@@ -12,22 +12,24 @@ ActivateRefinementState::ActivateRefinementState(BCIControlWindow *_bciControlWi
     addSelfTransition(BCIService::getInstance(),SIGNAL(rotLong()), this, SLOT(onRotateHandLong()));
     addSelfTransition(BCIService::getInstance(),SIGNAL(plannerUpdated()), this, SLOT(onPlannerUpdated()));
 
+    activeRefinementView = new ActiveRefinementView(bciControlWindow->currentFrame);
+    activeRefinementView->hide();
 }
 
 
 void ActivateRefinementState::onEntry(QEvent *e)
 {
-    OnlinePlannerController::getInstance()->setPlannerToRunning();
-    activeRefinementView = new ActiveRefinementView(bciControlWindow->currentFrame);
     activeRefinementView->show();
     bciControlWindow->currentState->setText("Active Refinement State");
+
+    OnlinePlannerController::getInstance()->setPlannerToRunning();
 }
 
 
 void ActivateRefinementState::onExit(QEvent *e)
 {
     OnlinePlannerController::getInstance()->setPlannerToPaused();
-    bciControlWindow->currentFrame->removeChild(activeRefinementView);
+    activeRefinementView->hide();
 }
 
 

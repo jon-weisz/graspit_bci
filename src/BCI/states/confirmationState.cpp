@@ -11,12 +11,14 @@ using bci_experiment::OnlinePlannerController;
 ConfirmationState::ConfirmationState(BCIControlWindow *_bciControlWindow,QState* parent):
         State("ConfirmationState", parent),bciControlWindow(_bciControlWindow)
 {    
+    confirmationView = new ConfirmationView(bciControlWindow->currentFrame);
+    confirmationView->hide();
 }
 
 
 void ConfirmationState::onEntry(QEvent *e)
 {
-    confirmationView = new ConfirmationView(bciControlWindow->currentFrame);
+
     confirmationView->show();
 
     bciControlWindow->currentState->setText("Confirmation State");
@@ -27,7 +29,7 @@ void ConfirmationState::onEntry(QEvent *e)
 void ConfirmationState::onExit(QEvent * e)
 {
     Q_UNUSED(e);
-    bciControlWindow->currentFrame->removeChild(confirmationView);
+    confirmationView->hide();
 }
 
 

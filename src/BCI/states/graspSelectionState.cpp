@@ -25,24 +25,25 @@ GraspSelectionState::GraspSelectionState(BCIControlWindow *_bciControlWindow,QSt
     addSelfTransition(BCIService::getInstance(),SIGNAL(next()), this, SLOT(onNext()));
     addSelfTransition(BCIService::getInstance(),SIGNAL(plannerUpdated()), this, SLOT(onPlannerUpdated()));
 
-
+    graspSelectionView = new GraspSelectionView(bciControlWindow->currentFrame);
+    graspSelectionView->hide();
 }
 
 
 void GraspSelectionState::onEntry(QEvent *e)
 {
-    OnlinePlannerController::getInstance()->setPlannerToReady();
-    graspSelectionView = new GraspSelectionView(bciControlWindow->currentFrame);
-    bciControlWindow->currentFrame->show();
+
     graspSelectionView->show();
     bciControlWindow->currentState->setText("Grasp Selection State");
+
+    OnlinePlannerController::getInstance()->setPlannerToReady();
 
 }
 
 
 void GraspSelectionState::onExit(QEvent *e)
 {
-    bciControlWindow->currentFrame->removeChild(graspSelectionView);
+    graspSelectionView->hide();
 }
 
 void GraspSelectionState::onNext()

@@ -12,6 +12,7 @@ ObjectSelectionState::ObjectSelectionState(BCIControlWindow *_bciControlWindow,Q
     addSelfTransition(BCIService::getInstance(),SIGNAL(next()), this, SLOT(onNext()));
 
     objectSelectionView = new ObjectSelectionView(bciControlWindow->currentFrame);
+    objectSelectionView->hide();
 }
 
 

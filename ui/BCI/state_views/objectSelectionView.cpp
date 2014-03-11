@@ -18,7 +18,7 @@ ObjectSelectionView::ObjectSelectionView(QWidget *parent) :
 
 void ObjectSelectionView::onNext()
 {
-    BCIService::getInstance()->emitGoToNextState2();
+    BCIService::getInstance()->emitNext();
 }
 
 
