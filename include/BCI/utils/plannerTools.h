@@ -42,7 +42,7 @@ namespace bci_experiment{
                                  std::vector<bool> & collisionStatus);
 
         //! Import grasps from a database to an egPlanner
-        void importGraspsFromDBMgr( EGPlanner * mPlanner,
+        void importGraspsFromDBMgr( OnLinePlanner * mPlanner,
                                     db_planner::DatabaseManager * mDbMgr);
 
         OnLinePlanner * createDefaultPlanner();

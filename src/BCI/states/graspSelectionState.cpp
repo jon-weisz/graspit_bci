@@ -57,8 +57,7 @@ void GraspSelectionState::onPlannerUpdated()
 
     if(bestGrasp)
     {
-        const GraspPlanningState *graspPlanningState = OnlinePlannerController::getInstance()->getGrasp(0);
-        graspSelectionView->showSelectedGrasp(graspPlanningState);
+        graspSelectionView->showSelectedGrasp(bestGrasp);
         bciControlWindow->currentState->setText("Planner Updated");
     }
 

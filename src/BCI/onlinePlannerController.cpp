@@ -87,7 +87,7 @@ namespace bci_experiment
             mDbMgr = new db_planner::SqlDatabaseManager("tonga.cs.columbia.edu", 5432,
                               "postgres","roboticslab","armdb",
 			      new GraspitDBModelAllocator(),
-                              new GraspitDBGraspAllocator(currentPlanner->getHand()));
+                              new GraspitDBGraspAllocator(currentPlanner->getRefHand()));
           }
 
           planner_tools::importGraspsFromDBMgr(currentPlanner, mDbMgr);
@@ -99,6 +99,8 @@ namespace bci_experiment
         }
 
     }
+
+
 
 
     void OnlinePlannerController::updateObject(GraspableBody * newTarget)
