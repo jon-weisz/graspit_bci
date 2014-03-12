@@ -52,8 +52,10 @@ void viewTarget(Body * b);
 //! Change the point cloud transparency
 bool setPointcloudTransparency(double transparency);
 
-}
+void updateCircularGuides(Hand * hand, Body * object);
+
+void destroyGuideSeparator();
 
 }
-
+}
 #endif // UITOOLS_H

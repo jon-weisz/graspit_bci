@@ -47,6 +47,10 @@ namespace bci_experiment{
             void rotateHandLat();
             void rotateHandLong();
 
+            void drawGuides();
+            void alignHand();
+            void destroyGuides();
+
             // Highlighting functionality should move to the view controller
             // The method here should only care about setting the next target
             // and possibly emitting a signal that the target has been emitted.
