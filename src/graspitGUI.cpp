@@ -45,6 +45,7 @@
 #include "SoComplexShape.h"
 #include "SoArrow.h"
 #include "SoTorquePointer.h"
+#include "debug.h"
 
 bool GraspItGUI::initialized = false;
 int GraspItGUI::initResult = SUCCESS;
