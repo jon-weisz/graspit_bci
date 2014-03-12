@@ -2026,122 +2026,6 @@ IVmgr::align() {
 		  //then move hand
 		  world->getCurrentHand()->moveTo(newTran, WorldElement::ONE_STEP, WorldElement::ONE_STEP);
 
-
-		  //DRAW LONG AND LAT NURBS CURVES
-
-
-		  //this is the rotation for creating the NURB curve X
-		  rotationX = new double[9];
-		  rotationX[0] = 1;			rotationX[3] = 0;					rotationX[6] = 0;
-		  rotationX[1] = 0; 		rotationX[4] = cos(M_PI/4);			rotationX[7] = -sin(M_PI/4);
-		  rotationX[2] = 0;  		rotationX[5] = sin(M_PI/4); 		rotationX[8] = cos(M_PI/4);
-
-		  //this is the rotation for creating NURB curve Z
-		  double *rotationZ = new double[9];
-		  rotationZ[0] = cos(M_PI/4);		rotationZ[3] = -sin(M_PI/4);		rotationZ[6] = 0;
-		  rotationZ[1] = sin(M_PI/4); 		rotationZ[4] = cos(M_PI/4);			rotationZ[7] = 0;
-		  rotationZ[2] = 0;  				rotationZ[5] = 0; 					rotationZ[8] = 1;
-
-		  rotX = mat3(rotationX);
-		  mat3 rotZ = mat3(rotationZ);
-
-		  vec3 currPntX = newTran.translation();
-		  vec3 currPntZ = newTran.translation();
-
-
-		  float ptsX[9][4];
-		  float ptsZ[9][4];
-
-		  for (int i = 0; i < 9; i++) {
-			  ptsX[i][0] = currPntX.x(); ptsX[i][1] = currPntX.y(); ptsX[i][2] = currPntX.z();
-			  ptsZ[i][0] = currPntZ.x(); ptsZ[i][1] = currPntZ.y(); ptsZ[i][2] = currPntZ.z();
-			  if (i%2 == 0) ptsX[i][3] = ptsZ[i][3] = 1;
-			  else ptsX[i][3] = ptsZ[i][3] = 1/sqrtf(2);
-			  currPntX = rotX*currPntX;
-			  currPntZ = rotZ*currPntZ;
-		  }
-
-		  float knots [12] = {0, 0, 0, M_PI/2, M_PI/2, M_PI, M_PI, 3*M_PI/2, 3*M_PI/2, 2*M_PI, 2*M_PI, 2*M_PI};
-
-		  if(!world->getCurrentHand()->getIVRoot()->getByName("ctrlPointsX")) {
-
-			  SoSeparator *curveSepX = new SoSeparator();
-			  SoSeparator *curveSepZ = new SoSeparator();
-			  SoMaterial *curveMatX = new SoMaterial();
-			  SoMaterial *curveMatZ = new SoMaterial();
-			  curveMatX->ambientColor = SbColor(1,0,1);
-			  curveMatX->transparency = .5;
-			  curveMatZ->transparency = .5;
-			  curveMatZ->ambientColor = SbColor(1,1,0);
-			  curveSepX->ref();
-			  curveSepZ->ref();
-			  SoDrawStyle *drawStyleX = new SoDrawStyle();
-			  SoDrawStyle *drawStyleZ = new SoDrawStyle();
-			  drawStyleX->lineWidth = 10;
-			  drawStyleZ->lineWidth = 10;
-			  curveSepX->addChild(curveMatX);
-			  curveSepX->addChild(drawStyleX);
-			  curveSepZ->addChild(curveMatZ);
-			  curveSepZ->addChild(drawStyleZ);
-
-			  SoScale *scaleX = new SoScale();
-			  scaleX->scaleFactor = SbVec3f(0,1,1);
-			  SoTransform *transX = new SoTransform();
-			  transX->translation = SbVec3f(currPntX.x(), 0, 0);
-			  transX->setName("transX");
-			  SoComplexity *complexityX = new SoComplexity();
-			  SoCoordinate4 *controlPtsX = new SoCoordinate4();
-			  SoNurbsCurve *curveX = new SoNurbsCurve();
-			  complexityX->value = .8;
-			  controlPtsX->point.setValues(0,9,ptsX);
-			  controlPtsX->setName("ctrlPointsX");
-			  curveX->numControlPoints = 9;
-			  curveX->knotVector.setValues(0, 12, knots);
-			  curveSepX->addChild(transX);
-			  curveSepX->addChild(scaleX);
-			  curveSepX->addChild(complexityX);
-			  curveSepX->addChild(controlPtsX);
-			  curveSepX->addChild(curveX);
-			  curveSepX->unrefNoDelete();
-
-			  SoScale *scaleZ = new SoScale();
-			  scaleZ->scaleFactor = SbVec3f(1,1,0);
-			  SoTransform *transZ = new SoTransform();
-			  transZ->translation = SbVec3f(0, 0, currPntZ.z());
-			  transZ->setName("transZ");
-			  SoComplexity *complexityZ = new SoComplexity();
-			  SoCoordinate4 *controlPtsZ = new SoCoordinate4();
-			  SoNurbsCurve *curveZ = new SoNurbsCurve();
-			  complexityZ->value = .8;
-			  controlPtsZ->point.setValues(0,9,ptsZ);
-			  controlPtsZ->setName("ctrlPointsZ");
-			  curveZ->numControlPoints = 9;
-			  curveZ->knotVector.setValues(0, 12, knots);
-			  curveSepZ->addChild(transZ);
-			  curveSepZ->addChild(scaleZ);
-			  curveSepZ->addChild(complexityZ);
-			  curveSepZ->addChild(controlPtsZ);
-			  curveSepZ->addChild(curveZ);
-			  curveSepZ->unrefNoDelete();
-			  
-			  curveSepX->setName("curveX");
-			  curveSepZ->setName("curveZ");
-			  world->getCurrentHand()->getIVRoot()->addChild(curveSepX);
-			  world->getCurrentHand()->getIVRoot()->addChild(curveSepZ);
-		  }
-		  else {
-			  SoCoordinate4 *ctrlPntsX = (SoCoordinate4*)world->getCurrentHand()->getIVRoot()->getByName("ctrlPointsX");
-			  ctrlPntsX->point.setValues(0,9,ptsX);
-			  SoTransform *transX = (SoTransform*)world->getCurrentHand()->getIVRoot()->getByName("transX");
-			  transX->translation = SbVec3f(currPntX.x(), 0, 0);
-			  SoCoordinate4 *ctrlPntsZ = (SoCoordinate4*)world->getCurrentHand()->getIVRoot()->getByName("ctrlPointsZ");
-			  ctrlPntsZ->point.setValues(0,9,ptsZ);
-			  SoTransform *transZ = (SoTransform*)world->getCurrentHand()->getIVRoot()->getByName("transZ");
-			  transZ->translation = SbVec3f(0, 0, currPntZ.z());
-		  }
-
-
-
 }
 
 /*
@@ -2151,70 +2035,16 @@ IVmgr::align() {
 void
 IVmgr::rotateLat() {
 
-	  if(!world->getCurrentHand()->getIVRoot()->getByName("ctrlPointsX")) {
-		  align();
-	  }
+    //align();
     double stepSize = 3.1415/100;
-	  transf robotTran = world->getCurrentHand()->getTran();
+    transf robotTran = world->getCurrentHand()->getTran();
+    transf objectTran = world->getCurrentHand()->getGrasp()->getObject()->getTran();
 
-	  //create new transforms and set
-	  transf rotationTrans = transf(Quaternion(stepSize, vec3::Z), vec3(0,0,0));
-	  transf newTran = robotTran *rotationTrans;
+    //create new transforms and set
 
-
-	  //this is the rotation for creating the NURB curve X
-	  double *rotationX = new double[9];
-	  rotationX[0] = 1;			rotationX[3] = 0;					rotationX[6] = 0;
-	  rotationX[1] = 0; 		rotationX[4] = cos(3.1415/4);		rotationX[7] = -sin(3.1415/4);
-	  rotationX[2] = 0;  		rotationX[5] = sin(3.1415/4); 		rotationX[8] = cos(3.1415/4);
-
-	  //this is the rotation for creating NURB curve Z
-	  double *rotationZ = new double[9];
-	  rotationZ[0] = cos(3.1415/4);		rotationZ[3] = -sin(3.1415/4);			rotationZ[6] = 0;
-	  rotationZ[1] = sin(3.1415/4); 		rotationZ[4] = cos(3.1415/4);		rotationZ[7] = 0;
-	  rotationZ[2] = 0;  					rotationZ[5] = 0; 					rotationZ[8] = 1;
-
-	  mat3 rotX = mat3(rotationX);
-	  mat3 rotZ = mat3(rotationZ);
-
-	  vec3 currPntX = robotTran.translation();
-	  vec3 currPntZ = robotTran.translation();
-
-	  float ptsX[9][4];
-	  float ptsZ[9][4];
-
-	  for (int i = 0; i < 9; i++) {
-		  ptsX[i][0] = currPntX.x(); ptsX[i][1] = currPntX.y(); ptsX[i][2] = currPntX.z();
-		  ptsZ[i][0] = currPntZ.x(); ptsZ[i][1] = currPntZ.y(); ptsZ[i][2] = currPntZ.z();
-		  if (i%2 == 0) ptsX[i][3] = ptsZ[i][3] = 1;
-		  else ptsX[i][3] = ptsZ[i][3] = 1/sqrtf(2);
-		  currPntX = rotX*currPntX;
-		  currPntZ = rotZ*currPntZ;
-	  }
-
-	  SoCoordinate4 *ctrlPntsX = (SoCoordinate4*)world->getCurrentHand()->getIVRoot()->getByName("ctrlPointsX");
-	  ctrlPntsX->point.setValues(0,9,ptsX);
-	  SoTransform *transX = (SoTransform*)world->getCurrentHand()->getIVRoot()->getByName("transX");
-	  transX->translation = SbVec3f(currPntX.x(), 0, 0);
-	  SoCoordinate4 *ctrlPntsZ = (SoCoordinate4*)world->getCurrentHand()->getIVRoot()->getByName("ctrlPointsZ");
-	  ctrlPntsZ->point.setValues(0,9,ptsZ);
-	  SoTransform *transZ = (SoTransform*)world->getCurrentHand()->getIVRoot()->getByName("transZ");
-	  transZ->translation = SbVec3f(0, 0, currPntZ.z());
-
-	  //turn off all collisions with obstacles.  
-	  //This is to allow the example hand to travel through obstacles during 
-	  //planning when necessary
-	  for(int i = 0; i < world->getNumBodies(); ++i)
-	    {
-	      //! The best test I can find for whether a body is graspable is if it is dynamic
-	      if(!world->getBody(i)->isDynamic()){
-		//std::cout << "toggling off collisions with body " << i << std::endl;
-		world->toggleCollisions(false, world->getBody(i), world->getCurrentHand());
-	      }
-	    }
-	    
-	  //then move hand
-	  world->getCurrentHand()->moveTo(newTran, WorldElement::ONE_STEP, WorldElement::ONE_STEP);
+    transf rotationTrans = (robotTran * objectTran.inverse()) * transf(Quaternion(stepSize, vec3::Z), vec3(0,0,0));
+    transf newTran = rotationTrans *  objectTran;
+    world->getCurrentHand()->moveTo(newTran, WorldElement::ONE_STEP, WorldElement::ONE_STEP);
 	  
 }
 
@@ -2224,69 +2054,16 @@ IVmgr::rotateLat() {
  */
 void
 IVmgr::rotateLong() {
-    DBGA("ivMgr rotateLong");
-	  if(!world->getCurrentHand()->getIVRoot()->getByName("ctrlPointsX")) {
-		  align();
-	  }
 
-	  //get transforms for hand and obj and get vectors b/w them
-	  transf robotTran = world->getCurrentHand()->getTran();
+    //align();
+    //get transforms for hand and obj and get vectors b/w them
+    transf robotTran = world->getCurrentHand()->getTran();
+    transf objectTran = world->getCurrentHand()->getGrasp()->getObject()->getTran();
+
     double stepSize = 3.1415/100;
-	  //create new transforms and set
-	  transf rotationTrans = transf(Quaternion(stepSize, vec3::X), vec3(0,0,0));
-	  transf newTran = robotTran * rotationTrans;
-
-	  //this is the rotation for creating the NURB curve X
-	  double * rotationX = new double[9];
-	  rotationX[0] = 1;			rotationX[3] = 0;					rotationX[6] = 0;
-	  rotationX[1] = 0; 		rotationX[4] = cos(3.1415/4);		rotationX[7] = -sin(3.1415/4);
-	  rotationX[2] = 0;  		rotationX[5] = sin(3.1415/4); 		rotationX[8] = cos(3.1415/4);
-
-	  //this is the rotation for creating NURB curve Z
-	  double * rotationZ = new double[9];
-	  rotationZ[0] = cos(3.1415/4);			rotationZ[3] = -sin(3.1415/4);		rotationZ[6] = 0;
-	  rotationZ[1] = sin(3.1415/4); 		rotationZ[4] = cos(3.1415/4);		rotationZ[7] = 0;
-	  rotationZ[2] = 0;  					rotationZ[5] = 0; 					rotationZ[8] = 1;
-
-	  mat3 rotX = mat3(rotationX);
-	  mat3 rotZ = mat3(rotationZ);
-
-	  vec3 currPntX = robotTran.translation();
-	  vec3 currPntZ = robotTran.translation();
-
-	  float ptsX[9][4];
-	  float ptsZ[9][4];
-
-	  for (int i = 0; i < 9; i++) {
-		  ptsX[i][0] = currPntX.x(); ptsX[i][1] = currPntX.y(); ptsX[i][2] = currPntX.z();
-		  ptsZ[i][0] = currPntZ.x(); ptsZ[i][1] = currPntZ.y(); ptsZ[i][2] = currPntZ.z();
-		  if (i%2 == 0) ptsX[i][3] = ptsZ[i][3] = 1;
-		  else ptsX[i][3] = ptsZ[i][3] = 1/sqrtf(2);
-		  currPntX = rotX*currPntX;
-		  currPntZ = rotZ*currPntZ;
-	  }
-
-	  SoCoordinate4 *ctrlPntsX = (SoCoordinate4*)world->getCurrentHand()->getIVRoot()->getByName("ctrlPointsX");
-	  ctrlPntsX->point.setValues(0,9,ptsX);
-	  SoTransform *transX = (SoTransform*)world->getCurrentHand()->getIVRoot()->getByName("transX");
-	  transX->translation = SbVec3f(currPntX.x(), 0, 0);
-	  SoCoordinate4 *ctrlPntsZ = (SoCoordinate4*)world->getCurrentHand()->getIVRoot()->getByName("ctrlPointsZ");
-	  ctrlPntsZ->point.setValues(0,9,ptsZ);
-	  SoTransform *transZ = (SoTransform*)world->getCurrentHand()->getIVRoot()->getByName("transZ");
-	  transZ->translation = SbVec3f(0, 0, currPntZ.z());
-
-	  	  //turn off all collisions with obstacles.  
-	  //This is to allow the example hand to travel through obstacles during 
-	  //planning when necessary
-	  for(int i = 0; i < world->getNumBodies(); ++i)
-	    {
-	      //! The best test I can find for whether a body is graspable is if it is dynamic
-	      if(!world->getBody(i)->isDynamic()){
-		//std::cout << "toggling off collisions with body " << i << std::endl;
-		world->toggleCollisions(false, world->getBody(i), world->getCurrentHand());
-	      }
-	    }
-
+    //create new transforms and set
+    transf rotationTrans = (robotTran * objectTran.inverse()) * transf(Quaternion(stepSize, vec3::X), vec3(0,0,0));
+    transf newTran = rotationTrans *  objectTran;
 
 	  //then move hand
 	  world->getCurrentHand()->moveTo(newTran, WorldElement::ONE_STEP, WorldElement::ONE_STEP);
