@@ -1,4 +1,5 @@
 #include "BCI/onlinePlannerController.h"
+#include "debug.h"
 
 using bci_experiment::world_element_tools::getWorld;
 
