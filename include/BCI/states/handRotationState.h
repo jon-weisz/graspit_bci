@@ -14,11 +14,13 @@ class HandRotationState:public State
 
 public:
     HandRotationState(const QString name ,BCIControlWindow *_bciControlWindow,QState* parent = 0);
+protected:
     BCIControlWindow *bciControlWindow;
 
 public slots:
     void onRotateHandLat();
     void onRotateHandLong();
+    void onHandRotationStateEntry();
 };
 
 #endif // HANDROTATIONSTATE_H
