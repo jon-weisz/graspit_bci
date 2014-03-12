@@ -19,13 +19,12 @@ public:
     virtual void onEntry(QEvent *e);
     virtual void onExit(QEvent *e);
 
-private:
-    BCIControlWindow *bciControlWindow;
+protected:
     ActiveRefinementView *activeRefinementView;
 
-public slots:
-    void onRotateHandLat();
-    void onRotateHandLong();
+//public slots:
+ //   void onRotateHandLat();
+  //  void onRotateHandLong();
 };
 
 

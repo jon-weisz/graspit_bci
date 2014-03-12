@@ -6,10 +6,10 @@ using bci_experiment::world_element_tools::getWorld;
 
 
 ActivateRefinementState::ActivateRefinementState(BCIControlWindow *_bciControlWindow,QState* parent):
-    HandRotationState("ActivateRefinementState",_bciControlWindow, parent),bciControlWindow(_bciControlWindow)
+    HandRotationState("ActivateRefinementState",_bciControlWindow, parent)
 {
-    addSelfTransition(BCIService::getInstance(),SIGNAL(rotLat()), this, SLOT(onRotateHandLat()));
-    addSelfTransition(BCIService::getInstance(),SIGNAL(rotLong()), this, SLOT(onRotateHandLong()));
+//    addSelfTransition(BCIService::getInstance(),SIGNAL(rotLat()), this, SLOT(onRotateHandLat()));
+//    addSelfTransition(BCIService::getInstance(),SIGNAL(rotLong()), this, SLOT(onRotateHandLong()));
 }
 
 
@@ -27,13 +27,13 @@ void ActivateRefinementState::onExit(QEvent *e)
 }
 
 
-void ActivateRefinementState::onRotateHandLong()
-{
-    OnlinePlannerController::getInstance()->rotateHandLong();
-}
+//void ActivateRefinementState::onRotateHandLong()
+//{
+//    OnlinePlannerController::getInstance()->rotateHandLong();
+//}
 
-void ActivateRefinementState::onRotateHandLat()
-{
-    OnlinePlannerController::getInstance()->rotateHandLat();
-}
+//void ActivateRefinementState::onRotateHandLat()
+//{
+//    OnlinePlannerController::getInstance()->rotateHandLat();
+//}
 
