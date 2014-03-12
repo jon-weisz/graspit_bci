@@ -189,7 +189,18 @@ namespace bci_experiment
     }
 
 
+    void OnlinePlannerController::drawGuides()
+    {
+        if(!getHand() || !getCurrentTarget())
+            DBGA("OnlinePlannerController::drawGuides::Error - Tried to draw guides with no hand or no target");
 
+        ui_tools::updateCircularGuides(currentPlanner->getRefHand(), getCurrentTarget());
+    }
+
+    void OnlinePlannerController::destroyGuides()
+    {
+        ui_tools::destroyGuideSeparator();
+    }
 
     void OnlinePlannerController::startPlanner()
     {
