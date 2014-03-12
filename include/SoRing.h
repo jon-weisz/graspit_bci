@@ -49,7 +49,7 @@ protected:
 
 private:
   static SbVec3f normal;
-
+  static bool initialized;
   static int NbTrianglesPerRing;
 
 };
