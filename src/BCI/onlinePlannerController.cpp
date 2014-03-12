@@ -253,12 +253,30 @@ namespace bci_experiment
 
     void OnlinePlannerController::rotateHandLong()
     {
-        graspItGUI->getIVmgr()->rotateLong();
+
+        float stepSize = M_PI/100.0;
+        transf robotTran = currentPlanner->getRefHand()->getTran();
+        transf objectTran = currentTarget->getTran();
+
+
+        transf rotationTrans = (robotTran * objectTran.inverse()) * transf(Quaternion(stepSize, vec3::Z), vec3(0,0,0));
+        transf newTran = rotationTrans *  objectTran;
+        currentPlanner->getRefHand()->moveTo(newTran, WorldElement::ONE_STEP, WorldElement::ONE_STEP);
+        drawGuides();
     }
 
     void OnlinePlannerController::rotateHandLat()
     {
-        graspItGUI->getIVmgr()->rotateLat();
+        float stepSize = M_PI/100.0;
+
+        transf robotTran = currentPlanner->getRefHand()->getTran();
+        transf objectTran = currentTarget->getTran();
+
+
+        transf rotationTrans = (robotTran * objectTran.inverse()) * transf(Quaternion(stepSize, vec3::X), vec3(0,0,0));
+        transf newTran = rotationTrans *  objectTran;
+        currentPlanner->getRefHand()->moveTo(newTran, WorldElement::ONE_STEP, WorldElement::ONE_STEP);
+        drawGuides();
     }
 
     void OnlinePlannerController::incrementGraspIndex()
