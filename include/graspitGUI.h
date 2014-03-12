@@ -71,6 +71,8 @@ class GraspItGUI
   
   void startMainLoop();
   void exitMainLoop();
+
+  static GraspItGUI * getInstance();
 };
 
 extern GraspItGUI *graspItGUI;
