@@ -202,6 +202,18 @@ namespace bci_experiment
         ui_tools::destroyGuideSeparator();
     }
 
+    void OnlinePlannerController::alignHand()
+    {
+        if(!getHand() || !getCurrentTarget())
+            DBGA("OnlinePlannerController::alignHand::Error - Tried to align hand with no hand or no target");
+        Hand * alignedHand = getHand();
+        if(currentPlanner)
+            alignedHand = currentPlanner->getRefHand();
+        world_element_tools::realignHand(alignedHand);
+        drawGuides();
+
+    }
+
     void OnlinePlannerController::startPlanner()
     {
         if(!currentPlanner || !currentPlanner->getTargetState()->getObject())
