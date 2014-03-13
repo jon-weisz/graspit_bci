@@ -16,8 +16,14 @@ GraspSelectionView::GraspSelectionView(QWidget *parent) :
     connect(ui->buttonRefineGrasp, SIGNAL(clicked()), this, SLOT(onRefineGrasp()));
     connect(ui->buttonBack, SIGNAL(clicked()), this, SLOT(onBack()));
 
-    //showSpinner();
-    showSelectedGrasp(NULL);
+    SoQtExaminerViewer *mainViewer = graspItGUI->getIVmgr()->getViewer();
+    Hand * h = graspItGUI->getIVmgr()->getWorld()->getCurrentHand();
+    QFrame *parentWindow = this->ui->renderArea;
+    QString viewName = QString("current best grasp");
+    handView = new HandView(mainViewer,h,*parentWindow, viewName);
+
+    showSpinner();
+    showSelectedGrasp(h,NULL);
 
 }
 ///////////////////////////////////////////////////
@@ -51,17 +57,12 @@ void GraspSelectionView::hideSpinner()
     spinner->hide();
 }
 
-void GraspSelectionView::showSelectedGrasp(const GraspPlanningState *graspPlanningState)
+void GraspSelectionView::showSelectedGrasp(Hand *hand ,const GraspPlanningState *graspPlanningState)
 {
     hideSpinner();
-    SoQtExaminerViewer *mainViewer = graspItGUI->getIVmgr()->getViewer();
-    Hand * h = graspItGUI->getIVmgr()->getWorld()->getCurrentHand();
-    QFrame *parentWindow = this->ui->renderArea;
-    QString viewName = QString("current best grasp");
-    handView = new HandView(mainViewer,h,*parentWindow, viewName);
     if(graspPlanningState)
     {
-        handView->update(*graspPlanningState, *h);
+        handView->update(*graspPlanningState, *hand);
     }
 }
 

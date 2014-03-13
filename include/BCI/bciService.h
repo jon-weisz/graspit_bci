@@ -91,6 +91,7 @@ signals:
 
 private:
         static BCIService * bciServiceInstance;
+        BCIService();
 };
 
 #endif // BCISERVICE_H

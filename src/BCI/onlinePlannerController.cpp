@@ -6,34 +6,30 @@ using bci_experiment::world_element_tools::getWorld;
 namespace bci_experiment
 {
 
-    OnlinePlannerController * OnlinePlannerController::mController = NULL;
+    OnlinePlannerController * OnlinePlannerController::onlinePlannerController = NULL;
 
     OnlinePlannerController* OnlinePlannerController::getInstance()
     {
-        if(!mController)
+        if(!onlinePlannerController)
         {
-            mController = new OnlinePlannerController();
+            onlinePlannerController = new OnlinePlannerController();
         }
 
-        return mController;
+        return onlinePlannerController;
     }
 
     OnlinePlannerController::OnlinePlannerController(QObject *parent) :
         QObject(parent),
         mDbMgr(NULL),
         currentTarget(NULL),
-        currentGraspIndex(0),
-        currentPlanner(NULL)
+        currentGraspIndex(0)
     {
-
+        currentPlanner = planner_tools::createDefaultPlanner();
     }
 
 
     bool OnlinePlannerController::analyzeApproachDir()
     {
-        if(!currentPlanner)
-            return false;
-
         Hand * refHand(currentPlanner->getRefHand());
         GraspPlanningState * graspPlanningState = new GraspPlanningState(refHand);
 
@@ -51,7 +47,7 @@ namespace bci_experiment
         /* If there is a planner and the planner has found some solutions
         * do some tests.
         */
-        if(currentPlanner && currentPlanner->getListSize())
+        if(currentPlanner->getListSize())
         {
             // Notify someone to analyze the current approach direction
             analyzeApproachDir();
@@ -64,6 +60,7 @@ namespace bci_experiment
                 //updateResults(true, false);
             }
         }
+
         BCIService::getInstance()->onPlannerUpdated();
         QTimer::singleShot(1000, this, SLOT(plannerTimedUpdate()));
     }
@@ -74,44 +71,19 @@ namespace bci_experiment
     void OnlinePlannerController::initializeDbInterface()
     {
 
-        if (!mDbMgr)
+        if (!mDbMgr && currentPlanner->getHand())
         {
+            GraspitDBModelAllocator *graspitDBModelAllocator = new GraspitDBModelAllocator();
+            GraspitDBGraspAllocator *graspitDBGraspAllocator = new GraspitDBGraspAllocator(currentPlanner->getRefHand());
 
-          if(!currentPlanner || !currentPlanner->getHand())
-          {
-              return;
-          }
-          if(!mDbMgr)
-          {
-            // If it is an online planner
             mDbMgr = new db_planner::SqlDatabaseManager("tonga.cs.columbia.edu", 5432,
-                              "postgres","roboticslab","armdb",
-			      new GraspitDBModelAllocator(),
-                              new GraspitDBGraspAllocator(currentPlanner->getRefHand()));
-          }
+                              "postgres","roboticslab","armdb",graspitDBModelAllocator,graspitDBGraspAllocator);
 
           planner_tools::importGraspsFromDBMgr(currentPlanner, mDbMgr);
         }
-
-        if(currentPlanner)
-        {
-            currentPlanner->updateSolutionList();
-        }
-
     }
 
 
-
-
-    void OnlinePlannerController::updateObject(GraspableBody * newTarget)
-    {
-        if(currentPlanner)
-        {
-            if(!currentPlanner->getHand())
-                return;
-            currentPlanner->getHand()->getGrasp()->setObjectNoUpdate(newTarget);
-        }
-    }
 
 
     void OnlinePlannerController::initializeTarget(Hand * currentHand,
@@ -119,7 +91,7 @@ namespace bci_experiment
     {
 
         // Set the grasps target to the new object
-        updateObject(targetObject);
+        currentPlanner->getHand()->getGrasp()->setObjectNoUpdate(targetObject);
 
         // Disable collisions between any nontarget objects and the hand
         world_element_tools::disableNontargetCollisions(currentHand, targetObject);
@@ -148,6 +120,7 @@ namespace bci_experiment
         ui_tools::highlightAll();
         //highlight the first body in a special color and set it as our current body
         currentTarget = ui_tools::highlightNextGraspableBody(NULL);
+        currentPlanner->getHand()->getGrasp()->setObjectNoUpdate(currentTarget);
     }
 
     void OnlinePlannerController::unhighlightAllBodies()
@@ -162,10 +135,10 @@ namespace bci_experiment
 
     void OnlinePlannerController::runObjectRecognition()
     {
-        // If we haven't set up a target and there are graspable bodies in the world
-        // target body 0
         if(!currentTarget && getWorld()->getNumGB())
+        {
             currentTarget = getWorld()->getGB(0);
+        }
     }
 
     bool OnlinePlannerController::hasRecognizedObjects()
@@ -184,33 +157,22 @@ namespace bci_experiment
 
     bool OnlinePlannerController::setPlannerToStopped()
     {
-        if(currentPlanner)
-        {
-            currentPlanner->stopPlanner();
-            return true;
-        }
-        return false;
+        currentPlanner->stopPlanner();
+        return true;
     }
 
     bool OnlinePlannerController::setPlannerToPaused()
     {
-        if(currentPlanner)
-        {
-            currentPlanner->pausePlanner();
-            return true;
-        }
-        return false;
+        currentPlanner->pausePlanner();
+        return true;
     }
 
 
     bool OnlinePlannerController::setPlannerToRunning()
     {
-        //if(!currentPlanner || !currentPlanner->getTargetState()->getObject())
-        //    return false;
-        if(currentPlanner && currentPlanner->getState()==READY)
+
+        if(currentPlanner->getState()==READY)
         {
-            // might want to connect to idle sensor instead of own thread.
-            //currentPlanner->startThread();
             currentPlanner->startPlanner();
             plannerTimedUpdate();
         }
@@ -221,23 +183,13 @@ namespace bci_experiment
     bool OnlinePlannerController::setPlannerToReady()
     {
 
-        if(!currentPlanner)
+        if(currentTarget)
         {
-            currentPlanner = planner_tools::createDefaultPlanner();
-
-            // If a valid target exists
-            if(currentTarget)
-            {
-                initializeTarget(currentPlanner->getHand(), currentTarget);
-            }
+            initializeTarget(currentPlanner->getHand(), currentTarget);
         }
 
-        //currentPlanner->stopPlanner();
-        currentPlanner->resetPlanner();
         return true;
     }
-
-
 
     void OnlinePlannerController::rotateHandLong()
     {
@@ -261,11 +213,13 @@ namespace bci_experiment
 
     const GraspPlanningState * OnlinePlannerController::getGrasp(int index)
     {
-        if(currentPlanner->getListSize() > 0)
-        {
-            return currentPlanner->getGrasp(index);
-        }
-        return NULL;
+        assert(currentPlanner->getListSize() > 0);
+        return currentPlanner->getGrasp(index);
+    }
+
+    const GraspPlanningState * OnlinePlannerController::getCurrentGrasp()
+    {
+        return getGrasp(currentGraspIndex);
     }
 
 }

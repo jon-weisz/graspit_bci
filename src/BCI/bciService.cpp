@@ -13,4 +13,11 @@ BCIService* BCIService::getInstance()
     return bciServiceInstance;
 }
 
+BCIService::BCIService()
+{
+//    //builds and starts a qtStateMachine
+//    BCIStateMachine *bciStateMachine = new BCIStateMachine(bciControlWindow);
+//    bciStateMachine->start();
+}
+
 

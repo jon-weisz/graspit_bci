@@ -41,7 +41,7 @@ class GraspSelectionView : public QWidget
     
 public:
     explicit GraspSelectionView(QWidget *parent = 0);
-    void showSelectedGrasp(const GraspPlanningState *graspPlanningState);
+    void showSelectedGrasp(Hand *hand ,const GraspPlanningState *graspPlanningState);
     ~GraspSelectionView();
 
 public slots:

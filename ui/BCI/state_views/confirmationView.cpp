@@ -21,21 +21,21 @@ ConfirmationView::ConfirmationView(QWidget *parent) :
     connect(ui->buttonOk, SIGNAL(clicked()), this, SLOT(onOk()));
     connect(ui->buttonBack, SIGNAL(clicked()), this, SLOT(onBack()));
 
-    showSelectedGrasp(NULL);
-
-}
-
-
-void ConfirmationView::showSelectedGrasp(const GraspPlanningState *graspPlanningState)
-{
     SoQtExaminerViewer *mainViewer = graspItGUI->getIVmgr()->getViewer();
     Hand * h = graspItGUI->getIVmgr()->getWorld()->getCurrentHand();
     QFrame *parentWindow = this->ui->previewFrame;
     QString viewName = QString("current best grasp");
     handView = new HandView(mainViewer,h,*parentWindow,viewName);
+
+}
+
+
+void ConfirmationView::setCurrentGrasp(Hand *hand, const GraspPlanningState *graspPlanningState)
+{
+
     if(graspPlanningState)
     {
-        handView->update(*graspPlanningState, *h);
+        handView->update(*graspPlanningState, *hand);
     }
 }
 

@@ -71,32 +71,6 @@ namespace bci_experiment
         }
 
 
-        void viewBodies(std::vector<Body *> & body_vec)
-        {
-          SoGroup * so = new SoGroup();
-          so->ref();
-          for(unsigned int i = 0; i < body_vec.size(); ++i)
-          {
-            so->addChild(body_vec[i]->getIVRoot());
-          }
-
-          graspItGUI->getIVmgr()->getViewer()->getCamera()->viewAll(so, graspItGUI->getIVmgr()->getViewer()->getViewportRegion(), 1.2);
-          so->removeAllChildren();
-          so->unref();
-        }
-
-
-        void viewGraspableBodies()
-        {
-          std::vector<Body *> graspableBodies;
-          for(int i = 0; i < getWorld()->getNumGB(); ++i)
-          {
-                graspableBodies.push_back(getWorld()->getGB(i));
-          }
-          viewBodies(graspableBodies);
-        }
-
-
         void viewHand(Hand * h)
         {
           graspItGUI->getIVmgr()->getViewer()->getCamera()->viewAll(h->getIVRoot(), graspItGUI->getIVmgr()->getViewer()->getViewportRegion(), 0.5);

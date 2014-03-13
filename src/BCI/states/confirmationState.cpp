@@ -18,11 +18,11 @@ ConfirmationState::ConfirmationState(BCIControlWindow *_bciControlWindow,QState*
 
 void ConfirmationState::onEntry(QEvent *e)
 {
-
+    const GraspPlanningState *grasp = OnlinePlannerController::getInstance()->getCurrentGrasp();
+    Hand *hand = OnlinePlannerController::getInstance()->getHand();
+    confirmationView->setCurrentGrasp(hand,grasp);
     confirmationView->show();
-
     bciControlWindow->currentState->setText("Confirmation State");
-
 }
 
 

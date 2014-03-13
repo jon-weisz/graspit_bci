@@ -35,8 +35,6 @@ namespace bci_experiment{
             static OnlinePlannerController * getInstance();
 
             bool analyzeApproachDir();
-            void initializeDbInterface();
-            void updateObject(GraspableBody * newTarget);
             void runObjectRecognition();
             bool hasRecognizedObjects();
 
@@ -57,6 +55,7 @@ namespace bci_experiment{
             GraspableBody* getCurrentTarget();
             Hand * getHand();
             const GraspPlanningState * getGrasp(int index);
+            const GraspPlanningState * getCurrentGrasp();
 
             bool setPlannerToRunning();
             bool setPlannerToStopped();
@@ -75,17 +74,19 @@ namespace bci_experiment{
 
         private:
 
+            static OnlinePlannerController * onlinePlannerController;
+
             OnlinePlannerController(QObject *parent = 0);
-            OnlinePlannerController(OnlinePlannerController *);
-            static OnlinePlannerController * mController;
+            void initializeDbInterface();
+
+
 
             db_planner::SqlDatabaseManager * mDbMgr;
-
             GraspableBody * currentTarget;
             unsigned int currentGraspIndex;
             OnLinePlanner * currentPlanner;
 
-            OnLinePlanner * getPlanner();
+
 
     private slots:
             void plannerTimedUpdate();

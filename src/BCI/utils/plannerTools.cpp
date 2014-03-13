@@ -136,6 +136,8 @@ namespace bci_experiment
                 mPlanner->addSolution(s);
             }
 
+            mPlanner->updateSolutionList();
+
         }
 
         OnLinePlanner * createDefaultPlanner(){
