@@ -35,24 +35,11 @@ namespace bci_experiment{
             static OnlinePlannerController * getInstance();
 
             bool analyzeApproachDir();
-            void runObjectRecognition();
             bool hasRecognizedObjects();
 
-            // Needs the align method to move here
-            // Needs the align method broken in to the GUI part and the
-            // actual moving the hand part
-
-            void rotateHandLat();
-            void rotateHandLong();
-
-            // Highlighting functionality should move to the view controller
-            // The method here should only care about setting the next target
-            // and possibly emitting a signal that the target has been emitted.
-            void highlightAllBodies();
-            void unhighlightAllBodies();
-            void highlightNextBody();
-
             GraspableBody* getCurrentTarget();
+            GraspableBody * incrementCurrentTarget();
+
             Hand * getHand();
             const GraspPlanningState * getGrasp(int index);
             const GraspPlanningState * getCurrentGrasp();
@@ -70,6 +57,7 @@ namespace bci_experiment{
             void initializeTarget(Hand * currentHand, GraspableBody * targetObject);
 
             void incrementGraspIndex();
+
 
 
         private:

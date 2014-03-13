@@ -3,11 +3,14 @@
 
 #include <QObject>
 
-class BCIStateMachine;
+#include "BCI/worldController.h"
+
 class GraspableBody;
 class DrawableFrame;
 class GraspPlanningState;
+class BCIControlWindow;
 
+using namespace bci_experiment;
 
 class BCIService:public QObject
 {
@@ -42,6 +45,8 @@ public:
     void onPlannerUpdated(){emit plannerUpdated();}
 
     static BCIService* getInstance();
+
+    void createStateMachine(BCIControlWindow *bciControlWindow);
 
 signals:
 
@@ -89,9 +94,13 @@ signals:
     void analyzeApproachDir(GraspPlanningState * gps);
 
 
+
+
 private:
         static BCIService * bciServiceInstance;
+
         BCIService();
+
 };
 
 #endif // BCISERVICE_H

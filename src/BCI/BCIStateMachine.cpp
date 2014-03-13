@@ -13,15 +13,10 @@
 
 #include "BCI/bciService.h"
 
-BCIStateMachine::BCIStateMachine(BCIControlWindow *_bciControlWindow)
+BCIStateMachine::BCIStateMachine(BCIControlWindow *_bciControlWindow, BCIService *_bciService):
+    bciControlWindow(_bciControlWindow),
+    bciService(_bciService)
 {
-    bciControlWindow = _bciControlWindow;
-}
-
-void BCIStateMachine::start()
-{        
-    BCIService * bciService = BCIService::getInstance();
-
     ObjectRecognitionState *objectRecognitionState = new ObjectRecognitionState(bciControlWindow);
     ObjectSelectionState *objectSelectionState = new ObjectSelectionState(bciControlWindow);
     GraspSelectionState *initialGraspSelectionState = new GraspSelectionState(bciControlWindow);
@@ -33,27 +28,27 @@ void BCIStateMachine::start()
     StoppedExecutionState *stoppedExecutionState = new StoppedExecutionState(bciControlWindow);
 
     //Add all state transistions that are not self transitions----------------------------
-
-    //exec always goes to the next state
     objectRecognitionState->addTransition(bciService,SIGNAL(goToNextState1()), objectSelectionState);
+
     objectSelectionState->addTransition(bciService,SIGNAL(goToNextState1()), initialGraspSelectionState);
+
     initialGraspSelectionState->addTransition(bciService, SIGNAL(goToNextState2()), activateRefinementState);
     initialGraspSelectionState->addTransition(bciService, SIGNAL(goToPreviousState()), objectSelectionState);
     initialGraspSelectionState->addTransition(bciService, SIGNAL(goToNextState1()), confirmationState);
+
     activateRefinementState->addTransition(bciService, SIGNAL(goToNextState1()), confirmationState);
+
     finalGraspSelectionState->addTransition(bciService, SIGNAL(goToNextState1()),confirmationState);
+
     onlinePlanningState->addTransition(bciService, SIGNAL(goToNextState1()), finalGraspSelectionState);
+
     confirmationState->addTransition(bciService, SIGNAL(goToNextState1()), executionState);
-    executionState->addTransition(bciService, SIGNAL(goToNextState1()), stoppedExecutionState);
-    stoppedExecutionState->addTransition(bciService, SIGNAL(goToNextState1()), executionState);
-
-    stoppedExecutionState->addTransition(bciService, SIGNAL(goToNextState2()), objectRecognitionState);
-
-
-    //next returns us to the previous state in the confirmation state
     confirmationState->addTransition(bciService, SIGNAL(goToNextState2()), initialGraspSelectionState);
 
-    //------------------------------------------------------------------------------------
+    executionState->addTransition(bciService, SIGNAL(goToNextState1()), stoppedExecutionState);
+
+    stoppedExecutionState->addTransition(bciService, SIGNAL(goToNextState1()), executionState);
+    stoppedExecutionState->addTransition(bciService, SIGNAL(goToNextState2()), objectRecognitionState);
 
     stateMachine.addState(objectRecognitionState);
     stateMachine.addState(objectSelectionState);
@@ -66,7 +61,11 @@ void BCIStateMachine::start()
     stateMachine.addState(stoppedExecutionState);
 
     stateMachine.setInitialState(objectRecognitionState);
-    stateMachine.start();
+}
 
+void BCIStateMachine::start()
+{        
+    stateMachine.start();
+    bciControlWindow->currentFrame->show();
 }
 

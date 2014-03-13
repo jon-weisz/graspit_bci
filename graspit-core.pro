@@ -99,7 +99,8 @@ HEADERS	+= include/barrett.h \
         include/Servers/graspitServer.h \
     include/SoRing.h \
     ui/BCI/state_views/graspView.h \
-    ui/BCI/qtWaitingSpinner.h
+    ui/BCI/qtWaitingSpinner.h \
+    src/BCI/worldController.h
 
 
 
@@ -182,7 +183,8 @@ SOURCES	+= src/arch.cpp \
         src/Servers/graspitServer.cpp \
     src/SoRing.cpp \
     ui/BCI/state_views/graspView.cpp \
-    ui/BCI/qtWaitingSpinner.cpp
+    ui/BCI/qtWaitingSpinner.cpp \
+    src/BCI/worldController.cpp
 
 
 

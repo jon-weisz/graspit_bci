@@ -18,8 +18,6 @@ GraspSelectionState::GraspSelectionState(BCIControlWindow *_bciControlWindow,QSt
 
       It also affects the visualization - This should change which grasp is shown by the demonstration hand
       and which grasp is shown most prominantly in any grasp preview pane.
-
-
     */
 
     addSelfTransition(BCIService::getInstance(),SIGNAL(next()), this, SLOT(onNext()));
@@ -40,7 +38,6 @@ void GraspSelectionState::onEntry(QEvent *e)
     OnlinePlannerController::getInstance()->setPlannerToReady();
     //called so that view will show best grasp from database
     onPlannerUpdated();
-
 }
 
 
@@ -62,7 +59,6 @@ void GraspSelectionState::onPlannerUpdated()
     if(bestGrasp)
     {
         graspSelectionView->showSelectedGrasp(hand, bestGrasp);
-        bciControlWindow->currentState->setText("Planner Updated");
     }
 
 }

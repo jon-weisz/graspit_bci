@@ -15,12 +15,13 @@
 class BCIStateMachine
 {
 public:
-    BCIStateMachine(BCIControlWindow *_bciControlWindow);
+    BCIStateMachine(BCIControlWindow *_bciControlWindow, BCIService *_bciService);
     void start();
 
 
 private:
     BCIControlWindow *bciControlWindow;
+    BCIService *bciService;
     QStateMachine stateMachine;
 
 };

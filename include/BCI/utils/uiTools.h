@@ -26,7 +26,7 @@ namespace bci_experiment
         void unhighlightBody(Body * b);
 
         //! Highlight the next graspable body according to graspable body index
-        GraspableBody * highlightNextGraspableBody(GraspableBody *b);
+        void highlightCurrentGraspableBody(GraspableBody *b);
 
         //! Unhighlight all graspable bodies
         bool unhighlightAll();

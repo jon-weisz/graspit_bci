@@ -3,7 +3,7 @@
 
 using bci_experiment::OnlinePlannerController;
 using bci_experiment::world_element_tools::getWorld;
-
+using bci_experiment::WorldController;
 
 ActivateRefinementState::ActivateRefinementState(BCIControlWindow *_bciControlWindow,QState* parent):
     HandRotationState("ActivateRefinementState",_bciControlWindow, parent),bciControlWindow(_bciControlWindow)
@@ -35,12 +35,12 @@ void ActivateRefinementState::onExit(QEvent *e)
 
 void ActivateRefinementState::onRotateHandLong()
 {
-    OnlinePlannerController::getInstance()->rotateHandLong();
+    WorldController::getInstance()->rotateHandLong();
 }
 
 void ActivateRefinementState::onRotateHandLat()
 {
-    OnlinePlannerController::getInstance()->rotateHandLat();
+    WorldController::getInstance()->rotateHandLat();
 }
 
 void ActivateRefinementState::onPlannerUpdated()

@@ -115,43 +115,28 @@ namespace bci_experiment
 
     }
 
-    void OnlinePlannerController::highlightAllBodies()
-    {
-        ui_tools::highlightAll();
-        //highlight the first body in a special color and set it as our current body
-        currentTarget = ui_tools::highlightNextGraspableBody(NULL);
-        currentPlanner->getHand()->getGrasp()->setObjectNoUpdate(currentTarget);
-    }
 
-    void OnlinePlannerController::unhighlightAllBodies()
-    {
-        ui_tools::unhighlightAll();
-    }
-
-    void OnlinePlannerController::highlightNextBody()
-    {
-        currentTarget = ui_tools::highlightNextGraspableBody(currentTarget);
-    }
-
-    void OnlinePlannerController::runObjectRecognition()
-    {
-        if(!currentTarget && getWorld()->getNumGB())
-        {
-            currentTarget = getWorld()->getGB(0);
-        }
-    }
 
     bool OnlinePlannerController::hasRecognizedObjects()
     {
        return world_element_tools::getWorld()->getNumGB();
     }
 
+
     GraspableBody* OnlinePlannerController::getCurrentTarget()
     {
+        if(!currentTarget && getWorld()->getNumGB())
+        {
+            currentTarget = getWorld()->getGB(0);
+        }
         return currentTarget;
     }
 
-
+    GraspableBody* OnlinePlannerController::incrementCurrentTarget()
+    {
+        currentTarget = world_element_tools::getNextGraspableBody(currentTarget);
+        return currentTarget;
+    }
 
 
 
@@ -191,20 +176,11 @@ namespace bci_experiment
         return true;
     }
 
-    void OnlinePlannerController::rotateHandLong()
-    {
-        graspItGUI->getIVmgr()->rotateLong();
-    }
-
-    void OnlinePlannerController::rotateHandLat()
-    {
-        graspItGUI->getIVmgr()->rotateLat();
-    }
-
     void OnlinePlannerController::incrementGraspIndex()
     {
         currentGraspIndex = (currentGraspIndex + 1)%(currentPlanner->getListSize());
     }
+
 
     Hand * OnlinePlannerController::getHand()
     {
@@ -213,13 +189,18 @@ namespace bci_experiment
 
     const GraspPlanningState * OnlinePlannerController::getGrasp(int index)
     {
-        assert(currentPlanner->getListSize() > 0);
-        return currentPlanner->getGrasp(index);
+        if(currentPlanner->getListSize() > 0)
+        {
+            return currentPlanner->getGrasp(index);
+        }
+        return NULL;
+
     }
 
     const GraspPlanningState * OnlinePlannerController::getCurrentGrasp()
     {
         return getGrasp(currentGraspIndex);
     }
+
 
 }

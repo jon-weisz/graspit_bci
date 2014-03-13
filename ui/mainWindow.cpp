@@ -1304,9 +1304,7 @@ void MainWindow::bciActionView()
     BCIControlWindow *bciControlWindow = new BCIControlWindow(mWindow);
     bciControlWindow->show();
 
-    //builds and starts a qtStateMachine
-    BCIStateMachine *bciStateMachine = new BCIStateMachine(bciControlWindow);
-    bciStateMachine->start();
+    BCIService::getInstance()->createStateMachine(bciControlWindow);
 
     //must run this for stateMachine to take effect
     bciControlWindow->exec();

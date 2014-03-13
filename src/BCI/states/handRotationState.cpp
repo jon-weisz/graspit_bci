@@ -5,6 +5,7 @@
 
 using bci_experiment::world_element_tools::getWorld;
 using bci_experiment::OnlinePlannerController;
+using bci_experiment::WorldController;
 
 
 HandRotationState::HandRotationState(QString name , BCIControlWindow *_bciControlWindow,QState* parent):
@@ -18,10 +19,10 @@ HandRotationState::HandRotationState(QString name , BCIControlWindow *_bciContro
 
 void HandRotationState::onRotateHandLong()
 {
-    OnlinePlannerController::getInstance()->rotateHandLong();
+    WorldController::getInstance()->rotateHandLong();
 }
 
 void HandRotationState::onRotateHandLat()
 {
-    OnlinePlannerController::getInstance()->rotateHandLat();
+    WorldController::getInstance()->rotateHandLat();
 }

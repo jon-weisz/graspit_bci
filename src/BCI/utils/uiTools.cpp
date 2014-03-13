@@ -34,20 +34,14 @@ namespace bci_experiment
         }
 
 
-        GraspableBody * highlightNextGraspableBody(GraspableBody *b)
+        void highlightCurrentGraspableBody(GraspableBody *b)
         {
-            GraspableBody * nextBody = getNextGraspableBody(b);
-            //highlight the new body
-            if(nextBody)
-            {
-                highlightBody(nextBody, SbColor(0,1,0));
-            }
-            //if the old body is not null, return it to the unselected color
+            highlightAll();
+
             if(b)
             {
-                highlightBody(b, SbColor(1,0,0));
+                highlightBody(b, SbColor(0,1,0));
             }
-            return nextBody;
         }
 
 

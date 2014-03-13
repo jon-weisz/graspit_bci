@@ -1,31 +1,22 @@
 #include "objectSelectionView.h"
 #include "ui_objectSelectionView.h"
-#include "BCI/bciService.h"
 #include "debug.h"
 
-ObjectSelectionView::ObjectSelectionView(QWidget *parent) :
+ObjectSelectionView::ObjectSelectionView(ObjectSelectionState *state,QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ObjectSelectionView)
 {
     ui->setupUi(this);
 
 
-    connect(ui->next, SIGNAL(clicked()), this, SLOT(onNext()));
-    connect(ui->select, SIGNAL(clicked()), this, SLOT(onSelect()));
+    connect(ui->next, SIGNAL(clicked()), state, SLOT(onNext()));
+    connect(ui->select, SIGNAL(clicked()), state, SLOT(onSelect()));
 
 }
 
 
-void ObjectSelectionView::onNext()
-{
-    BCIService::getInstance()->emitNext();
-}
 
 
-void ObjectSelectionView::onSelect()
-{
-    BCIService::getInstance()->emitGoToNextState1();
-}
 
 
 ObjectSelectionView::~ObjectSelectionView()

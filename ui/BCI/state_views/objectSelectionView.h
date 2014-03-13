@@ -23,12 +23,7 @@
 #include <Inventor/nodes/SoSeparator.h>
 #include <Inventor/engines/SoElapsedTime.h>
 
-#include "graspitGUI.h"
-#include "ivmgr.h"
-#include "body.h"
-#include "world.h"
-#include "robot.h"
-#include "grasp.h"
+#include "BCI/states/objectSelectionState.h"
 
 namespace Ui {
 class ObjectSelectionView;
@@ -39,18 +34,13 @@ class ObjectSelectionView : public QWidget
     Q_OBJECT
     
 public:
-    explicit ObjectSelectionView(QWidget *parent = 0);
+    explicit ObjectSelectionView(ObjectSelectionState *state, QWidget *parent = 0);
     ~ObjectSelectionView();
     
 private:
 
     Ui::ObjectSelectionView *ui;
 
-
-
-public slots:
-    void onSelect();
-    void onNext();
 };
 
 #endif // OBJECTSELECTIONVIEW_H
