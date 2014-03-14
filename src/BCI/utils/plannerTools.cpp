@@ -88,10 +88,6 @@ namespace bci_experiment
 
 
 
-        EGPlanner * getCurrentPlanner()
-        {
-            getWorld()->getCurrentPlanner();
-        }
 
 
         void importGraspsFromDBMgr( OnLinePlanner * mPlanner, db_planner::DatabaseManager * mDbMgr)
@@ -136,7 +132,11 @@ namespace bci_experiment
                 mPlanner->addSolution(s);
             }
 
+            //reorders the solutions we have found.
             mPlanner->updateSolutionList();
+
+            //needed to return hand to aligned with object, since it was used to testGraspCollisions
+            hs.execute(mHand);
 
         }
 

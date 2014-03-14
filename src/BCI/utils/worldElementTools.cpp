@@ -160,17 +160,19 @@ Body * addBodyIfUnique(const QString & bodyName)
 //!  Realigns the hand so that it is facing the object and at a reasonable distance
 void realignHand(Hand * h)
 {
-  double approachDist;
-  h->quickOpen(1.0);
-  if(!h->getGrasp()->getObject())
-    approachDist = 300;
-  else
-    {
-      approachDist = 300 - h->getTran().translation().len();
+    h->quickOpen(1.0);
 
+    double approachDist;
+    if(!h->getGrasp()->getObject())
+    {
+        approachDist = 300;
     }
-  h->approachToContact(-approachDist, true);
-  graspItGUI->getIVmgr()->align();
+    else
+    {
+        approachDist = 300 - h->getTran().translation().len();
+    }
+    h->approachToContact(-approachDist, true);
+    graspItGUI->getIVmgr()->align();
 }
 
 }

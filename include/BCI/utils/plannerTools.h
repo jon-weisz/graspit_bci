@@ -11,9 +11,6 @@ namespace bci_experiment{
 
     namespace planner_tools{
 
-        //! Get the current head planner in the world
-          EGPlanner * getCurrentPlanner();
-
 
         //! Verify that the pregrasp and grasp states are not in collision
         bool testGraspCollisions(Hand * h, const GraspPlanningState * s);
