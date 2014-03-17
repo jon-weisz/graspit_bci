@@ -196,7 +196,7 @@ void realignHand(Hand * h)
 {
   double approachDist;
   h->quickOpen(1.0);
-  if(!h->getGrasp()->getObject()){
+  if(h->getGrasp()->getObject()){
     approachDist = 300;
     alignHandToObject(h, h->getGrasp()->getObject(), approachDist);
   }
