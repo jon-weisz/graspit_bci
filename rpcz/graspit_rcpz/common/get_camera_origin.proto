@@ -1,0 +1,15 @@
+package graspit_rpcz;
+
+import "geometry_msgs.proto";
+
+message CameraOriginRequest {}
+
+message CameraOriginResponse
+{
+	required Pose cameraOrigin = 1;
+}
+
+service CameraOriginService
+{
+	rpc GetCameraOrigin(CameraOriginRequest) returns (CameraOriginResponse);
+}

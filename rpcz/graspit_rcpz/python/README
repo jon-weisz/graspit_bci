@@ -1,0 +1,6 @@
+Python examples for RPCZ
+
+Run generate_protos.py to generate Python modules for the example
+protocol buffers.
+
+

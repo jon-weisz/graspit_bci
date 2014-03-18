@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "BCI/worldController.h"
+#include "Servers/rosRPCZClient.h"
 
 class GraspableBody;
 class DrawableFrame;
@@ -35,19 +36,25 @@ public:
 
     void emitAnalyzeGrasp(const GraspPlanningState * gps) {emit analyzeGrasp(gps); }
     void emitAnalyzeNextGrasp() {emit analyzeNextGrasp(); }
-    void emitRunObjectRecognition(){emit runObjectRecognition();}
+    void emitRunObjectRecognition(){}
 
     void emitSendString(const QString & s){emit sendString(s);}
 
 
     void emitAnalyzeApproachDir(GraspPlanningState * gs){emit analyzeApproachDir(gs);}
 
+    //called when active planner is updated
     void onPlannerUpdated(){emit plannerUpdated();}
+
+    //ros server calls
+    void runObjectRecognition();
+    void getCameraOrigin();
+    void checkGraspReachability();
+
 
     static BCIService* getInstance();
 
-    void createStateMachine(BCIControlWindow *bciControlWindow);
-
+    void init(BCIControlWindow *bciControlWindow);
 signals:
 
     //tell state machine to go to next state
@@ -85,7 +92,7 @@ signals:
     void rotLat();
 
     //! Signal that object recognition system should be rerun
-    void runObjectRecognition();
+    //void runObjectRecognition();
     void sendString(const QString & s);
 
     // determine reachability of the grasp at this index
@@ -94,12 +101,12 @@ signals:
     void analyzeApproachDir(GraspPlanningState * gps);
 
 
-
-
 private:
         static BCIService * bciServiceInstance;
-
         BCIService();
+
+        RosRPCZClient rosServer;
+
 
 };
 

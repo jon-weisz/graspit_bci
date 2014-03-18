@@ -100,7 +100,8 @@ HEADERS	+= include/barrett.h \
     include/SoRing.h \
     ui/BCI/state_views/graspView.h \
     ui/BCI/qtWaitingSpinner.h \
-    src/BCI/worldController.h
+    src/BCI/worldController.h \
+    src/Servers/rosRPCZClient.h
 
 
 
@@ -184,7 +185,8 @@ SOURCES	+= src/arch.cpp \
     src/SoRing.cpp \
     ui/BCI/state_views/graspView.cpp \
     ui/BCI/qtWaitingSpinner.cpp \
-    src/BCI/worldController.cpp
+    src/BCI/worldController.cpp \
+    src/Servers/rosRPCZClient.cpp
 
 
 
@@ -389,7 +391,18 @@ protobuf {
   PROTOS = Drawable.proto GraspitMessage.proto
   # add message path here
   PROTOPATH = ./protocols
-  include(protobuf.pri) 
+  include(protobuf.pri)
+}
+
+#-------------------------------------- RPCZ -------------------------------------------------------------
+rpcz {
+  # add message files here
+  #PROTOS2 = geometry_msgs.proto graspable_object.proto run_recognition.proto
+  # add message path here
+  #PROTOPATH2 = ./rpcz_services
+  include(rpcz.pri)
+
+
 }
 
 #-------------------------------------- BCI Experiment code -----------------------------------------------------------

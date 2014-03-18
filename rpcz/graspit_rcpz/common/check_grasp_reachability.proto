@@ -1,0 +1,10 @@
+package graspit_rpcz;
+
+message CheckGraspReachabilityRequest {}
+
+message CheckGraspReachabilityResponse {}
+
+service CheckGraspReachabilityService 
+{
+	rpc CheckGraspReachability(CheckGraspReachabilityRequest) returns (CheckGraspReachabilityResponse);
+}

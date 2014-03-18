@@ -52,6 +52,5 @@ void ActivateRefinementState::onPlannerUpdated()
         activeRefinementView->showSelectedGrasp(bestGrasp);
         bciControlWindow->currentState->setText("Planner Updated");
     }
-
 }
 

@@ -13,22 +13,19 @@ ObjectRecognitionState::ObjectRecognitionState(BCIControlWindow *_bciControlWind
 
 void ObjectRecognitionState::onEntry(QEvent *e)
   {
-
-
     objectRecognitionView->show();
     bciControlWindow->currentState->setText("Object Recognition State");
 
-    BCIService::getInstance()->emitRunObjectRecognition();
+    BCIService::getInstance()->runObjectRecognition();
 
     if(OnlinePlannerController::getInstance()->hasRecognizedObjects())
     {
         BCIService::getInstance()->emitGoToNextState1();
     }
-
 }
-
 
 void ObjectRecognitionState::onExit(QEvent *e)
 {
      objectRecognitionView->hide();
 }
+
