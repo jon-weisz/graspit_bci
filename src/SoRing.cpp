@@ -14,6 +14,7 @@
 
 SbVec3f SoRing::normal(0,0,1);
 int SoRing::NbTrianglesPerRing = 60;
+bool SoRing::initialized = false;
 
 SO_NODE_SOURCE(SoRing)
 
@@ -25,6 +26,11 @@ void SoRing::initClass()
 
 SoRing::SoRing()
 {
+    if(!initialized)
+    {
+        initClass();
+        initialized = true;
+    }
   SO_NODE_CONSTRUCTOR(SoRing);
 
   SO_NODE_ADD_FIELD(center, (0,0) );

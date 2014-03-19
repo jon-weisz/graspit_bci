@@ -1,5 +1,6 @@
 
 #include "BCI/utils/worldElementTools.h"
+#include "debug.h"
 
 namespace bci_experiment{
 namespace world_element_tools{
@@ -154,25 +155,58 @@ Body * addBodyIfUnique(const QString & bodyName)
   return newBody;
 }
 
+//! Aligns the hand to an object
+void alignHandToObject(Hand * hand, Body * targetBody, double distance)
+{
+    // Get approach transform so that we can rotate it in to the object
+    transf approachTran = hand->getApproachTran()*hand->getTran();
 
+    //Calculate the vector from the offset of the approach transform to the body.
+    //We want to rotate the Z direction of the approach transform in to this
+    //vector so that our approach direction points towards the body
+    vec3 approachToBody = normalise(approachTran.translation() - targetBody->getTran().translation());
+    vec3 approachDir = vec3(approachTran.affine()[2],approachTran.affine()[5], approachTran.affine()[8]);
 
+    //Find the angle between the approach direction and the
+    //desired approach direction
+    double angle = acos(approachToBody%approachDir);
+
+    //If the angle is over a small threshold, correct the approach direction
+    //if(angle > .01)
+    //{
+        //Find the axis to rotate around to match approach direction to
+        //to the desired direction
+    //    vec3 rotationAxis = approachToBody*approachDir;
+
+        //Calculate the relative transf based on the angle and axis
+    //    transf rotationTran = rotate_transf(-angle, rotationAxis);
+
+        //Move the hand to this relative transform
+        //hand->setTran(rotationTran * hand->getTran());
+    //}
+
+    //If the distance is legal, try to set the hand to the desired distance,
+    //but respect collisions.
+    if(distance > 0)
+        hand->approachToContact((approachTran.translation() - targetBody->getTran().translation()).len() - distance, true);
+}
 
 //!  Realigns the hand so that it is facing the object and at a reasonable distance
+//!  with open fingers.
 void realignHand(Hand * h)
 {
-    h->quickOpen(1.0);
-
-    double approachDist;
-    if(!h->getGrasp()->getObject())
+  double approachDist;
+  h->quickOpen(1.0);
+  if(h->getGrasp()->getObject()){
+    approachDist = 300;
+    alignHandToObject(h, h->getGrasp()->getObject(), approachDist);
+  }
+  else
     {
-        approachDist = 300;
+      DBGA("Aligning hand without object");
+      approachDist = 300 - h->getTran().translation().len();
+      h->approachToContact(-approachDist, true);
     }
-    else
-    {
-        approachDist = 300 - h->getTran().translation().len();
-    }
-    h->approachToContact(-approachDist, true);
-    graspItGUI->getIVmgr()->align();
 }
 
 }

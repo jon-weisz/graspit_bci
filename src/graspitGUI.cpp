@@ -45,6 +45,7 @@
 #include "SoComplexShape.h"
 #include "SoArrow.h"
 #include "SoTorquePointer.h"
+#include "debug.h"
 
 bool GraspItGUI::initialized = false;
 int GraspItGUI::initResult = SUCCESS;
@@ -62,7 +63,19 @@ FILE *debugfile;
 //! This is the system wide pointer to the graspit user interface.
 GraspItGUI *graspItGUI = 0;
 
+//! This is the singleton pattern invocation of the global graspit user interface
+GraspItGUI * GraspItGUI::getInstance()
+{
+    if(initialized)
+        return graspItGUI;
+    DBGP("ERROR: GraspItGUI::getInstance::Requested singleton that can only be initialized elsewhere.");
+    return NULL;
+}
+
 //////////////////////////////////////////////////////////////////////////////
+
+
+
 
 /*!
   If this class hasn't been initialized in another instance, it performs
@@ -93,10 +106,12 @@ GraspItGUI::GraspItGUI(int argc,char **argv)
 	ivmgr->getViewer()->getWidget()->setFocusPolicy(Qt::StrongFocus);
 
 	initialized = true;
+    // Started transitioning to singleton pattern
     graspItGUI = this;
     initResult = processArgs(argc,argv);
   }
 }
+
 
 /*!
   Deletes both the IVmgr and the MainWindow.

@@ -13,6 +13,7 @@ HandRotationState::HandRotationState(QString name , BCIControlWindow *_bciContro
 {
     addSelfTransition(BCIService::getInstance(),SIGNAL(rotLat()), this, SLOT(onRotateHandLat()));
     addSelfTransition(BCIService::getInstance(),SIGNAL(rotLong()), this, SLOT(onRotateHandLong()));
+    addSelfTransition(this,SIGNAL(entered()), this, SLOT(onHandRotationStateEntry()));
     DBGA("HandRotationState");
 }
 
@@ -25,4 +26,9 @@ void HandRotationState::onRotateHandLong()
 void HandRotationState::onRotateHandLat()
 {
     WorldController::getInstance()->rotateHandLat();
+}
+
+void HandRotationState::onHandRotationStateEntry()
+{
+    OnlinePlannerController::getInstance()->alignHand();
 }

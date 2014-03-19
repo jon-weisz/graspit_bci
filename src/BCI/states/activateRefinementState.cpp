@@ -6,10 +6,8 @@ using bci_experiment::world_element_tools::getWorld;
 using bci_experiment::WorldController;
 
 ActivateRefinementState::ActivateRefinementState(BCIControlWindow *_bciControlWindow,QState* parent):
-    HandRotationState("ActivateRefinementState",_bciControlWindow, parent),bciControlWindow(_bciControlWindow)
+    HandRotationState("ActivateRefinementState",_bciControlWindow, parent)
 {
-    addSelfTransition(BCIService::getInstance(),SIGNAL(rotLat()), this, SLOT(onRotateHandLat()));
-    addSelfTransition(BCIService::getInstance(),SIGNAL(rotLong()), this, SLOT(onRotateHandLong()));
     addSelfTransition(BCIService::getInstance(),SIGNAL(plannerUpdated()), this, SLOT(onPlannerUpdated()));
 
     activeRefinementView = new ActiveRefinementView(bciControlWindow->currentFrame);
@@ -33,18 +31,11 @@ void ActivateRefinementState::onExit(QEvent *e)
 }
 
 
-void ActivateRefinementState::onRotateHandLong()
-{
-    WorldController::getInstance()->rotateHandLong();
-}
 
-void ActivateRefinementState::onRotateHandLat()
-{
-    WorldController::getInstance()->rotateHandLat();
-}
 
-void ActivateRefinementState::onPlannerUpdated()
+void ActivateRefinementState::onPlannerUpdated(QEvent * e)
 {
+    return;
     const GraspPlanningState *bestGrasp = OnlinePlannerController::getInstance()->getGrasp(0);
 
     if(bestGrasp)
@@ -54,4 +45,5 @@ void ActivateRefinementState::onPlannerUpdated()
     }
 
 }
+
 

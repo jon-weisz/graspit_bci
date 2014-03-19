@@ -1,6 +1,8 @@
 #include "BCI/onlinePlannerController.h"
+
 #include "BCI/bciService.h"
 #include "debug.h"
+
 using bci_experiment::world_element_tools::getWorld;
 
 namespace bci_experiment
@@ -22,7 +24,8 @@ namespace bci_experiment
         QObject(parent),
         mDbMgr(NULL),
         currentTarget(NULL),
-        currentGraspIndex(0)
+        currentGraspIndex(0),
+        graspDemonstrationHand(NULL)
     {
         currentPlanner = planner_tools::createDefaultPlanner();
     }
@@ -74,7 +77,7 @@ namespace bci_experiment
         if (!mDbMgr && currentPlanner->getHand())
         {
             GraspitDBModelAllocator *graspitDBModelAllocator = new GraspitDBModelAllocator();
-            GraspitDBGraspAllocator *graspitDBGraspAllocator = new GraspitDBGraspAllocator(currentPlanner->getRefHand());
+            GraspitDBGraspAllocator *graspitDBGraspAllocator = new GraspitDBGraspAllocator(currentPlanner->getHand());
 
             mDbMgr = new db_planner::SqlDatabaseManager("tonga.cs.columbia.edu", 5432,
                               "postgres","roboticslab","armdb",graspitDBModelAllocator,graspitDBGraspAllocator);
@@ -139,6 +142,29 @@ namespace bci_experiment
     }
 
 
+    void OnlinePlannerController::drawGuides()
+    {
+        if(!getHand() || !getCurrentTarget())
+            DBGA("OnlinePlannerController::drawGuides::Error - Tried to draw guides with no hand or no target");
+
+        ui_tools::updateCircularGuides(currentPlanner->getRefHand(), getCurrentTarget());
+    }
+
+    void OnlinePlannerController::destroyGuides()
+    {
+        ui_tools::destroyGuideSeparator();
+    }
+
+    void OnlinePlannerController::alignHand()
+    {
+        if(!getHand() || !getCurrentTarget())
+            DBGA("OnlinePlannerController::alignHand::Error - Tried to align hand with no hand or no target");
+        Hand * alignedHand = getHand();
+        if(currentPlanner)
+            alignedHand = currentPlanner->getRefHand();
+        world_element_tools::realignHand(alignedHand);
+        drawGuides();
+    }
 
     bool OnlinePlannerController::setPlannerToStopped()
     {
@@ -170,10 +196,41 @@ namespace bci_experiment
 
         if(currentTarget)
         {
-            initializeTarget(currentPlanner->getHand(), currentTarget);
+            initializeTarget(currentPlanner->getRefHand(), currentTarget);
         }
 
         return true;
+    }
+
+
+
+
+    void OnlinePlannerController::rotateHandLong()
+    {
+
+        float stepSize = M_PI/100.0;
+        transf robotTran = currentPlanner->getRefHand()->getTran();
+        transf objectTran = currentTarget->getTran();
+
+
+        transf rotationTrans = (robotTran * objectTran.inverse()) * transf(Quaternion(stepSize, vec3::Z), vec3(0,0,0));
+        transf newTran = rotationTrans *  objectTran;
+        currentPlanner->getRefHand()->moveTo(newTran, WorldElement::ONE_STEP, WorldElement::ONE_STEP);
+        drawGuides();
+    }
+
+    void OnlinePlannerController::rotateHandLat()
+    {
+        float stepSize = M_PI/100.0;
+
+        transf robotTran = currentPlanner->getRefHand()->getTran();
+        transf objectTran = currentTarget->getTran();
+
+
+        transf rotationTrans = (robotTran * objectTran.inverse()) * transf(Quaternion(stepSize, vec3::X), vec3(0,0,0));
+        transf newTran = rotationTrans *  objectTran;
+        currentPlanner->getRefHand()->moveTo(newTran, WorldElement::ONE_STEP, WorldElement::ONE_STEP);
+        drawGuides();
     }
 
     void OnlinePlannerController::incrementGraspIndex()
@@ -185,6 +242,33 @@ namespace bci_experiment
     Hand * OnlinePlannerController::getHand()
     {
         return currentPlanner->getHand();
+    }
+
+    bool isCloneOf(Robot * r1, Robot * r2)
+    {
+        return r1->getBase()->getIVGeomRoot() == r2->getBase()->getIVGeomRoot();
+    }
+
+    Hand * OnlinePlannerController::getGraspDemoHand()
+    {
+        if (!currentPlanner)
+        {
+            DBGA("OnlinePlannerController::getGraspDemoHand:Attempted to get demonstration hand with no planner set");
+            return NULL;
+        }
+        if(graspDemonstrationHand && !(isCloneOf(currentPlanner->getRefHand(), graspDemonstrationHand)))
+        {
+            getWorld()->destroyElement(graspDemonstrationHand);
+            graspDemonstrationHand = NULL;
+        }
+        if(!graspDemonstrationHand)
+        {
+            graspDemonstrationHand = new Hand(getWorld(),currentPlanner->getRefHand()->getName() + "grasp_demo_hand");
+            graspDemonstrationHand->cloneFrom(currentPlanner->getRefHand());
+            getWorld()->removeElementFromSceneGraph(graspDemonstrationHand);
+        }
+        return graspDemonstrationHand;
+
     }
 
     const GraspPlanningState * OnlinePlannerController::getGrasp(int index)

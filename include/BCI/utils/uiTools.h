@@ -43,8 +43,17 @@ namespace bci_experiment
         //! Change the point cloud transparency
         bool setPointcloudTransparency(double transparency);
 
-    }
+//! Change the view to focus on all of the bodies given
+void viewBodies(std::vector<Body *> & body_vec);
+
+
+//! Change the view to focus on all of the graspable bodies in the scene
+void viewGraspableBodies();
+
+void updateCircularGuides(Hand * hand, Body * object);
+
+void destroyGuideSeparator();
 
 }
-
+}
 #endif // UITOOLS_H
