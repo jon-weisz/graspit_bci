@@ -160,7 +160,7 @@ namespace bci_experiment
              op->setModelState(mHandObjectState);
 
              w->setCurrentPlanner(op);
-
+             op->showSolutionClone(true);
              op->resetPlanner();
 
             return op;
