@@ -212,7 +212,12 @@ OnLinePlanner::distanceOutsideApproach(const transf &solTran, const transf &hand
 	double f;
 	//relative transform between the two
 	transf changeTran = solTran * handTran.inverse();
-	
+    transf handApproach = mHand->getApproachTran() * handTran;
+    transf solApproachTran = mHand->getApproachTran() * solTran;
+
+    vec3 handApproachZ(handApproach.affine()[2], handApproach.affine()[5], handApproach.affine()[8]);
+    vec3 solApproachZ(solApproachTran.affine()[2],solApproachTran.affine()[5], solApproachTran.affine()[8]);
+
 	//DBGP("T1: " << solTran.translation());
 	//DBGP("T2: " << handTran.translation());
 	//DBGP("Change: " << changeTran.translation() );
@@ -221,7 +226,7 @@ OnLinePlanner::distanceOutsideApproach(const transf &solTran, const transf &hand
 	changeTran = mHand->getApproachTran() * changeTran * mHand->getApproachTran().inverse();
   //double dotZ = (mHand->getApproachTran()*handTran).affine().row(2) * (mHand->getApproachTran()*solTran).affine().transpose().row(2);
 	//get angular change
-	double angle; vec3 axis;
+    double angle; vec3 axis;
 	changeTran.rotation().ToAngleAxis(angle, axis);
 
 	//get translation change
@@ -234,8 +239,9 @@ OnLinePlanner::distanceOutsideApproach(const transf &solTran, const transf &hand
 		f = 1.0;
 	}
   double angleMod = 1.0;
-  if (axis.z() < 0)
-    angleMod = -1.0;
+
+  if (handApproachZ%solApproachZ < 0)
+    angleMod = 10.0;
 
 	approach.z() = 0;
 	double dist = approach.len();
@@ -246,10 +252,10 @@ OnLinePlanner::distanceOutsideApproach(const transf &solTran, const transf &hand
 	angle = fabs(angle) / max_angle ;
 	dist = dist / max_dist;
 	//DBGP("Angle " << angle << "; dist " << dist << std::endl);
-  double alignment_score = 1.0;
-  if (useAlignment) alignment_score = .001+(axis.z() * angleMod);
+  double alignment_score = 1/angleMod;
+  //if (useAlignment) alignment_score = .001+(axis.z() * angleMod);
   
-	return f * std::max(angle, dist)/alignment_score;
+    return f * std::max(angle, dist)/alignment_score;
 }
 
 
