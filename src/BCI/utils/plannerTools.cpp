@@ -111,10 +111,8 @@ namespace bci_experiment
             std::vector<db_planner::Grasp*> grasps;
             mDbMgr->GetGrasps(*modelList.back(), GraspitDBGrasp::getHandDBName(mHand).toStdString(), &grasps);
 
+            mHand->saveState();
             HandObjectState hs(mHand);
-            hs.setPositionType(SPACE_COMPLETE);
-            hs.setPostureType(POSE_DOF);
-            hs.saveCurrentHandState();
 
             // Load the grasps into the grasp planner list.
             unsigned int numGrasps = std::min<unsigned int>(grasps.size(), 10);
@@ -136,7 +134,7 @@ namespace bci_experiment
             mPlanner->updateSolutionList();
 
             //needed to return hand to aligned with object, since it was used to testGraspCollisions
-            hs.execute(mHand);
+            mHand->restoreState();
 
         }
 
