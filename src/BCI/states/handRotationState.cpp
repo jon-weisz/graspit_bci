@@ -20,12 +20,12 @@ HandRotationState::HandRotationState(QString name , BCIControlWindow *_bciContro
 
 void HandRotationState::onRotateHandLong()
 {
-    WorldController::getInstance()->rotateHandLong();
+    OnlinePlannerController::getInstance()->rotateHandLong();
 }
 
 void HandRotationState::onRotateHandLat()
 {
-    WorldController::getInstance()->rotateHandLat();
+    OnlinePlannerController::getInstance()->rotateHandLat();
 }
 
 void HandRotationState::onHandRotationStateEntry()

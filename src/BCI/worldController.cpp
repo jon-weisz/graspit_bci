@@ -41,13 +41,5 @@ namespace bci_experiment
         ui_tools::highlightCurrentGraspableBody(currentTarget);
     }
 
-    void WorldController::rotateHandLong()
-    {
-        graspItGUI->getIVmgr()->rotateLong();
-    }
 
-    void WorldController::rotateHandLat()
-    {
-        graspItGUI->getIVmgr()->rotateLat();
-    }
 }

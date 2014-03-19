@@ -15,12 +15,6 @@ namespace bci_experiment
 
         static WorldController * getInstance();
 
-        // Needs the align method to move here
-        // Needs the align method broken in to the GUI part and the
-        // actual moving the hand part
-
-        void rotateHandLat();
-        void rotateHandLong();
 
         // Highlighting functionality should move to the view controller
         // The method here should only care about setting the next target
