@@ -24,6 +24,7 @@ void BCIPreviewView::showBestGrasp()
 {
     // create scene root
     SoSeparator *root = new SoSeparator;
+    root->setName("BestGraspRoot");
     root->ref();
 
     // camera
@@ -90,6 +91,7 @@ SoSeparator *  buildLinkCopy(Link * l)
 {
   //Set up the scene graphs for the hand geometry
   IVHandGeometry = new SoSeparator;
+  IVHandGeometry->setName("IVHandGeometryRoot");
   //copy palm geometry
   //IVHandGeometry->addChild(h->getPalm()->getIVRoot()->copy(false));
   IVHandGeometry->addChild(buildLinkCopy(h->getPalm()));

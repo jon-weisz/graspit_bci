@@ -9,6 +9,7 @@ BCIWorldView::BCIWorldView(QWidget *parent) :
 
     SoQtRenderArea * renderArea = new SoQtRenderArea(this, " ",true);
     SoSeparator * bciWorldViewRoot = new SoSeparator;
+    bciWorldViewRoot->setName("BCIWorldViewRoot");
     SoMaterial * soMaterial = new SoMaterial;
     SoTransformSeparator *lightSep = new SoTransformSeparator;
     SoRotation *lightDir = new SoRotation;

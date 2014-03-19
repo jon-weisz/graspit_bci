@@ -601,6 +601,7 @@ HandObjectState::getIVRoot()
 {
 	if (!IVRoot) {
 		IVRoot = new SoSeparator;
+        IVRoot->setName("HandObjectState_root");
 		IVTran = new SoTransform;
 		IVMat = new SoMaterial;
 		IVRoot->addChild(IVTran);
@@ -713,6 +714,7 @@ GraspPlanningState::compareStatesDistances(const GraspPlanningState *s1, const G
 
 SoSeparator * HandObjectState::copyHandStateIV(){
   SoSeparator * graspIVRoot = new SoSeparator();
+  graspIVRoot->setName("HandObjectState_root");
   //FIXME -- is this necesary?
   graspIVRoot->ref();
   SoNode * handIVRoot = mHand->getIVRoot()->copy(1);

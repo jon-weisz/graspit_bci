@@ -140,7 +140,7 @@ World::World(QObject *parent, const char *name, IVmgr *mgr) : QObject(parent,nam
 
 	IVRoot = new SoSeparator;
 	IVRoot->ref();
-
+    IVRoot->setName("WorldIVRoot");
 	idleSensor = NULL;
 	dynamicsOn = false;
 }

@@ -18,7 +18,8 @@ HandView::HandView(SoQtExaminerViewer *mainViewer, Hand * h, QFrame &parentWindo
      stateID_(-1),
      parentWindow(&parentWindow)
 {
-
+  IVRoot->setName("HandviewRoot");
+  IVRoot->ref();
   handViewSoQtRenderArea = new SoQtRenderArea(&parentWindow, " ",true);
   handViewSoQtRenderArea->setTransparencyType(SoGLRenderAction::SORTED_OBJECT_BLEND);
   handViewSoQtRenderArea->setBackgroundColor(SbColor(1.0,1.0,1.0));
@@ -54,6 +55,7 @@ SoSeparator * HandView::initIVHandGeometry(Hand * h)
 {
   //Set up the scene graphs for the hand geometry
   SoSeparator *IVHandGeometry = new SoSeparator;
+  IVHandGeometry->setName("HandViewIVHandGeometry");
   //copy palm geometry
   IVHandGeometry->addChild(h->getPalm()->getIVRoot()->copy(false));
   std::vector<DynamicBody *> links;
@@ -196,5 +198,6 @@ QString HandView::getViewName()
 
 HandView::~HandView()
 {
+    IVRoot->unref();
   delete handViewSoQtRenderArea;
 }

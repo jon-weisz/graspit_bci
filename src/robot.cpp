@@ -120,6 +120,7 @@ Robot::loadFromXml(const TiXmlElement* root,QString rootPath)
 
 		//init my IVRoot and add the base
 		IVRoot = new SoSeparator;
+        IVRoot->setName("ROBOT_ROOT");
 		IVRoot->addChild(base->getIVRoot());
 	}
 	else{
@@ -431,6 +432,7 @@ Robot::cloneFrom(Robot *original)
 	base->cloneFrom( original->getBase() );
 	//base->initDynamics();
 	IVRoot = new SoSeparator;
+    IVRoot->setName("Robot_Root_Clone");
 	IVRoot->addChild(base->getIVRoot());
 
 	numDOF = original->getNumDOF();
@@ -548,6 +550,7 @@ void
 Robot::addApproachGeometry()
 {	
 	IVApproachRoot = new SoSeparator();
+    IVApproachRoot->setName("Robot_Approach_Root");
 	SoTransform *t1 = new SoTransform();
 	approachTran.toSoTransform(t1);
 	IVApproachRoot->addChild(t1);

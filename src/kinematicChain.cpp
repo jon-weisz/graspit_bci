@@ -163,6 +163,7 @@ KinematicChain::initChainFromXml(const TiXmlElement* root,QString &linkDir)
 	lastJoint = new int[numLinks];
 
 	IVRoot = new SoSeparator;
+    IVRoot->setName("KC_ROOT");
 	IVTran = new SoTransform;
 	IVTran->ref();
 
@@ -274,6 +275,7 @@ void
 KinematicChain::cloneFrom(const KinematicChain *original)
 {
 	IVRoot = new SoSeparator;
+    IVRoot->setName("KC_ROOT_CLONE");
 	IVTran = new SoTransform;
 	IVTran->ref();
 	tran = original->getTran();
