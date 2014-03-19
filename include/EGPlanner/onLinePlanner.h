@@ -139,6 +139,6 @@ public:
 	ActionType getAction();
 	void showGrasp(int i);
 	void executeGrasp(int i);
-        void updateSolutionList();
-        double distanceOutsideApproach(const transf &solTran, const transf &handTran, bool useApproach = false);
+    void updateSolutionList();
+    double distanceOutsideApproach(const transf &solTran, const transf &handTran, bool useApproach = true);
 };
