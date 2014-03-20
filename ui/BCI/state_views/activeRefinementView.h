@@ -16,7 +16,7 @@ class ActiveRefinementView : public QWidget
     
 public:
     explicit ActiveRefinementView(QWidget *parent = 0);
-    void showSelectedGrasp(const GraspPlanningState *graspPlanningState);
+    void showSelectedGrasp(Hand *hand,const GraspPlanningState *graspPlanningState);
     ~ActiveRefinementView();
 
 
