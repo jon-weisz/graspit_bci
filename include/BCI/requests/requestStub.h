@@ -1,9 +1,11 @@
+#ifndef REQUEST_H
+#define REQUEST_H
+
 #include "rpcz/rpcz.hpp"
 
 class Request
 {
 public:
-    Request();
     void sendRequest();
 
 protected:
@@ -11,6 +13,8 @@ protected:
     virtual void callback() = 0;
 
 
-    rpcz::rpc rpc;
+    rpcz::rpc _rpc;
 
 };
+
+#endif // REQUEST_H

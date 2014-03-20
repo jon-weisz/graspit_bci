@@ -15,6 +15,9 @@
 
 #include <QObject>
 #include <boost/shared_ptr.hpp>
+#include "BCI/requests/objectRecognitionStub.h"
+#include "BCI/requests/cameraOriginStub.h"
+#include "BCI/requests/graspReachabilityStub.h"
 
 using namespace graspit_rpcz;
 
@@ -28,19 +31,16 @@ public:
     void getCameraOrigin();
     void checkGraspReachability();
 
-//    void objectRecognitionCallback(graspit_rpcz::ObjectRecognitionResponse *response);
-    void objectRecognitionCallback( boost::shared_ptr<graspit_rpcz::ObjectRecognitionResponse> response);
-//    void objectRecognitionCallback();
-    void getCameraOriginCallback( graspit_rpcz::CameraOriginResponse response );
     void checkGraspReachabilityCallback( graspit_rpcz::CheckGraspReachabilityResponse response );
 
 
 private:
     rpcz::application _application;
-    rpcz::rpc _rpc;
-    graspit_rpcz::CameraOriginService_Stub cameraOrigin_stub;
-    graspit_rpcz::ObjectRecognitionService_Stub objectRecognition_stub;
-    graspit_rpcz::CheckGraspReachabilityService_Stub checkGraspReachability_stub;
+
+    GraspReachabilityStub graspReachabilityStub;
+    ObjectRecognitionStub objectRecognitionStub;
+    CameraOriginStub cameraOriginStub;
+
 
 
 };

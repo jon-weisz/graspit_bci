@@ -99,7 +99,12 @@ HEADERS	+= include/barrett.h \
         include/Servers/graspitServer.h \
         include/SoRing.h \
         include/BCI/worldController.h \
-        include/Servers/rosRPCZClient.h
+        include/Servers/rosRPCZClient.h \
+    include/BCI/requests/requestStub.h \
+    include/BCI/requests/objectRecognitionStub.h \
+    include/BCI/requests/cameraOriginStub.h \
+    include/BCI/requests/graspReachabilityStub.h \
+    include/BCI/requests/graspReachabilityStub.h
 
 
 
@@ -181,7 +186,11 @@ SOURCES	+= src/arch.cpp \
     ui/BCI/state_views/graspView.cpp \
     ui/BCI/qtWaitingSpinner.cpp \
     src/BCI/worldController.cpp \
-    src/Servers/rosRPCZClient.cpp
+    src/Servers/rosRPCZClient.cpp \
+    src/BCI/requests/objectRecognitionStub.cpp \
+    src/BCI/requests/graspReachabilityStub.cpp \
+    src/BCI/requests/requestStub.cpp \
+    src/BCI/requests/cameraOriginStub.cpp
 
 
 
@@ -434,9 +443,7 @@ bci_experiment {
                 ui/BCI/state_views/executionView.cpp \
                 src/BCI/states/stoppedExecutionState.cpp \
                 ui/BCI/state_views/stoppedExecutionView.cpp \
-                ui/BCI/state_views/activeRefinementView.cpp \
-                src/BCI/requests/objectRecognitionRequest.cpp \
-                src/BCI/requests/request.cpp
+                ui/BCI/state_views/activeRefinementView.cpp
 
 
 
@@ -475,9 +482,7 @@ bci_experiment {
                ui/BCI/state_views/stoppedExecutionView.h \
                ui/BCI/state_views/activeRefinementView.h \
                ui/BCI/state_views/graspView.h \
-               ui/BCI/qtWaitingSpinner.h \
-               include/BCI/requests/objectRecognitionRequest.h \
-                include/BCI/requests/request.h
+               ui/BCI/qtWaitingSpinner.h
 
 
 

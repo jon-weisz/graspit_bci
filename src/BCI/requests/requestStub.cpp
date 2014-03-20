@@ -1,8 +1,5 @@
-#include "BCI/requests/request.h"
+#include "BCI/requests/requestStub.h"
 
-Request::Request()
-{
-}
 
 void Request::sendRequest()
 {

@@ -1,4 +1,4 @@
-#include "BCI/requests/request.h"
+#include "BCI/requests/requestStub.h"
 #include "run_recognition.rpcz.h"
 #include "run_recognition.pb.h"
 #include "rpcz/rpc_channel.hpp"
@@ -6,10 +6,10 @@
 
 using namespace graspit_rpcz;
 
-class ObjectRecognitionServiceRequest: public Request
+class ObjectRecognitionStub: public Request
 {
 public:
-    ObjectRecognitionServiceRequest(rpcz::rpc_channel * channel);
+    ObjectRecognitionStub(rpcz::rpc_channel * channel);
 
 protected:
     virtual void sendRequestImpl();
