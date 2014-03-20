@@ -435,7 +435,7 @@ bci_experiment {
                 src/BCI/states/stoppedExecutionState.cpp \
                 ui/BCI/state_views/stoppedExecutionView.cpp \
                 ui/BCI/state_views/activeRefinementView.cpp \
-                #src/BCI/requests/objectRecognitionRequest.cpp \
+                src/BCI/requests/objectRecognitionRequest.cpp \
                 src/BCI/requests/request.cpp
 
 
