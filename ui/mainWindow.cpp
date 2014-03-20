@@ -1313,5 +1313,7 @@ void MainWindow::bciActionView()
     //must run this for stateMachine to take effect
     bciControlWindow->exec();
 
+
+
 }
 

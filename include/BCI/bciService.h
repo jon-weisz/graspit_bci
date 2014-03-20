@@ -66,6 +66,10 @@ signals:
 
     void plannerUpdated();
 
+    void runObjectRecognitionSignal();
+    void getCameraOriginSignal();
+    void checkGraspReachabilitySignal();
+
 
     //! Signal to planner to execute
     void exec();

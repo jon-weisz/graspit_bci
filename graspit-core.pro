@@ -434,7 +434,9 @@ bci_experiment {
                 ui/BCI/state_views/executionView.cpp \
                 src/BCI/states/stoppedExecutionState.cpp \
                 ui/BCI/state_views/stoppedExecutionView.cpp \
- ui/BCI/state_views/activeRefinementView.cpp
+                ui/BCI/state_views/activeRefinementView.cpp \
+                #src/BCI/requests/objectRecognitionRequest.cpp \
+                src/BCI/requests/request.cpp
 
 
 
@@ -473,7 +475,9 @@ bci_experiment {
                ui/BCI/state_views/stoppedExecutionView.h \
                ui/BCI/state_views/activeRefinementView.h \
                ui/BCI/state_views/graspView.h \
-               ui/BCI/qtWaitingSpinner.h
+               ui/BCI/qtWaitingSpinner.h \
+               include/BCI/requests/objectRecognitionRequest.h \
+                include/BCI/requests/request.h
 
 
 

@@ -30,7 +30,7 @@ void BCIService::init(BCIControlWindow *bciControlWindow)
 
 void BCIService::runObjectRecognition()
 {
-//    rosServer.runObjectRecognition();
+    rosServer.runObjectRecognition();
 }
 
 void BCIService::getCameraOrigin()
