@@ -97,18 +97,13 @@ HEADERS	+= include/barrett.h \
 	include/FitParabola.h \
 	include/shadow.h \
         include/Servers/graspitServer.h \
-    include/SoRing.h \
-    ui/BCI/state_views/graspView.h \
-    ui/BCI/qtWaitingSpinner.h \
-    src/BCI/worldController.h \
-    src/Servers/rosRPCZClient.h
+        include/SoRing.h \
+        include/BCI/worldController.h \
+        include/Servers/rosRPCZClient.h
 
 
 
 
-    	
-
-    
 
 
 SOURCES	+= src/arch.cpp \
@@ -254,6 +249,7 @@ HEADERS += ui/mainWindow.h \
 	ui/Planner/plannerdlg.h \
 	ui/EGPlanner/egPlannerDlg.h \
         ui/EGPlanner/compliantPlannerDlg.h
+
 
 
 
@@ -453,29 +449,31 @@ bci_experiment {
                include/BCI/states/objectSelectionState.h \
                include/BCI/states/placementLocationSelectionState.h \
                include/BCI/states/confirmationState.h \
+               include/BCI/states/onlinePlanningState.h \
+               include/BCI/states/handRotationState.h \
+               include/BCI/states/graspSelectionState.h \
+               include/BCI/states/activateRefinementState.h \
+               include/BCI/states/objectRecognitionState.h \
+               include/BCI/states/executionState.h \
+               include/BCI/states/stoppedExecutionState.h \
+               include/BCI/bciService.h \
                ui/EGPlanner/compliantPlannerDlg.h \
                ui/BCI/binaryCommandView.h \
                ui/BCI/bciControlWindow.h \
                ui/BCI/handView.h \
                ui/BCI/bciWorldView.h \
                ui/BCI/bciPreviewView.h \
-               include/BCI/states/onlinePlanningState.h \
-               include/BCI/states/handRotationState.h \
-               include/BCI/states/graspSelectionState.h \
-               include/BCI/states/activateRefinementState.h \
-               include/BCI/bciService.h \
-                ui/BCI/state_views/objectSelectionView.h \
-                ui/BCI/state_views/graspSelectionView.h \
-                ui/BCI/state_views/confirmationView.h \
-                ui/BCI/state_views/placementLocationSelectionView.h \
-                include/BCI/states/objectRecognitionState.h \
-                ui/BCI/state_views/objectRecognitionView.h \
-                ui/BCI/control_views/singleBandControl.h \
-                include/BCI/states/executionState.h \
-                ui/BCI/state_views/executionView.h \
-                include/BCI/states/stoppedExecutionState.h \
-                ui/BCI/state_views/stoppedExecutionView.h \
-    ui/BCI/state_views/activeRefinementView.h
+               ui/BCI/state_views/objectSelectionView.h \
+               ui/BCI/state_views/graspSelectionView.h \
+               ui/BCI/state_views/confirmationView.h \
+               ui/BCI/state_views/placementLocationSelectionView.h \
+               ui/BCI/state_views/objectRecognitionView.h \
+               ui/BCI/control_views/singleBandControl.h \
+               ui/BCI/state_views/executionView.h \
+               ui/BCI/state_views/stoppedExecutionView.h \
+               ui/BCI/state_views/activeRefinementView.h \
+               ui/BCI/state_views/graspView.h \
+               ui/BCI/qtWaitingSpinner.h
 
 
 
