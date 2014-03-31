@@ -99,7 +99,11 @@ SOURCES += rpcz/src/rpcz/application.cc  \
             rpcz/build/graspit_rcpz/cpp/geometry_msgs.rpcz.h\
             rpcz/build/graspit_rcpz/cpp/get_camera_origin.rpcz.h \
             rpcz/build/graspit_rcpz/cpp/graspable_object.rpcz.h\
-            rpcz/build/graspit_rcpz/cpp/run_recognition.rpcz.h
+            rpcz/build/graspit_rcpz/cpp/run_recognition.rpcz.h\
+            rpcz/build/graspit_rcpz/cpp/execute_grasp.rpcz.h\
+            rpcz/build/graspit_rcpz/cpp/execute_grasp.pb.h \
+            rpcz/build/graspit_rcpz/cpp/grasp.rpcz.h\
+            rpcz/build/graspit_rcpz/cpp/grasp.pb.h
 
 
   SOURCES +=  rpcz/build/graspit_rcpz/cpp/geometry_msgs.pb.cc \
@@ -111,7 +115,11 @@ SOURCES += rpcz/src/rpcz/application.cc  \
              rpcz/build/graspit_rcpz/cpp/geometry_msgs.rpcz.cc  \
              rpcz/build/graspit_rcpz/cpp/get_camera_origin.rpcz.cc\
              rpcz/build/graspit_rcpz/cpp/graspable_object.rpcz.cc\
-             rpcz/build/graspit_rcpz/cpp/run_recognition.rpcz.cc
+             rpcz/build/graspit_rcpz/cpp/run_recognition.rpcz.cc \
+            rpcz/build/graspit_rcpz/cpp/execute_grasp.rpcz.cc\
+            rpcz/build/graspit_rcpz/cpp/execute_grasp.pb.cc \
+            rpcz/build/graspit_rcpz/cpp/grasp.rpcz.cc\
+            rpcz/build/graspit_rcpz/cpp/grasp.pb.cc
 
 ############################
 

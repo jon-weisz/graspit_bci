@@ -1,0 +1,20 @@
+package graspit_rpcz;
+
+
+import "grasp.proto";
+
+message ExecuteGraspRequest 
+{
+	required GraspMsg grasp = 2;
+}
+
+message ExecuteGraspResponse 
+{
+	required bool isSuccessful = 1;
+	optional string errorMsg = 2;
+}
+
+service ExecuteGraspService 
+{
+	rpc run(ExecuteGraspRequest) returns (ExecuteGraspResponse);
+}

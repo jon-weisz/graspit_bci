@@ -6,6 +6,8 @@ PROTOBUF_GENERATE_CPP(GRASPIT_PB_SRCS GRASPIT_PB_HDRS
 	 ../common/graspable_object.proto
 	 ../common/get_camera_origin.proto
 	 ../common/check_grasp_reachability.proto
+	 ../common/execute_grasp.proto
+	 ../common/grasp.proto
 	 )
 PROTOBUF_GENERATE_RPCZ(GRASPIT_RPCZ_SRCS GRASPIT_RPCZ_HDRS 	 
 	 ../common/geometry_msgs.proto
@@ -13,6 +15,8 @@ PROTOBUF_GENERATE_RPCZ(GRASPIT_RPCZ_SRCS GRASPIT_RPCZ_HDRS
 	 ../common/graspable_object.proto
 	 ../common/get_camera_origin.proto
 	 ../common/check_grasp_reachability.proto
+	 ../common/execute_grasp.proto
+	 ../common/grasp.proto
 	 )
 
 add_library(graspit_pb ${GRASPIT_PB_SRCS} ${GRASPITSEARCH_PB_HDRS} ${GRASPIT_RPCZ_SRCS}

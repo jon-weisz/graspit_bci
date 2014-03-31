@@ -9,7 +9,7 @@ message ObjectRecognitionResponse {
 }
 
 service ObjectRecognitionService {
-  rpc RunObjectRecognition(ObjectRecognitionRequest) returns(ObjectRecognitionResponse);
+  rpc run(ObjectRecognitionRequest) returns(ObjectRecognitionResponse);
 }
 
 

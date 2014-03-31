@@ -3,11 +3,20 @@
 
 #include "rpcz/rpc_channel.hpp"
 #include "rpcz/rpc_channel_impl.hpp"
-
 #include "check_grasp_reachability.pb.h"
 #include "check_grasp_reachability.rpcz.h"
 
 #include "BCI/requests/requestStub.h"
+
+//class GraspReachabilityStub : public RequestType
+//{
+//public:
+//    GraspReachabilityStub(rpcz::rpc_channel * channel);
+
+//protected:
+//    virtual void callback();
+//};
+
 
 class GraspReachabilityStub : public Request
 {

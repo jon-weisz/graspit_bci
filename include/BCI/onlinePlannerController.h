@@ -44,6 +44,7 @@ namespace bci_experiment{
             const GraspPlanningState * getGrasp(int index);
             const GraspPlanningState * getCurrentGrasp();
 
+
             bool setPlannerToRunning();
             bool setPlannerToStopped();
             bool setPlannerToPaused();

@@ -6,9 +6,10 @@
 
 RosRPCZClient::RosRPCZClient():
     _application(),
-    graspReachabilityStub(_application.create_rpc_channel("tcp://localhost:5556")),
-    objectRecognitionStub(_application.create_rpc_channel("tcp://localhost:5556")),
-    cameraOriginStub(_application.create_rpc_channel("tcp://localhost:5556"))
+    graspReachabilityStub(_application.create_rpc_channel("tcp://localhost:5561")),
+    objectRecognitionStub(_application.create_rpc_channel("tcp://localhost:5561")),
+    cameraOriginStub(_application.create_rpc_channel("tcp://localhost:5561")),
+    executeGraspStub(_application.create_rpc_channel("tcp://localhost:5561"))
 {
 
 }
@@ -29,16 +30,12 @@ void RosRPCZClient::checkGraspReachability()
     graspReachabilityStub.sendRequest();
 }
 
-
-
-
-
-
-
-void RosRPCZClient::checkGraspReachabilityCallback( graspit_rpcz::CheckGraspReachabilityResponse response )
+void RosRPCZClient::executeGrasp()
 {
-    std::cout << "hello world I am a callback!!!!"<< std::endl;
+    executeGraspStub.sendRequest();
 }
+
+
 
 
 
