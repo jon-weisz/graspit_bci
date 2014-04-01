@@ -64,10 +64,7 @@ namespace bci_experiment{
             const GraspPlanningState * getGrasp(int index);
             const GraspPlanningState * getCurrentGrasp();
 
-            bool setPlannerToRunning();
-            bool setPlannerToStopped();
-            bool setPlannerToPaused();
-            bool setPlannerToReady();
+
 
             void connectToPlannerUpdateSignal();
 
@@ -99,6 +96,10 @@ namespace bci_experiment{
 
     private slots:
             void plannerTimedUpdate();
+            bool setPlannerToRunning();
+            bool setPlannerToStopped();
+            bool setPlannerToPaused();
+            bool setPlannerToReady();
 
     };
 

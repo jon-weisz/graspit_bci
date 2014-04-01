@@ -22,9 +22,10 @@ GraspSelectionState::GraspSelectionState(BCIControlWindow *_bciControlWindow,QSt
 
     addSelfTransition(BCIService::getInstance(),SIGNAL(next()), this, SLOT(onNext()));
     addSelfTransition(BCIService::getInstance(),SIGNAL(plannerUpdated()), this, SLOT(onPlannerUpdated()));
-
+    connect(this, SIGNAL(entered()), OnlinePlannerController::getInstance(), SLOT(setPlannerToReady()));
     graspSelectionView = new GraspSelectionView(bciControlWindow->currentFrame);
     graspSelectionView->hide();
+
 }
 
 
@@ -35,7 +36,7 @@ void GraspSelectionState::onEntry(QEvent *e)
     bciControlWindow->currentState->setText("Grasp Selection State");
 
     //loads grasps from the database
-    OnlinePlannerController::getInstance()->setPlannerToReady();
+    //OnlinePlannerController::getInstance()->setPlannerToReady();
     //called so that view will show best grasp from database
     onPlannerUpdated();
 }

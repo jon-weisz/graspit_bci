@@ -18,7 +18,7 @@ public:
 public slots:
     virtual void onEntry(QEvent *e);
     virtual void onExit(QEvent *e);
-    virtual void onPlannerUpdated(QEvent *e);
+    virtual void onPlannerUpdated(QEvent *e = NULL);
 
 protected:
     ActiveRefinementView *activeRefinementView;
