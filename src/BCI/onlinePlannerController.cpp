@@ -101,7 +101,13 @@ namespace bci_experiment
     {
 
         // Set the grasps target to the new object
+        currentPlanner->getRefHand()->getGrasp()->setObjectNoUpdate(targetObject);
         currentPlanner->getHand()->getGrasp()->setObjectNoUpdate(targetObject);
+        OnlinePlannerController::getGraspDemoHand()->getGrasp()->setObjectNoUpdate(targetObject);
+
+        // Set the target for the planner state
+        currentPlanner->getTargetState()->setObject(targetObject);
+        currentPlanner->setModelState(currentPlanner->getTargetState());
 
         // Disable collisions between any nontarget objects and the hand
         world_element_tools::disableNontargetCollisions(currentHand, targetObject);
