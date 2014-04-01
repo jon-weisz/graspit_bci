@@ -264,7 +264,7 @@ namespace bci_experiment
             DBGA("OnlinePlannerController::getGraspDemoHand:Attempted to get demonstration hand with no planner set");
             return NULL;
         }
-        if(graspDemonstrationHand && !(isCloneOf(currentPlanner->getRefHand(), graspDemonstrationHand)))
+        /*if(graspDemonstrationHand && !(isCloneOf(currentPlanner->getRefHand(), graspDemonstrationHand)))
         {
             getWorld()->destroyElement(graspDemonstrationHand);
             graspDemonstrationHand = NULL;
@@ -274,7 +274,8 @@ namespace bci_experiment
             graspDemonstrationHand = new Hand(getWorld(),currentPlanner->getRefHand()->getName() + "grasp_demo_hand");
             graspDemonstrationHand->cloneFrom(currentPlanner->getRefHand());
             getWorld()->removeElementFromSceneGraph(graspDemonstrationHand);
-        }
+        }*/
+        graspDemonstrationHand = static_cast<OnLinePlanner *>(currentPlanner)->getSolutionClone();
         return graspDemonstrationHand;
 
     }
