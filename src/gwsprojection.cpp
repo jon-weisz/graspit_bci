@@ -52,7 +52,6 @@
 #include <Inventor/nodes/SoTransformSeparator.h>
 #include <Inventor/Qt/SoQtRenderArea.h>
 #include <Inventor/Qt/viewers/SoQtExaminerViewer.h>
-#include <Inventor/SoInput.h>
 
 #ifdef USE_DMALLOC
 #include "dmalloc.h"
