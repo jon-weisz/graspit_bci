@@ -46,6 +46,7 @@
 #include "SoArrow.h"
 #include "SoTorquePointer.h"
 #include "debug.h"
+#include "SoRing.h"
 
 bool GraspItGUI::initialized = false;
 int GraspItGUI::initResult = SUCCESS;
@@ -97,6 +98,7 @@ GraspItGUI::GraspItGUI(int argc,char **argv)
     SoComplexShape::initClass();
     SoArrow::initClass();
     SoTorquePointer::initClass();
+    SoRing::initClass();
 
     ivmgr = new IVmgr((QWidget *)mainWindow->mUI->viewerHolder,"myivmgr");
 	
