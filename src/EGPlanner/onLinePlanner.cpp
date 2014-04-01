@@ -50,7 +50,7 @@
 OnLinePlanner::OnLinePlanner(Hand *h) : SimAnnPlanner(h)
 {
 	mSolutionClone = NULL;
-	mMarkSolutions = true;
+    mMarkSolutions = false;
 	mCurrentBest = NULL;
 	mSimAnn->setParameters(ANNEAL_ONLINE);
 	setRenderType(RENDER_LEGAL);
