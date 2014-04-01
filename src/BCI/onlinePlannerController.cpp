@@ -254,7 +254,7 @@ namespace bci_experiment
 
     bool isCloneOf(Robot * r1, Robot * r2)
     {
-        return r1->getBase()->getIVGeomRoot() == r2->getBase()->getIVGeomRoot();
+        return r1->getBase()->getIVGeomRoot()->getChild(0) == r2->getBase()->getIVGeomRoot()->getChild(0);
     }
 
     Hand * OnlinePlannerController::getGraspDemoHand()
