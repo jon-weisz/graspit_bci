@@ -189,6 +189,9 @@ namespace bci_experiment
 
     bool OnlinePlannerController::setPlannerToRunning()
     {
+        if(currentTarget != currentPlanner->getTargetState()->getObject() ||
+                currentPlanner->getState() == INIT)
+            setPlannerToReady();
 
         if(currentPlanner->getState()==READY)
         {
