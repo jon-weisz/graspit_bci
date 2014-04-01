@@ -24,10 +24,12 @@ public slots:
     void onOk();
     void onRotLat();
     void onRotLong();
+
     
 private:
     HandView *handView;
     Ui::ActiveRefinementView *ui;
+    void createHandView();
 };
 
 #endif // ACTIVEREFINEMENTVIEW_H
