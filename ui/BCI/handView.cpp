@@ -182,6 +182,7 @@ void HandView::update(const GraspPlanningState & s, Hand & cloneHand)
     
     copyLinkTransforms(&cloneHand, IVHandGeometry);
 
+    copyIVTran(IVObjectGeometry, *s.getObject()->getIVTran());
     //disable collisions between clone hand and everything
     cloneHand.getWorld()->toggleCollisions(false, &cloneHand, s.getObject());
     //bci_experiment::planner_tools::setCollisionState(&cloneHand, oldCollisionStatus);
