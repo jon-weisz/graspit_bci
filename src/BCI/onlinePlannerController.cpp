@@ -8,6 +8,13 @@ using bci_experiment::world_element_tools::getWorld;
 namespace bci_experiment
 {
 
+    void disableShowContacts()
+    {
+        for(int i = 0; i < getWorld()->getNumBodies(); ++i)
+        {
+            getWorld()->getBody(i)->showFrictionCones(false);
+        }
+    }
     OnlinePlannerController * OnlinePlannerController::onlinePlannerController = NULL;
 
     OnlinePlannerController* OnlinePlannerController::getInstance()
@@ -100,6 +107,7 @@ namespace bci_experiment
         world_element_tools::disableNontargetCollisions(currentHand, targetObject);
         world_element_tools::disableTableObjectCollisions();
 
+        disableShowContacts();
         //start planner
         currentPlanner->resetPlanner();
 
