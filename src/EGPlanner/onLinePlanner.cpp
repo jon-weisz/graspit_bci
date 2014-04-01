@@ -460,8 +460,8 @@ void
 OnLinePlanner::executeGrasp(int i)
 {
 	assert (i>=0 && i<getListSize());
-	mRefHand->getIVRoot()->removeChild(mRefHand->getIVRoot()->getByName("curveX"));
-	mRefHand->getIVRoot()->removeChild(mRefHand->getIVRoot()->getByName("curveZ"));
+//	mRefHand->getIVRoot()->removeChild(mRefHand->getIVRoot()->getByName("curveX"));
+//	mRefHand->getIVRoot()->removeChild(mRefHand->getIVRoot()->getByName("curveZ"));
 	const GraspPlanningState *s = getGrasp(i);
 	s->execute(mRefHand);
 	mRefHand->setTransparency(0);
