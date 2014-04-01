@@ -39,7 +39,7 @@ namespace bci_experiment
         if(!onlinePlannerController)
         {            
             onlinePlannerController = new OnlinePlannerController();
-            assert(isMainThread(onlinePlannerController));
+	    //            assert(isMainThread(onlinePlannerController));
         }
 
         return onlinePlannerController;
