@@ -20,6 +20,7 @@ SO_NODE_SOURCE(SoRing)
 
 void SoRing::initClass()
 {
+    initialized = true;
   // initialize type ID
   SO_NODE_INIT_CLASS(SoRing, SoShape, "Shape");
 }
@@ -27,9 +28,8 @@ void SoRing::initClass()
 SoRing::SoRing()
 {
     if(!initialized)
-    {
-        initClass();
-        initialized = true;
+    {        
+	initClass();
     }
   SO_NODE_CONSTRUCTOR(SoRing);
 
