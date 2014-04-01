@@ -8,6 +8,21 @@ using bci_experiment::world_element_tools::getWorld;
 namespace bci_experiment
 {
 
+    bool isMainThread(QObject * obj)
+    {
+        if(obj->thread() != GraspItGUI::getInstance()->getIVmgr()->thread())
+        {
+            DBGA("Object not in main thread");
+            return false;
+        }
+
+        if(QThread::currentThread() != GraspItGUI::getInstance()->getIVmgr()->thread())
+        {
+            DBGA("Current thread is not main thread");
+            return false;
+        }
+    }
+
     void disableShowContacts()
     {
         for(int i = 0; i < getWorld()->getNumBodies(); ++i)
@@ -15,17 +30,22 @@ namespace bci_experiment
             getWorld()->getBody(i)->showFrictionCones(false);
         }
     }
+
+
     OnlinePlannerController * OnlinePlannerController::onlinePlannerController = NULL;
 
     OnlinePlannerController* OnlinePlannerController::getInstance()
     {
         if(!onlinePlannerController)
-        {
+        {            
             onlinePlannerController = new OnlinePlannerController();
+            assert(isMainThread(onlinePlannerController));
         }
 
         return onlinePlannerController;
     }
+
+
 
     OnlinePlannerController::OnlinePlannerController(QObject *parent) :
         QObject(parent),
