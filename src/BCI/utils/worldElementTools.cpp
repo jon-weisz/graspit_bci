@@ -49,6 +49,20 @@ void setObjectCentral(Body * b)
   }
 }
 
+void setNonLinkCollisions(Hand * h, bool on)
+{
+    for(int j = 0; j < getWorld()->getNumBodies(); ++j)
+    {
+        Body * b = getWorld()->getBody(j);
+        if(b->inherits("Link"))
+            continue;
+        else
+        {
+            getWorld()->toggleCollisions(on, h, b);
+        }
+    }
+
+}
 
 void disableNontargetCollisions(Hand * h, GraspableBody * target)
 {
