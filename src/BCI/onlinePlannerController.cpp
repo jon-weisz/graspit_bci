@@ -213,6 +213,19 @@ namespace bci_experiment
     }
 
 
+    bool OnlinePlannerController::setAllowedPlanningCollisions()
+    {
+        currentPlanner->getRefHand()->getGrasp()->setObjectNoUpdate(currentTarget);
+        currentPlanner->getHand()->getGrasp()->setObjectNoUpdate(currentTarget);
+        OnlinePlannerController::getGraspDemoHand()->getGrasp()->setObjectNoUpdate(currentTarget);
+        currentPlanner->getRefHand()->getGrasp()->setObjectNoUpdate(currentTarget);
+
+        world_element_tools::disableNontargetCollisions(currentPlanner->getRefHand(), currentTarget);
+        world_element_tools::setNonLinkCollisions(currentPlanner->getHand(), true);
+        world_element_tools::setNonLinkCollisions(getGraspDemoHand(), true);
+    }
+
+
     bool OnlinePlannerController::setPlannerToRunning()
     {
         if(currentTarget != currentPlanner->getTargetState()->getObject() ||

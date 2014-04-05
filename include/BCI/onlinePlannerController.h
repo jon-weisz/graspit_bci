@@ -92,10 +92,13 @@ namespace bci_experiment{
             OnLinePlanner * currentPlanner;
             Hand * graspDemonstrationHand;
 
+            bool setAllowedPlanningCollisions();
 
 
     private slots:
             void plannerTimedUpdate();
+
+    public slots:
             bool setPlannerToRunning();
             bool setPlannerToStopped();
             bool setPlannerToPaused();
