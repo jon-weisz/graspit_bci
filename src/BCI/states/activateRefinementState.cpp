@@ -40,7 +40,8 @@ void ActivateRefinementState::onPlannerUpdated(QEvent * e)
     if(bestGrasp)
     {
         activeRefinementView->showSelectedGrasp(bestGrasp);
-        bciControlWindow->currentState->setText("Planner Updated");
+        QString graspID;
+        bciControlWindow->currentState->setText("Planner Updated: " + graspID.setNum(bestGrasp->getAttribute("graspId")) );
     }
 
 }
