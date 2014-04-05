@@ -324,7 +324,7 @@ namespace bci_experiment
 
     const GraspPlanningState * OnlinePlannerController::getGrasp(int index)
     {
-        if(currentPlanner->getListSize() > 0)
+        if(currentPlanner->getListSize() > 0 && index < currentPlanner->getListSize())
         {
             return currentPlanner->getGrasp(index);
         }
