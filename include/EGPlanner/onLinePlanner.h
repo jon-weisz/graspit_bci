@@ -142,4 +142,5 @@ public:
     void updateSolutionList();
     double distanceOutsideApproach(const transf &solTran, const transf &handTran, bool useApproach = true);
     Hand * getSolutionClone(){return mSolutionClone;}
+    GraspTester * getGraspTester(){return mGraspTester;}
 };

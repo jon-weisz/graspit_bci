@@ -2,6 +2,7 @@
 
 #include "BCI/bciService.h"
 #include "debug.h"
+#include "EGPlanner/graspTesterThread.h"
 
 using bci_experiment::world_element_tools::getWorld;
 
@@ -123,6 +124,7 @@ namespace bci_experiment
         // Set the grasps target to the new object
         currentPlanner->getRefHand()->getGrasp()->setObjectNoUpdate(targetObject);
         currentPlanner->getHand()->getGrasp()->setObjectNoUpdate(targetObject);
+        currentPlanner->getGraspTester()->getHand()->getGrasp()->setObjectNoUpdate(targetObject);
         OnlinePlannerController::getGraspDemoHand()->getGrasp()->setObjectNoUpdate(targetObject);
 
         // Set the target for the planner state
