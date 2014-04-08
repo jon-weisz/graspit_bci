@@ -64,13 +64,13 @@ void setNonLinkCollisions(Hand * h, bool on)
 
 }
 
-void disableNontargetCollisions(Hand * h, GraspableBody * target)
+  void setNontargetCollisions(Hand * h, GraspableBody * target, bool on)
 {
   World * w = getWorld();
   for (int i = 0; i < w->getNumGB(); ++i)
     {
   if(w->getGB(i) != target)
-    w->toggleCollisions(false, w->getGB(i), h);
+    w->toggleCollisions(on, w->getGB(i), h);
     }
   w->toggleCollisions(true, target, h);
 }
