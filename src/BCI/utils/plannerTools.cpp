@@ -112,7 +112,6 @@ namespace bci_experiment
             mDbMgr->GetGrasps(*modelList.back(), GraspitDBGrasp::getHandDBName(mHand).toStdString(), &grasps);
 
             mHand->saveState();
-            HandObjectState hs(mHand);
 
             // Load the grasps into the grasp planner list.
             unsigned int numGrasps = std::min<unsigned int>(grasps.size(), 10);
