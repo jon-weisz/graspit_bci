@@ -99,7 +99,6 @@ HEADERS	+= include/barrett.h \
         include/Servers/graspitServer.h \
         include/SoRing.h \
         include/BCI/worldController.h \
-        include/Servers/rosRPCZClient.h \
     include/BCI/requests/requestStub.h \
     include/BCI/requests/objectRecognitionStub.h \
     include/BCI/requests/cameraOriginStub.h \
@@ -187,7 +186,6 @@ SOURCES	+= src/arch.cpp \
     ui/BCI/state_views/graspView.cpp \
     ui/BCI/qtWaitingSpinner.cpp \
     src/BCI/worldController.cpp \
-    src/Servers/rosRPCZClient.cpp \
     src/BCI/requests/objectRecognitionStub.cpp \
     src/BCI/requests/graspReachabilityStub.cpp \
     src/BCI/requests/requestStub.cpp \

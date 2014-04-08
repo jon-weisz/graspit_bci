@@ -65,7 +65,6 @@ namespace bci_experiment{
             const GraspPlanningState * getCurrentGrasp();
 
 
-
             void connectToPlannerUpdateSignal();
 
             // Perform any validation or processing that should update
