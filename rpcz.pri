@@ -22,6 +22,15 @@ LIBS += /usr/lib/libprotobuf.so
 LIBS += -lboost_thread -lboost_program_options
 LIBS += -lzmq
 
+HEADERS += include/Servers/rosRPCZClient.h 
+
+SOURCES += src/Servers/rosRPCZClient.cpp 
+
+LIBS += -Lrpcz/build/src/rpcz -lrpcz
+LIBS += -Lrpcz/build/graspit_rcpz/cpp/ -lgraspit_pb
+
+
+
 #####################################
 #proto files
 for(p, PROTOPATH2):PROTOPATHS2 += --proto_path=$${p}
