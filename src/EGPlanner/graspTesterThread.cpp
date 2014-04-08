@@ -169,6 +169,18 @@ GraspTester::testGrasp(GraspPlanningState *s)
 	if (!legal) {
 		DBGA("Illegal state in tester thread!");
 		s->setLegal(false);
+		DBGA("outputting collisions");
+
+		s->execute();		
+		CollisionReport colReport;
+		std::vector<Body *> body_list;
+		mHand->getBodyList(&body_list);
+		mHand->getWorld()->getCollisionReport(&colReport, &body_list);
+		CollisionReport::iterator it = colReport.begin();
+		while(it!=colReport.end()) {
+		  DBGA("Collision between " << it->first->getName().toStdString() << " and " << it->second->getName().toStdString() );
+		  ++it;
+		}
 		return;
 	}
     mHand->saveState();
