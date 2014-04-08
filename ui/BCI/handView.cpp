@@ -172,9 +172,9 @@ void HandView::update(const GraspPlanningState & s, Hand & cloneHand)
 
     //First copy the current hand state so that it can be restored.
     cloneHand.saveState();
-    //std::vector<bool> oldCollisionStatus;
-    //bci_experiment::planner_tools::resetHandCollisions(&cloneHand, false, oldCollisionStatus);
-    cloneHand.getWorld()->toggleCollisions(false, &cloneHand);
+    std::vector<bool> oldCollisionStatus;
+    bci_experiment::planner_tools::resetHandCollisions(&cloneHand, false, oldCollisionStatus);
+    //cloneHand.getWorld()->toggleCollisions(false, &cloneHand);
     //need to activate the collision on the copied hand using the cloned hand
     //container object
     cloneHand.getWorld()->toggleCollisions(true, &cloneHand, s.getObject());
@@ -184,8 +184,8 @@ void HandView::update(const GraspPlanningState & s, Hand & cloneHand)
 
     copyIVTran(IVObjectGeometry, *s.getObject()->getIVTran());
     //disable collisions between clone hand and everything
-    cloneHand.getWorld()->toggleCollisions(false, &cloneHand, s.getObject());
-    //bci_experiment::planner_tools::setCollisionState(&cloneHand, oldCollisionStatus);
+    //cloneHand.getWorld()->toggleCollisions(false, &cloneHand, s.getObject());
+    bci_experiment::planner_tools::setCollisionState(&cloneHand, oldCollisionStatus);
     //cloneHand.restoreState();
   }
 

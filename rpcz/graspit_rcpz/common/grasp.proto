@@ -1,0 +1,26 @@
+package graspit_rpcz;
+
+import "graspable_object.proto";
+import "geometry_msgs.proto";
+
+
+message HandStateMsg
+{
+	required Pose hand_pose = 1;
+	repeated float hand_dof = 2;
+}
+
+
+message GraspMsg 
+{
+	required int32 graspId = 7;
+	required GraspableObject object =1;
+
+	required float epsilon_quality = 2;
+	required float volume_quality = 3;
+	repeated float secondary_qualities = 4;
+
+	required HandStateMsg pre_grasp_hand_state =5;
+	required HandStateMsg final_grasp_hand_state =6;
+}
+

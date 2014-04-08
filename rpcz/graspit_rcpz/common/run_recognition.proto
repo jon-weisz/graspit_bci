@@ -1,0 +1,16 @@
+package graspit_rpcz;
+
+import "graspable_object.proto";
+
+message ObjectRecognitionRequest {}
+
+message ObjectRecognitionResponse {
+  repeated GraspableObject foundObjects = 1;
+}
+
+service ObjectRecognitionService {
+  rpc run(ObjectRecognitionRequest) returns(ObjectRecognitionResponse);
+}
+
+
+

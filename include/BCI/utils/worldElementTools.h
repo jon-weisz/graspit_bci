@@ -49,7 +49,7 @@ void setObjectCentral(Body * b);
 
 
 //! Tell the hand to ignore all bodies that aren't the target.
-void disableNontargetCollisions(Hand * h, GraspableBody * target);
+ void setNontargetCollisions(Hand * h, GraspableBody * target, bool on);
 
 
 //! Determine if the experiment table can collide with objects

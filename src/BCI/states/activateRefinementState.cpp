@@ -21,7 +21,8 @@ void ActivateRefinementState::onEntry(QEvent *e)
 {
     activeRefinementView->show();
     bciControlWindow->currentState->setText("Active Refinement State");
-
+    onPlannerUpdated();
+    OnlinePlannerController::getInstance()->setPlannerToRunning();
 }
 
 
@@ -36,14 +37,14 @@ void ActivateRefinementState::onExit(QEvent *e)
 void ActivateRefinementState::onPlannerUpdated(QEvent * e)
 {
     const GraspPlanningState *bestGrasp = OnlinePlannerController::getInstance()->getGrasp(0);
+    Hand *hand = OnlinePlannerController::getInstance()->getGraspDemoHand();
 
     if(bestGrasp)
     {
-        activeRefinementView->showSelectedGrasp(bestGrasp);
+        activeRefinementView->showSelectedGrasp(hand,bestGrasp);
         QString graspID;
         bciControlWindow->currentState->setText("Planner Updated: " + graspID.setNum(bestGrasp->getAttribute("graspId")) );
     }
-
 }
 
 

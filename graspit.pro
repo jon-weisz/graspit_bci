@@ -50,6 +50,7 @@ CONFIG += bci_experiment
 
 #------------------GraspIt! core files---------------------
 CONFIG += protobuf
+CONFIG += rpcz
 include(graspit-core.pro)
 
 

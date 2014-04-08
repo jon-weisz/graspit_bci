@@ -8,7 +8,6 @@ ObjectSelectionView::ObjectSelectionView(ObjectSelectionState *state,QWidget *pa
 {
     ui->setupUi(this);
 
-
     connect(ui->next, SIGNAL(clicked()), state, SLOT(onNext()));
     connect(ui->select, SIGNAL(clicked()), state, SLOT(onSelect()));
 

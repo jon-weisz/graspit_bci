@@ -18,13 +18,29 @@ BCIService::BCIService()
 
 }
 
-void BCIService::createStateMachine(BCIControlWindow *bciControlWindow)
+void BCIService::init(BCIControlWindow *bciControlWindow)
 {
-
-
     //builds and starts a qtStateMachine
     BCIStateMachine *bciStateMachine = new BCIStateMachine(bciControlWindow,this);
     bciStateMachine->start();
+}
+
+
+
+
+void BCIService::runObjectRecognition()
+{
+    rosServer.runObjectRecognition();
+}
+
+void BCIService::getCameraOrigin()
+{
+    rosServer.getCameraOrigin();
+}
+
+void BCIService::checkGraspReachability()
+{
+    rosServer.checkGraspReachability();
 }
 
 

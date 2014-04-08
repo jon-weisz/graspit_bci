@@ -22,6 +22,7 @@ namespace bci_experiment
             DBGA("Current thread is not main thread");
             return false;
         }
+	return true;
     }
 
     void disableShowContacts()
@@ -120,21 +121,8 @@ namespace bci_experiment
     void OnlinePlannerController::initializeTarget(Hand * currentHand,
                                                    GraspableBody * targetObject)
     {
-
-        // Set the grasps target to the new object
-        currentPlanner->getRefHand()->getGrasp()->setObjectNoUpdate(targetObject);
-        currentPlanner->getHand()->getGrasp()->setObjectNoUpdate(targetObject);
-        currentPlanner->getGraspTester()->getHand()->getGrasp()->setObjectNoUpdate(targetObject);
-        OnlinePlannerController::getGraspDemoHand()->getGrasp()->setObjectNoUpdate(targetObject);
-
-        // Set the target for the planner state
-        currentPlanner->getTargetState()->setObject(targetObject);
-        currentPlanner->setModelState(currentPlanner->getTargetState());
-
-        // Disable collisions between any nontarget objects and the hand
-        world_element_tools::disableNontargetCollisions(currentHand, targetObject);
-        world_element_tools::disableTableObjectCollisions();
-
+      setAllowedPlanningCollisions();
+        
         disableShowContacts();
         //start planner
         currentPlanner->resetPlanner();
@@ -217,14 +205,23 @@ namespace bci_experiment
 
     bool OnlinePlannerController::setAllowedPlanningCollisions()
     {
+      // Set the target for the planner state
+        currentPlanner->getTargetState()->setObject(currentTarget);
+        currentPlanner->setModelState(currentPlanner->getTargetState());
+	
+
         currentPlanner->getRefHand()->getGrasp()->setObjectNoUpdate(currentTarget);
         currentPlanner->getHand()->getGrasp()->setObjectNoUpdate(currentTarget);
         OnlinePlannerController::getGraspDemoHand()->getGrasp()->setObjectNoUpdate(currentTarget);
-        currentPlanner->getRefHand()->getGrasp()->setObjectNoUpdate(currentTarget);
+        currentPlanner->getGraspTester()->getHand()->getGrasp()->setObjectNoUpdate(currentTarget);
+        
 
-        world_element_tools::disableNontargetCollisions(currentPlanner->getRefHand(), currentTarget);
+
+        world_element_tools::setNontargetCollisions(currentPlanner->getRefHand(), currentTarget, false);
         world_element_tools::setNonLinkCollisions(currentPlanner->getHand(), true);
-        world_element_tools::setNonLinkCollisions(getGraspDemoHand(), true);
+        world_element_tools::setNonLinkCollisions(currentPlanner->getGraspTester()->getHand(), true);
+        //world_element_tools::setNonLinkCollisions(getGraspDemoHand(), true);
+	return true;
     }
 
 
@@ -245,11 +242,13 @@ namespace bci_experiment
     //puts planner in ready state
     bool OnlinePlannerController::setPlannerToReady()
     {
-
-        if(currentTarget)
+        if(currentTarget && (!mDbMgr || currentPlanner->getState() != READY || currentTarget != currentPlanner->getHand()->getGrasp()->getObject()))
         {
             initializeTarget(currentPlanner->getRefHand(), currentTarget);
         }
+      else{
+	DBGA("OnlinePlannerController::setPlannerToReady: ERROR Attempted to set planner to ready without valid target");
+      }
 
         return true;
     }

@@ -83,6 +83,7 @@
 #include "BCI/bciControlWindow.h"
 #include "BCI/BCIStateMachine.h"
 #include "BCI/bciService.h"
+#include "Servers/rosRPCZClient.h"
 
 //------------------------------------ CONSTRUCTOR AND DESTRUCTOR -------------------------------------
 
@@ -1301,13 +1302,18 @@ void MainWindow::updateTendonNamesBox()
 
 void MainWindow::bciActionView()
 {
+    //RosRPCZClient *rosClient = new RosRPCZClient();
+    //rosClient->runObjectRecognition();
+
     BCIControlWindow *bciControlWindow = new BCIControlWindow(mWindow);
     bciControlWindow->show();
 
-    BCIService::getInstance()->createStateMachine(bciControlWindow);
+    BCIService::getInstance()->init(bciControlWindow);
 
     //must run this for stateMachine to take effect
     bciControlWindow->exec();
+
+
 
 }
 

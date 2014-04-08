@@ -1,0 +1,28 @@
+#include "BCI/requests/cameraOriginStub.h"
+
+#include "matvec3D.h"
+#include "graspitGUI.h"
+#include "ivmgr.h"
+#include <Inventor/nodes/SoCamera.h>
+
+CameraOriginStub::CameraOriginStub(rpcz::rpc_channel * channel)
+    :cameraOrigin_stub(channel, "CameraOriginService")
+{
+}
+
+
+void CameraOriginStub::sendRequestImpl()
+{
+    cameraOrigin_stub.GetCameraOrigin(request,&response, &_rpc,rpcz::new_callback(this, &CameraOriginStub::callback));
+}
+
+void CameraOriginStub::callback()
+{
+    std::cout << "hello world I am a callback!!!!"<< std::endl;
+    float x = response.cameraorigin().position().x();
+    float y = response.cameraorigin().position().y();
+    float z = response.cameraorigin().position().z();
+    transf t(mat3::IDENTITY, vec3(x,y,z));
+    graspItGUI->getIVmgr()->setCameraTransf(t);
+    graspItGUI->getIVmgr()->getViewer()->getCamera()->pointAt(SbVec3f(0,0,0), SbVec3f(0,0,1));
+}

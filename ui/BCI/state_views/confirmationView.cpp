@@ -22,7 +22,7 @@ ConfirmationView::ConfirmationView(QWidget *parent) :
     connect(ui->buttonBack, SIGNAL(clicked()), this, SLOT(onBack()));
 
     SoQtExaminerViewer *mainViewer = graspItGUI->getIVmgr()->getViewer();
-    Hand * h = graspItGUI->getIVmgr()->getWorld()->getCurrentHand();
+    Hand * h = OnlinePlannerController::getInstance()->getGraspDemoHand();
     QFrame *parentWindow = this->ui->previewFrame;
     QString viewName = QString("current best grasp");
     handView = new HandView(mainViewer,h,*parentWindow,viewName);

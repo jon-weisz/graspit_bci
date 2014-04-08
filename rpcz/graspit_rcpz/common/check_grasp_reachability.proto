@@ -1,0 +1,17 @@
+package graspit_rpcz;
+
+import "grasp.proto";
+
+message CheckGraspReachabilityRequest {
+	required GraspMsg grasp = 1;
+}
+
+message CheckGraspReachabilityResponse {
+	required int32 graspId = 1;
+	required int32 graspStatus = 2;
+}
+
+service CheckGraspReachabilityService 
+{
+	rpc run(CheckGraspReachabilityRequest) returns (CheckGraspReachabilityResponse);
+}
