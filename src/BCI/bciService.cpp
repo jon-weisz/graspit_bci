@@ -38,9 +38,9 @@ void BCIService::getCameraOrigin()
     rosServer.getCameraOrigin();
 }
 
-void BCIService::checkGraspReachability()
+void BCIService::checkGraspReachability(const GraspPlanningState * state)
 {
-    rosServer.checkGraspReachability();
+    rosServer.checkGraspReachability(state);
 }
 
 

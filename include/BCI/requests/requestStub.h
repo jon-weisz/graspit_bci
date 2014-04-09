@@ -1,6 +1,6 @@
 #ifndef REQUEST_H
 #define REQUEST_H
-
+#include <QObject>
 #include "rpcz/rpcz.hpp"
 
 //template <class ServiceStub, class RequestType, class ResponseType>
@@ -40,9 +40,11 @@
 //};
 
 
-class Request
+class Request :public QObject
 {
+    Q_OBJECT
 public:
+
     void sendRequest(){
            try
            {
@@ -58,12 +60,21 @@ public:
            }
        }
 
+    void callback()
+    {
+        callbackImpl();
+        emit requestComplete();
+    }
+
 protected:
     virtual void sendRequestImpl() = 0;
-    virtual void callback() = 0;
+    virtual void callbackImpl() = 0;
+
 
 
     rpcz::rpc _rpc;
+signals:
+        void requestComplete();
 
 };
 

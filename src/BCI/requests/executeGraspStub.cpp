@@ -10,10 +10,10 @@ ExecuteGraspStub::ExecuteGraspStub(rpcz::rpc_channel * channel)
 
 void ExecuteGraspStub::sendRequestImpl()
 {
-    executeGrasp_stub.run(request,&response, &_rpc,rpcz::new_callback(this, &ExecuteGraspStub::callback));
+    executeGrasp_stub.run(request,&response, &_rpc,rpcz::new_callback<ExecuteGraspStub>(this, &ExecuteGraspStub::callback));
 }
 
-void ExecuteGraspStub::callback()
+void ExecuteGraspStub::callbackImpl()
 {
     std::cout << "hello world I am a callback!!!!"<< std::endl;
 }

@@ -49,7 +49,7 @@ public:
     //ros server calls
     void runObjectRecognition();
     void getCameraOrigin();
-    void checkGraspReachability();
+    void checkGraspReachability(const GraspPlanningState * state);
 
 
     static BCIService* getInstance();

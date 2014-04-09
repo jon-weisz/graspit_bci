@@ -20,12 +20,13 @@
 
 class GraspReachabilityStub : public Request
 {
+    Q_OBJECT
 public:
     GraspReachabilityStub(rpcz::rpc_channel * channel);
 
 protected:
     virtual void sendRequestImpl();
-    virtual void callback();
+    virtual void callbackImpl();
 
 private:
     graspit_rpcz::CheckGraspReachabilityService_Stub graspReachability_stub;

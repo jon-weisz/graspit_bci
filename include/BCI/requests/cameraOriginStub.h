@@ -11,12 +11,13 @@
 
 class CameraOriginStub : public Request
 {
+    Q_OBJECT
 public:
     CameraOriginStub(rpcz::rpc_channel * channel);
 
 protected:
     virtual void sendRequestImpl();
-    virtual void callback();
+    virtual void callbackImpl();
 
 private:
     graspit_rpcz::CameraOriginService_Stub cameraOrigin_stub;

@@ -10,12 +10,13 @@ class Body;
 
 class ObjectRecognitionStub: public Request
 {
+    Q_OBJECT
 public:
     ObjectRecognitionStub(rpcz::rpc_channel * channel);
 
 protected:
     virtual void sendRequestImpl();
-    virtual void callback();
+    virtual void callbackImpl();
 
 private:
     graspit_rpcz::ObjectRecognitionService_Stub objectRecognition_stub;

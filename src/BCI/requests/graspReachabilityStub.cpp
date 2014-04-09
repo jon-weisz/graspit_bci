@@ -16,10 +16,10 @@ GraspReachabilityStub::GraspReachabilityStub(rpcz::rpc_channel * channel)
 
 void GraspReachabilityStub::sendRequestImpl()
 {
-    graspReachability_stub.run(request,&response, &_rpc,rpcz::new_callback(this, &GraspReachabilityStub::callback));
+    graspReachability_stub.run(request,&response, &_rpc,rpcz::new_callback<GraspReachabilityStub>(this, &GraspReachabilityStub::callback));
 }
 
-void GraspReachabilityStub::callback()
+void GraspReachabilityStub::callbackImpl()
 {
     QString attribute = QString("testResult");
     EGPlanner* currentWorldPlanner = graspItGUI->getIVmgr()->getWorld()->getCurrentPlanner();

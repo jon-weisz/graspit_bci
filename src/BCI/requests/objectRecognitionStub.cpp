@@ -13,10 +13,10 @@ ObjectRecognitionStub::ObjectRecognitionStub(rpcz::rpc_channel * channel):
 
 void ObjectRecognitionStub::sendRequestImpl()
 {
-    objectRecognition_stub.run(request,&response, &_rpc,rpcz::new_callback(this, &ObjectRecognitionStub::callback));
+    objectRecognition_stub.run(request,&response, &_rpc,rpcz::new_callback<ObjectRecognitionStub>(this, &ObjectRecognitionStub::callback));
 }
 
-void ObjectRecognitionStub::callback()
+void ObjectRecognitionStub::callbackImpl()
 {
     std::for_each(response.foundobjects().begin(),
                   response.foundobjects().end(),
