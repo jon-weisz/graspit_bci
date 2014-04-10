@@ -10,16 +10,16 @@
 #include "BCI/requests/executeGraspStub.h"
 
 using namespace graspit_rpcz;
-
+class GraspPlanningState;
 class RosRPCZClient
 {
 
 public:
     RosRPCZClient();
-
+    //const QObject * receiver, const char * member
     void runObjectRecognition();
     void getCameraOrigin();
-    void checkGraspReachability();
+    void checkGraspReachability(const GraspPlanningState * gps);
     void executeGrasp();
 
 private:

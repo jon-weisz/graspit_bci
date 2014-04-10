@@ -1,7 +1,7 @@
 #include "rosRPCZClient.h"
 
 #include "BCI/bciService.h"
-
+#include "EGPlanner/searchState.h"
 
 
 RosRPCZClient::RosRPCZClient():
@@ -25,8 +25,9 @@ void RosRPCZClient::getCameraOrigin()
     cameraOriginStub.sendRequest();
 }
 
-void RosRPCZClient::checkGraspReachability()
-{
+void RosRPCZClient::checkGraspReachability(const GraspPlanningState * gps)
+{    
+    graspReachabilityStub.buildRequest(gps);
     graspReachabilityStub.sendRequest();
 }
 
@@ -34,7 +35,6 @@ void RosRPCZClient::executeGrasp()
 {
     executeGraspStub.sendRequest();
 }
-
 
 
 
