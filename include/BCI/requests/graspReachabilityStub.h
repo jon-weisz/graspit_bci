@@ -17,6 +17,7 @@
 //    virtual void callback();
 //};
 
+class GraspPlanningState;
 
 class GraspReachabilityStub : public Request
 {

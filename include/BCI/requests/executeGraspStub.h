@@ -15,6 +15,8 @@ class ExecuteGraspStub : public Request
 public:
     ExecuteGraspStub(rpcz::rpc_channel * channel);
 
+    void buildRequest();
+
 protected:
     virtual void sendRequestImpl();
     virtual void callbackImpl();
