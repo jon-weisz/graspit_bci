@@ -9,13 +9,15 @@
 
 #include "BCI/requests/requestStub.h"
 
+class GraspPlanningState;
+
 class ExecuteGraspStub : public Request
 {
     Q_OBJECT
 public:
     ExecuteGraspStub(rpcz::rpc_channel * channel);
 
-    void buildRequest();
+    void buildRequest(const GraspPlanningState * gps);
 
 protected:
     virtual void sendRequestImpl();
