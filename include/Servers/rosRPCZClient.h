@@ -20,7 +20,7 @@ public:
     void runObjectRecognition();
     void getCameraOrigin();
     void checkGraspReachability(const GraspPlanningState * gps);
-    void executeGrasp();
+    void executeGrasp(const GraspPlanningState * gps);
 
 private:
     rpcz::application _application;

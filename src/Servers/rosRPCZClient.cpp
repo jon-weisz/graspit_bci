@@ -31,8 +31,9 @@ void RosRPCZClient::checkGraspReachability(const GraspPlanningState * gps)
     graspReachabilityStub.sendRequest();
 }
 
-void RosRPCZClient::executeGrasp()
+void RosRPCZClient::executeGrasp(const GraspPlanningState * gps)
 {
+    executeGraspStub.buildRequest(gps);
     executeGraspStub.sendRequest();
 }
 
