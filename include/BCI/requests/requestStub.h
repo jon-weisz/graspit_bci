@@ -9,8 +9,13 @@ class Request :public QObject
     Q_OBJECT
 public:
 
-    void sendRequest()
+    void sendRequest(QObject * callbackReceiver = NULL, const char * slot = NULL)
     {
+        if(callbackReceiver)
+        {
+            connect(this, SIGNAL(requestComplete()), callbackReceiver, slot);
+
+        }
            try
            {
                sendRequestImpl();

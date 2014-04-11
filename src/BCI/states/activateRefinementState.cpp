@@ -45,6 +45,7 @@ void ActivateRefinementState::onPlannerUpdated(QEvent * e)
         QString graspID;
         bciControlWindow->currentState->setText("Planner Updated: " + graspID.setNum(bestGrasp->getAttribute("graspId")) );
     }
+    OnlinePlannerController::getInstance()->analyzeNextGrasp();
 }
 
 

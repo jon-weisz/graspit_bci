@@ -15,25 +15,25 @@ RosRPCZClient::RosRPCZClient():
 }
 
 
-void RosRPCZClient::runObjectRecognition()
+void RosRPCZClient::runObjectRecognition(QObject * callbackReceiver, const char * slot)
 {
-    objectRecognitionStub.sendRequest();
+    objectRecognitionStub.sendRequest(callbackReceiver, slot);
 }
 
-void RosRPCZClient::getCameraOrigin()
+void RosRPCZClient::getCameraOrigin(QObject * callbackReceiver, const char *slot)
 {
-    cameraOriginStub.sendRequest();
+    cameraOriginStub.sendRequest(callbackReceiver, slot);
 }
 
-void RosRPCZClient::checkGraspReachability(const GraspPlanningState * gps)
+void RosRPCZClient::checkGraspReachability(const GraspPlanningState * gps, QObject * callbackReceiver, const char * slot)
 {    
     graspReachabilityStub.buildRequest(gps);
-    graspReachabilityStub.sendRequest();
+    graspReachabilityStub.sendRequest(callbackReceiver, slot);
 }
 
-void RosRPCZClient::executeGrasp()
+void RosRPCZClient::executeGrasp(QObject * callbackReceiver, const char * slot)
 {
-    executeGraspStub.sendRequest();
+    executeGraspStub.sendRequest( callbackReceiver, slot);
 }
 
 

@@ -16,11 +16,10 @@ class RosRPCZClient
 
 public:
     RosRPCZClient();
-    //const QObject * receiver, const char * member
-    void runObjectRecognition();
-    void getCameraOrigin();
-    void checkGraspReachability(const GraspPlanningState * gps);
-    void executeGrasp();
+    void runObjectRecognition(QObject * callbackReceiver = NULL, const char * slot = NULL);
+    void getCameraOrigin(QObject * callbackReceiver = NULL, const char * slot = NULL);
+    void checkGraspReachability(const GraspPlanningState * gps, QObject * callbackReceiver = NULL, const char * slot = NULL);
+    void executeGrasp(QObject * callbackReceiver = NULL, const char * slot = NULL);
 
 private:
     rpcz::application _application;
