@@ -19,7 +19,7 @@ public:
     void runObjectRecognition(QObject * callbackReceiver = NULL, const char * slot = NULL);
     void getCameraOrigin(QObject * callbackReceiver = NULL, const char * slot = NULL);
     void checkGraspReachability(const GraspPlanningState * gps, QObject * callbackReceiver = NULL, const char * slot = NULL);
-    void executeGrasp(QObject * callbackReceiver = NULL, const char * slot = NULL);
+    void executeGrasp(const GraspPlanningState * gps, QObject * callbackReceiver = NULL, const char * slot = NULL);
 
 private:
     rpcz::application _application;

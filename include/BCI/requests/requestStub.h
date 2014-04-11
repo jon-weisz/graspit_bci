@@ -19,6 +19,7 @@ public:
            try
            {
                sendRequestImpl();
+               std::cout << "REQUEST SENT" << std::endl;;
            }
            catch(rpcz::rpc_error &e)
            {
@@ -32,6 +33,7 @@ public:
 
     void callback()
     {
+        std::cout << "RESPONSE RECEIVED" << std::endl;;
         callbackImpl();
         emit requestComplete();
     }

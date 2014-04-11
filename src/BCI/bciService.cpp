@@ -39,11 +39,19 @@ void BCIService::getCameraOrigin(QObject * callbackReceiver, const char * slot)
     rosServer.getCameraOrigin(callbackReceiver, slot);
 }
 
+
 void BCIService::checkGraspReachability(const GraspPlanningState * state,
                                         QObject * callbackReceiver,
                                         const char * slot)
 {
     rosServer.checkGraspReachability(state, callbackReceiver, slot);
+}
+ 
+void BCIService::executeGrasp(const GraspPlanningState * gps, 
+			      QObject * callbackReceiver,
+			      const char * slot)
+{
+    rosServer.executeGrasp(gps);
 }
 
 

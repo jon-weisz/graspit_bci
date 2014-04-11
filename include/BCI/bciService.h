@@ -49,7 +49,8 @@ public:
     //ros server calls
     void runObjectRecognition();
     void getCameraOrigin();
-    void checkGraspReachability(const GraspPlanningState * state);
+    void checkGraspReachability(const GraspPlanningState * gps);
+    void executeGrasp(const GraspPlanningState * gps);
 
 
     static BCIService* getInstance();

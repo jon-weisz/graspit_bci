@@ -31,9 +31,11 @@ void RosRPCZClient::checkGraspReachability(const GraspPlanningState * gps, QObje
     graspReachabilityStub.sendRequest(callbackReceiver, slot);
 }
 
-void RosRPCZClient::executeGrasp(QObject * callbackReceiver, const char * slot)
+
+void RosRPCZClient::executeGrasp(const GraspPlanningState * gps, QObject * callbackReceiver, const char * slot)
 {
-    executeGraspStub.sendRequest( callbackReceiver, slot);
+  executeGraspStub.buildRequest(gps);
+  executeGraspStub.sendRequest(callbackReceiver, slot);
 }
 
 

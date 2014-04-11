@@ -62,6 +62,14 @@ void ExecuteGraspStub::buildRequest(const GraspPlanningState * gps)
     request.mutable_grasp()->mutable_final_grasp_hand_state()->mutable_hand_pose()->mutable_orientation()->set_x(rx);
     request.mutable_grasp()->mutable_final_grasp_hand_state()->mutable_hand_pose()->mutable_orientation()->set_y(ry);
     request.mutable_grasp()->mutable_final_grasp_hand_state()->mutable_hand_pose()->mutable_orientation()->set_z(rz);
+
+    request.mutable_grasp()->mutable_pre_grasp_hand_state()->mutable_hand_pose()->mutable_position()->set_x(tx);
+    request.mutable_grasp()->mutable_pre_grasp_hand_state()->mutable_hand_pose()->mutable_position()->set_y(ty);
+    request.mutable_grasp()->mutable_pre_grasp_hand_state()->mutable_hand_pose()->mutable_position()->set_z(tz);
+    request.mutable_grasp()->mutable_pre_grasp_hand_state()->mutable_hand_pose()->mutable_orientation()->set_w(rw);
+    request.mutable_grasp()->mutable_pre_grasp_hand_state()->mutable_hand_pose()->mutable_orientation()->set_x(rx);
+    request.mutable_grasp()->mutable_pre_grasp_hand_state()->mutable_hand_pose()->mutable_orientation()->set_y(ry);
+    request.mutable_grasp()->mutable_pre_grasp_hand_state()->mutable_hand_pose()->mutable_orientation()->set_z(rz);
 }
 
 

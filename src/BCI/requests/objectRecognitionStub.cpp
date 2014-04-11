@@ -6,7 +6,7 @@
 #include "ivmgr.h"
 #include "world.h"
 ObjectRecognitionStub::ObjectRecognitionStub(rpcz::rpc_channel * channel):
-    objectRecognition_stub(channel, "RecognitionService", true)
+    objectRecognition_stub(channel, "ObjectRecognitionService", true)
 {
 
 }
