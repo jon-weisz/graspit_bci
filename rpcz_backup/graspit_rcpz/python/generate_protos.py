@@ -11,7 +11,7 @@ from os.path import isfile, join
 #         plugin_binary=
 #             '../../build/src/rpcz/plugin/python/protoc-gen-python_rpcz')
 
-output_dir = './gen_proto'
+output_dir = '../../../gen_proto'
 input_path = '../common/'
 
 proto_files = [ f for f in listdir(input_path) if isfile(join(input_path,f)) ]

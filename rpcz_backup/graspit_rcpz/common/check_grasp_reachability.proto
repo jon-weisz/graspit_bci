@@ -1,9 +1,9 @@
 package graspit_rpcz;
 
-import "grasp.proto";
+import "geometry_msgs.proto";
 
 message CheckGraspReachabilityRequest {
-	required GraspMsg grasp = 1;
+	required Pose final_hand_pose = 1;
 }
 
 message CheckGraspReachabilityResponse {
