@@ -29,7 +29,7 @@
 #include <QDialog>
 
 #include "ui_egPlannerDlg.h"
-#include "BCI/handView.h"
+#include "BCI/handViewWindow.h"
 #include <vector>
 #include <QtGui/QShortcut>
 #include "DBase/DBPlanner/sql_database_manager.h"

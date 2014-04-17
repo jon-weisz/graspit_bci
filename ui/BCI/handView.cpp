@@ -204,9 +204,9 @@ QString HandView::getViewName()
   return viewName_;
 }
 
-
 HandView::~HandView()
 {
     IVRoot->unref();
   delete handViewSoQtRenderArea;
 }
+

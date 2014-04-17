@@ -27,10 +27,48 @@ void BCIPreviewView::showBestGrasp()
     root->setName("BestGraspRoot");
     root->ref();
 
+//<<<<<<< HEAD
     // camera
     SoQtExaminerViewer *mainViewer_ =  graspItGUI->getIVmgr()->getViewer();
     SoCamera *camera = static_cast<SoCamera *>(mainViewer_->getCamera()->copy());
     root->addChild(camera);
+//=======
+//    SoQtRenderArea * renderArea = new SoQtRenderArea(this, " ",true);
+//    SoSeparator * bciWorldViewRoot = new SoSeparator;
+//    SoMaterial * soMaterial = new SoMaterial;
+//    SoTransformSeparator *lightSep = new SoTransformSeparator;
+//    SoRotation *lightDir = new SoRotation;
+//    SoLightModel * lightModel = new SoLightModel;
+
+//    SoNode *ivRoot = graspItGUI->getIVmgr()->getViewer()->getSceneGraph();
+
+//    soMaterial->diffuseColor.setValue(1,0,0);
+
+//    lightDir->rotation.connectFrom(&graspItGUI->getIVmgr()->getViewer()->getCamera()->orientation);
+//    lightSep->addChild(lightDir);
+//    lightSep->addChild(graspItGUI->getIVmgr()->getViewer()->getHeadlight());
+
+//    lightModel->model=SoLightModel::PHONG;
+
+//    bciWorldViewRoot->addChild(graspItGUI->getIVmgr()->getViewer()->getCamera());
+//    bciWorldViewRoot->addChild(lightSep);
+//    bciWorldViewRoot->addChild(lightModel);
+//    bciWorldViewRoot->addChild(ivRoot);
+
+//    renderArea->setSceneGraph(bciWorldViewRoot);
+//    renderArea->setBackgroundColor(SbColor(1,1,1));
+//    renderArea->scheduleRedraw();
+//    renderArea->render();
+//    renderArea->show();
+
+////    SoQtRenderArea *soQtRenderArea = new SoQtRenderArea(this, " ",true);
+////    SoQtExaminerViewer *mainViewer_ =  graspItGUI->getIVmgr()->getViewer();
+////    SoSeparator *ivRoot = new SoSeparator();
+////    SoCamera *camera_ = static_cast<SoCamera *>(mainViewer_->getCamera()->copy());
+////    SoRotation *lightDir = new SoRotation;
+////    SoTransformSeparator *lightSep = new SoTransformSeparator;
+////    Hand *currentHand =   graspItGUI->getIVmgr()->getWorld()->getCurrentHand();
+//>>>>>>> a56deb358ef66d31a0968a9b77679eb1046725ad
 
     // light
     root->addChild(new SoDirectionalLight);

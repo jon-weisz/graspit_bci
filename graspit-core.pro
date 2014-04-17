@@ -111,6 +111,7 @@ HEADERS	+= include/barrett.h \
 
 
 
+
 SOURCES	+= src/arch.cpp \
 	src/barrett.cpp \
 	src/bbox.cpp \
@@ -260,10 +261,6 @@ HEADERS += ui/mainWindow.h \
         ui/EGPlanner/compliantPlannerDlg.h
 
 
-
-
-
-
 SOURCES += ui/mainWindow.cpp \
 	ui/archBuilderDlg.cpp \
 	ui/barrettHandDlg.cpp \
@@ -279,8 +276,6 @@ SOURCES += ui/mainWindow.cpp \
 	ui/Planner/plannerdlg.cpp \
 	ui/EGPlanner/egPlannerDlg.cpp \
         ui/EGPlanner/compliantPlannerDlg.cpp
-
-
 
 #-------------------------------------- images and resources -------------------------------------------------------
 
