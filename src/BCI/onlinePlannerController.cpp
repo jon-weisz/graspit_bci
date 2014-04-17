@@ -342,19 +342,19 @@ namespace bci_experiment
     void OnlinePlannerController::analyzeNextGrasp()
     {
         //Planner exists
-      if(!currentWorldPlanner())
+      if(!currentPlanner)
           return;
 
         // Lock planner's grasp list
-      QMutexLocker lock(&currentWorldPlanner()->mListAttributeMutex);
+      QMutexLocker lock(&currentPlanner->mListAttributeMutex);
 
 
       //Check if any test is still pending
       //Go through all grasps
-      for(int i = 0; i < currentWorldPlanner()->getListSize(); ++i)
+      for(int i = 0; i < currentPlanner->getListSize(); ++i)
       {
           //If a grasp hasn't been evaluated
-          const GraspPlanningState * gs = currentWorldPlanner()->getGrasp(i);
+          const GraspPlanningState * gs = currentPlanner->getGrasp(i);
           if(gs->getAttribute("testResult") == 0.0)
           {
               //And an evaluation request was emitted for it less than some time ago
@@ -367,14 +367,14 @@ namespace bci_experiment
       }
 
      //If no request is pending, find the first grasp on the list that hasn't been analyzed
-      for(int i = 0; i < currentWorldPlanner()->getListSize(); ++i)
+      for(int i = 0; i < currentPlanner->getListSize(); ++i)
       {
-          const GraspPlanningState * gs = currentWorldPlanner()->getGrasp(i);
+          const GraspPlanningState * gs = currentPlanner->getGrasp(i);
           if(gs->getAttribute("testResult") == 0.0)
           {
               //Request analysis and ask to be called gain when analysis is completed.
-              currentWorldPlanner()->setGraspAttribute(i, "testTime",  QDateTime::currentDateTime().toTime_t());
-              BCIService::getInstance()->checkGraspReachability(gs, this, SLOT(analyzeNextGrasp());
+              currentPlanner->setGraspAttribute(i, "testTime",  QDateTime::currentDateTime().toTime_t());
+              BCIService::getInstance()->checkGraspReachability(gs, this, SLOT(analyzeNextGrasp()));
               break;
           }
       }

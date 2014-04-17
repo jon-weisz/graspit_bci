@@ -47,11 +47,23 @@ public:
     void onPlannerUpdated(){emit plannerUpdated();}
 
     //ros server calls
-    void runObjectRecognition();
-    void getCameraOrigin();
-    void checkGraspReachability(const GraspPlanningState * gps);
-    void executeGrasp(const GraspPlanningState * gps);
 
+
+    void runObjectRecognition(QObject * callbackReceiver , const char * slot);
+
+
+    void getCameraOrigin(QObject * callbackReceiver, const char * slot);
+
+
+
+    void checkGraspReachability(const GraspPlanningState * state,
+                                            QObject * callbackReceiver,
+                                            const char * slot);
+
+
+    void executeGrasp(const GraspPlanningState * gps,
+                                  QObject * callbackReceiver,
+                                  const char * slot);
 
     static BCIService* getInstance();
 

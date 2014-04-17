@@ -16,7 +16,7 @@ void ObjectRecognitionState::onEntry(QEvent *e)
     objectRecognitionView->show();
     bciControlWindow->currentState->setText("Object Recognition State");
 
-    BCIService::getInstance()->runObjectRecognition();
+    BCIService::getInstance()->runObjectRecognition(NULL,NULL);
 
     if(OnlinePlannerController::getInstance()->hasRecognizedObjects())
     {
