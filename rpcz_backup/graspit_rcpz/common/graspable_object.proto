@@ -1,7 +1,0 @@
-
-import "geometry_msgs.proto";
-
-message GraspableObject {
-	required string name = 1;
-	required Pose pose = 2;
-}
