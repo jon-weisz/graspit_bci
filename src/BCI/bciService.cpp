@@ -28,22 +28,28 @@ void BCIService::init(BCIControlWindow *bciControlWindow)
 
 
 
-void BCIService::runObjectRecognition()
+void BCIService::runObjectRecognition(QObject * callbackReceiver ,
+                                      const char * slot)
 {
-    rosServer.runObjectRecognition();
+    rosServer.runObjectRecognition(callbackReceiver, slot);
 }
 
-void BCIService::getCameraOrigin()
+void BCIService::getCameraOrigin(QObject * callbackReceiver, const char * slot)
 {
-    rosServer.getCameraOrigin();
+    rosServer.getCameraOrigin(callbackReceiver, slot);
 }
 
-void BCIService::checkGraspReachability(const GraspPlanningState * gps)
-{
-    rosServer.checkGraspReachability(gps);
-}
 
-void BCIService::executeGrasp(const GraspPlanningState * gps)
+void BCIService::checkGraspReachability(const GraspPlanningState * state,
+                                        QObject * callbackReceiver,
+                                        const char * slot)
+{
+    rosServer.checkGraspReachability(state, callbackReceiver, slot);
+}
+ 
+void BCIService::executeGrasp(const GraspPlanningState * gps, 
+			      QObject * callbackReceiver,
+			      const char * slot)
 {
     rosServer.executeGrasp(gps);
 }

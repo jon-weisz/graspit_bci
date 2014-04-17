@@ -102,6 +102,8 @@ namespace bci_experiment{
             bool setPlannerToStopped();
             bool setPlannerToPaused();
             bool setPlannerToReady();
+            void analyzeNextGrasp();
+
 
     };
 
