@@ -351,12 +351,17 @@ namespace bci_experiment
 
       //Check if any test is still pending
       //Go through all grasps
+      //Ordering of grasps may have changed based on the demonstrated hand pose,
+      //so we must examine all grasps to ensure that none of them are currently being evaluated.
+      int firstUnevaluatedIndex = -1;
       for(int i = 0; i < currentPlanner->getListSize(); ++i)
       {
           //If a grasp hasn't been evaluated
           const GraspPlanningState * gs = currentPlanner->getGrasp(i);
           if(gs->getAttribute("testResult") == 0.0)
           {
+              if(firstUnevaluatedIndex < 0)
+                  firstUnevaluatedIndex = i;
               //And an evaluation request was emitted for it less than some time ago
               if(gs->getAttribute("testTime") >  QDateTime::currentDateTime().toTime_t() - 10)
               {
@@ -365,20 +370,14 @@ namespace bci_experiment
               }
           }
       }
+      if (firstUnevaluatedIndex < 0)
+          return;
 
-     //If no request is pending, find the first grasp on the list that hasn't been analyzed
-      for(int i = 0; i < currentPlanner->getListSize(); ++i)
-      {
-          const GraspPlanningState * gs = currentPlanner->getGrasp(i);
-          if(gs->getAttribute("testResult") == 0.0)
-          {
-              //Request analysis and ask to be called gain when analysis is completed.
-              currentPlanner->setGraspAttribute(i, "testTime",  QDateTime::currentDateTime().toTime_t());
-              BCIService::getInstance()->checkGraspReachability(gs, this, SLOT(analyzeNextGrasp()));
-              break;
-          }
-      }
-
+      const GraspPlanningState * graspToEvaluate = currentPlanner->getGrasp(firstUnevaluatedIndex);
+      assert(graspToEvaluate->getAttribute("testResult") == 0.0);
+      //Request analysis and ask to be called gain when analysis is completed.
+      currentPlanner->setGraspAttribute(firstUnevaluatedIndex, "testTime",  QDateTime::currentDateTime().toTime_t());
+      BCIService::getInstance()->checkGraspReachability(graspToEvaluate, this, SLOT(analyzeNextGrasp()));
     }
 
 

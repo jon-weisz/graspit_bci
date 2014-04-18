@@ -13,7 +13,7 @@ CameraOriginStub::CameraOriginStub(rpcz::rpc_channel * channel)
 
 void CameraOriginStub::sendRequestImpl()
 {
-    cameraOrigin_stub.GetCameraOrigin(request,&response, &_rpc,rpcz::new_callback<CameraOriginStub>(this, &CameraOriginStub::callback));
+    cameraOrigin_stub.GetCameraOrigin(request,&response, _rpc,rpcz::new_callback<CameraOriginStub>(this, &CameraOriginStub::callback));
 }
 
 void CameraOriginStub::callbackImpl()

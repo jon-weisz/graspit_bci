@@ -13,7 +13,7 @@ ObjectRecognitionStub::ObjectRecognitionStub(rpcz::rpc_channel * channel):
 
 void ObjectRecognitionStub::sendRequestImpl()
 {
-    objectRecognition_stub.run(request,&response, &_rpc,rpcz::new_callback<ObjectRecognitionStub>(this, &ObjectRecognitionStub::callback));
+    objectRecognition_stub.run(request,&response, _rpc,rpcz::new_callback<ObjectRecognitionStub>(this, &ObjectRecognitionStub::callback));
 }
 
 void ObjectRecognitionStub::callbackImpl()

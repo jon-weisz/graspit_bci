@@ -37,11 +37,12 @@ void ExecuteGraspStub::buildRequest(const GraspPlanningState * gps)
     }
 
 
-    for(int i = 0; i < gps->getHand()->getNumDOF(); i ++)
+    double dof[gps->getHand()->getNumDOF()];
+    const_cast<GraspPlanningState *>(gps)->getPosture()->getHandDOF(dof);
+    for(int i = 0; i < gps->getHand()->getNumDOF(); ++i)
     {
-        double dof = gps->getHand()->getDOF(i)->getVal();
-        request.mutable_grasp()->mutable_pre_grasp_hand_state()->add_hand_dof(dof);
-        request.mutable_grasp()->mutable_final_grasp_hand_state()->add_hand_dof(dof);
+        request.mutable_grasp()->mutable_pre_grasp_hand_state()->add_hand_dof(dof[i]);
+        request.mutable_grasp()->mutable_final_grasp_hand_state()->add_hand_dof(dof[i]);
     }
 
 
@@ -76,7 +77,7 @@ void ExecuteGraspStub::buildRequest(const GraspPlanningState * gps)
 
 void ExecuteGraspStub::sendRequestImpl()
 {
-    executeGrasp_stub.run(request,&response, &_rpc,rpcz::new_callback<ExecuteGraspStub>(this, &ExecuteGraspStub::callback));
+    executeGrasp_stub.run(request,&response, _rpc,rpcz::new_callback<ExecuteGraspStub>(this, &ExecuteGraspStub::callback));
 }
 
 void ExecuteGraspStub::callbackImpl()
