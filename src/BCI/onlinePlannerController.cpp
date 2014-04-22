@@ -380,5 +380,25 @@ namespace bci_experiment
       BCIService::getInstance()->checkGraspReachability(graspToEvaluate, this, SLOT(analyzeNextGrasp()));
     }
 
+   void OnlinePlannerController::addToWorld(const QString model_filename, const QString object_pose_string)
+    {
+        std::stringstream s;
+        s << object_pose_string.toStdString();
+        transf object_pose;
+        s >> object_pose;
 
+        QString body_file = QString(getenv("GRASPIT")) + "/" +  "models/objects/" + model_filename;
+        Body *b = graspItGUI->getIVmgr()->getWorld()->importBody("GraspableBody", body_file);
+        if(!b)
+        {
+            QString body_file = QString(getenv("GRASPIT")) + "/" +  "models/object_database/" + model_filename;
+            b = graspItGUI->getIVmgr()->getWorld()->importBody("GraspableBody", body_file);
+        }
+
+        if(b)
+        {
+            b->setTran(object_pose);
+            b->setName(model_filename);
+        }
+    }
 }
