@@ -4,7 +4,7 @@
 #include "rpcz/rpc_channel.hpp"
 #include "rpcz/rpc_channel_impl.hpp"
 #include <QString>
-
+#include "matvec3D.h"
 using namespace graspit_rpcz;
 class Body;
 
@@ -13,6 +13,9 @@ class ObjectRecognitionStub: public Request
     Q_OBJECT
 public:
     ObjectRecognitionStub(rpcz::rpc_channel * channel);
+
+signals:
+    void addToWorld(const QString model_filename, const QString object_pose);
 
 protected:
     virtual void sendRequestImpl();
@@ -24,7 +27,7 @@ private:
     graspit_rpcz::ObjectRecognitionResponse response;
 
     void addObject(GraspableObject object);
-    Body * addToWorld(const QString & model_filename);
+    //Body * addToWorld(const QString & model_filename);
 
 
 };
