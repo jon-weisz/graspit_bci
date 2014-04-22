@@ -52,21 +52,7 @@ void ObjectRecognitionStub::addObject(GraspableObject object)
     s << object_pose;
     QString stringPose(QString::fromStdString(s.str()));
     emit addToWorld(objectName, stringPose);
-
-    //b.setTran(object_pose);
 }
-
-//Body *ObjectRecognitionStub::addToWorld(const QString & model_filename)
-//{
-//     QString body_file = QString(getenv("GRASPIT")) + "/" +  "models/objects/" + model_filename;
-//     Body *b = graspItGUI->getIVmgr()->getWorld()->importBody("GraspableBody", body_file);
-//     if(!b)
-//     {
-//         QString body_file = QString(getenv("GRASPIT")) + "/" +  "models/object_database/" + model_filename;
-//         b = graspItGUI->getIVmgr()->getWorld()->importBody("GraspableBody", body_file);
-//     }
-//     return b;
-//}
 
 
 
