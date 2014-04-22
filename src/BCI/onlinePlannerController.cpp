@@ -401,4 +401,11 @@ namespace bci_experiment
             b->setName(model_filename);
         }
     }
+
+   void OnlinePlannerController::clearObjects()
+   {
+       while(getWorld()->getNumGB() > 0)
+           getWorld()->destroyElement(getWorld()->getGB(0), true);
+
+   }
 }
