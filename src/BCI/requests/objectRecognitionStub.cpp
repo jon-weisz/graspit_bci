@@ -14,6 +14,12 @@ ObjectRecognitionStub::ObjectRecognitionStub(rpcz::rpc_channel * channel):
         SIGNAL(addToWorld(const QString, const QString )),
         bci_experiment::OnlinePlannerController::getInstance(),
         SLOT(addToWorld(const QString , const QString )));
+
+    connect(
+        this,
+        SIGNAL(clearGB()),
+        bci_experiment::OnlinePlannerController::getInstance(),
+        SLOT(clearObjects()));
 }
 
 void ObjectRecognitionStub::sendRequestImpl()
@@ -23,6 +29,13 @@ void ObjectRecognitionStub::sendRequestImpl()
 
 void ObjectRecognitionStub::callbackImpl()
 {
+    // ask bodies to be cleared
+    emit clearGB();
+    // clear any existing graspable bodies
+    while(graspItGUI->getIVmgr()->getWorld()->getNumGB())
+        usleep(10000);
+
+    // add each of the new bodies
     std::for_each(response.foundobjects().begin(),
                   response.foundobjects().end(),
                   boost::bind(&ObjectRecognitionStub::addObject, this, _1));

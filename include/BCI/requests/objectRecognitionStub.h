@@ -16,6 +16,7 @@ public:
 
 signals:
     void addToWorld(const QString model_filename, const QString object_pose);
+    void clearGB();
 
 protected:
     virtual void sendRequestImpl();
