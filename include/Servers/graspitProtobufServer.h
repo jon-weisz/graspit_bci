@@ -26,6 +26,19 @@ private:
     //! Graspit message to read into
     GraspitProtobufMessage *msg;
 
+    //! Timer to reread if more bits are needed or a partial message has been recieved.
+    QTimer tryRereadTimer;
+
+    //! Delay at which we should retry parsing the message if not enough data is available.
+    int rereadLatency;
+
+    //! Schedule an attempt to parse data in the buffer if necessary.
+    void scheduleReread(int readLatency);
+
+
+    //! Read the message size prefix
+    quint32 getMessageSize();
+
 private slots:
     //! Read the message and act on it.
     void parseMessage();
