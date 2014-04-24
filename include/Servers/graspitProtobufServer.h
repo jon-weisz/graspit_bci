@@ -1,6 +1,7 @@
 #ifndef GRASPITPROTOBUFSERVER_H
 #define GRASPITPROTOBUFSERVER_H
 #include <QtNetwork>
+#include <QTimer>
 class GraspitProtobufMessage;
 class DrawableFrame;
 
@@ -16,9 +17,14 @@ signals:
     void updateFrame(DrawableFrame & drawing);
 
 private:
-  QTcpSocket * sock;
-  unsigned int max_len;
-  GraspitProtobufMessage * msg;
+    //! Individual Socket connection
+    QTcpSocket *sock;
+
+    //! Maximum size of socket's buffer
+    unsigned int maxLen;
+
+    //! Graspit message to read into
+    GraspitProtobufMessage *msg;
 
 private slots:
     //! Read the message and act on it.
