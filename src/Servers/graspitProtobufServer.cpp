@@ -34,6 +34,13 @@ void GraspitProtobufConnection::parseMessage()
         DrawableFrame drawableFrame = msg->drawable_frame();
         BCIService::getInstance()->emitDrawableFrame(&drawableFrame);
     }
+    if(msg->has_renderable())
+    {
+        if(msg->renderable().has_pointcloud())
+        {
+            msg->renderable().pointcloud();
+        }
+    }
 }
 
 bool GraspitProtobufConnection::readMessage()

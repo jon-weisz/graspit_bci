@@ -2,6 +2,7 @@
 #define GRASPITPROTOBUFSERVER_H
 #include <QtNetwork>
 #include <QTimer>
+#include "RenderableProtoDrawer.h"
 class GraspitProtobufMessage;
 class DrawableFrame;
 
