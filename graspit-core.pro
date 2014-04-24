@@ -417,6 +417,7 @@ bci_experiment {
               src/BCI/states/graspSelectionState.cpp \
               src/BCI/states/confirmationState.cpp \ 
               src/Servers/graspitProtobufServer.cpp \
+              src/Servers/RenderableProtoDrawer.cpp \
               ui/BCI/binaryCommandView.cpp \
               ui/BCI/bciControlWindow.cpp \
               ui/BCI/handView.cpp \
@@ -447,6 +448,7 @@ bci_experiment {
                include/BCI/utils/plannerTools.h \
                include/BCI/onlinePlannerController.h \
                include/Servers/graspitProtobufServer.h \ 
+               include/Servers/RenderableProtoDrawer.h \
                include/BCI/uiTools.h \
                include/BCI/state.h \
                include/BCI/BCIStateMachine.h \
