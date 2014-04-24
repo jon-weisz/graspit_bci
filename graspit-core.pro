@@ -22,8 +22,8 @@ DEPENDPATH += src src/Collision include include/math include/Planner include/EGP
 
 HEADERS	+= include/barrett.h \
 	include/body.h \
-	include/bbox.h \
-	include/bbox_inl.h \
+        include/bBox.h \
+        include/bBox_inl.h \
 	include/contact.h \
 	include/contactSetting.h \
 	include/debug.h \
@@ -114,7 +114,7 @@ HEADERS	+= include/barrett.h \
 
 SOURCES	+= src/arch.cpp \
 	src/barrett.cpp \
-	src/bbox.cpp \
+        src/bBox.cpp \
 	src/body.cpp \
 	src/contact.cpp \
 	src/contactSetting.cpp \
