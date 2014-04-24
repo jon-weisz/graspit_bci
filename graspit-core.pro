@@ -388,9 +388,9 @@ mosek {
 #-------------------------------------- Protobuf Messages -------------------------------------------------------------
 protobuf {
   # add message files here
-  PROTOS = Drawable.proto GraspitMessage.proto
+  PROTOS = Drawable.proto Renderable.proto GraspitMessage.proto
   # add message path here
-  PROTOPATH = ./protocols
+  PROTOPATH = $$PWD/protocols
   include(protobuf.pri)
 }
 
